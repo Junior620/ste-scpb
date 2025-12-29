@@ -1,0 +1,115 @@
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
+import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
+import { generateLocalizedMetadata } from '@/i18n/metadata';
+import { ProductDetailSection } from '@/components/sections/ProductDetailSection';
+import { createCMSClient } from '@/infrastructure/cms';
+import type { Product } from '@/domain/entities/Product';
+import { generateProductSchema, renderSchemaScript } from '@/lib/schema';
+
+// ISR: Revalidate every hour
+export const revalidate = 3600;
+
+interface ProductDetailPageProps {
+  params: Promise<{ locale: string; slug: string }>;
+}
+
+export async function generateStaticParams() {
+  try {
+    const cmsClient = createCMSClient();
+    const slugs = await cmsClient.getAllProductSlugs();
+    return slugs.flatMap((productSlug: string) =>
+      SUPPORTED_LOCALES.map((locale) => ({ locale, slug: productSlug }))
+    );
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  
+  let product: Product | null = null;
+  try {
+    const cmsClient = createCMSClient();
+    product = await cmsClient.getProductBySlug(slug, locale as Locale);
+  } catch {
+    // Product not found
+  }
+
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    };
+  }
+
+  const validLocale = isValidLocale(locale) ? (locale as Locale) : 'fr';
+  const productName = product.name[validLocale];
+  const productDescription = product.description[validLocale];
+  const ogImage = product.images.length > 0 ? product.images[0].url : undefined;
+
+  return generateLocalizedMetadata({
+    title: productName,
+    description: productDescription.substring(0, 160),
+    pathname: `/produits/${slug}`,
+    locale: validLocale,
+    ogImage,
+    keywords: [productName, product.category, 'export', 'B2B', 'Cameroun', ...product.certifications],
+  });
+}
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const { locale, slug } = await params;
+
+  // Enable static rendering
+  if (isValidLocale(locale)) {
+    setRequestLocale(locale as Locale);
+  }
+
+  // Fetch product from CMS
+  let product: Product | null = null;
+  let relatedProducts: Product[] = [];
+  
+  try {
+    const cmsClient = createCMSClient();
+    product = await cmsClient.getProductBySlug(slug, locale as Locale);
+    
+    if (product && product.relatedProducts.length > 0) {
+      // Fetch related products
+      const allProducts = await cmsClient.getProducts(locale as Locale);
+      relatedProducts = allProducts.filter((p: Product) =>
+        product!.relatedProducts.includes(p.slug)
+      );
+    }
+  } catch {
+    // Product not found
+  }
+
+  if (!product) {
+    notFound();
+  }
+
+  // Generate schema.org JSON-LD
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.com';
+  const productSchema = generateProductSchema(product, locale as Locale, baseUrl);
+
+  return (
+    <>
+      {/* Schema.org JSON-LD for Product */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: renderSchemaScript(productSchema),
+        }}
+      />
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
+        <ProductDetailSection
+          product={product}
+          relatedProducts={relatedProducts}
+          locale={locale as Locale}
+        />
+      </main>
+    </>
+  );
+}

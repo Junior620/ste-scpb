@@ -1,26 +1,356 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* ============================================
+   STE-SCPB Design Tokens
+   Theme: "Constellations des Commodities"
+   Style: Dark Premium / Space Corporate
+   ============================================ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base colors - Dark space theme (default) */
+  --background: #0a0a0f;
+  --background-secondary: #12121a;
+  --background-tertiary: #1a1a25;
+  --foreground: #f0f0f5;
+  --foreground-muted: #b8b8c8;
+
+  /* Primary - Golden accent (commodities/premium) */
+  --primary: #d4a853;
+  --primary-light: #e8c77a;
+  --primary-dark: #b08a3a;
+  --primary-foreground: #0a0a0f;
+
+  /* Secondary - Deep blue (trust/corporate) */
+  --secondary: #3a5a9a;
+  --secondary-light: #4a7ac0;
+  --secondary-dark: #2a4a7a;
+  --secondary-foreground: #f0f0f5;
+
+  /* Accent - Constellation glow */
+  --accent: #7a9aff;
+  --accent-light: #9ab8ff;
+  --accent-dark: #5a7aef;
+
+  /* Semantic colors */
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+
+  /* Space effects */
+  --glow-primary: rgba(212, 168, 83, 0.4);
+  --glow-accent: rgba(122, 154, 255, 0.4);
+  --star-color: rgba(255, 255, 255, 0.8);
+  --nebula-color: rgba(122, 154, 255, 0.1);
+
+  /* Borders */
+  --border: #2a2a35;
+  --border-light: #3a3a45;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px var(--glow-primary);
+}
+
+/* Light theme */
+.light {
+  --background: #fafafa;
+  --background-secondary: #ffffff;
+  --background-tertiary: #f5f5f5;
+  --foreground: #1a1a1f;
+  --foreground-muted: #6b6b7a;
+
+  /* Primary - Golden accent (darker for light mode) */
+  --primary: #b08a3a;
+  --primary-light: #d4a853;
+  --primary-dark: #8a6a2a;
+  --primary-foreground: #ffffff;
+
+  /* Secondary - Deep blue */
+  --secondary: #2a4a7a;
+  --secondary-light: #3a5a9a;
+  --secondary-dark: #1a3a6a;
+  --secondary-foreground: #ffffff;
+
+  /* Accent */
+  --accent: #4a6adf;
+  --accent-light: #6a8aff;
+  --accent-dark: #3a5acf;
+
+  /* Semantic colors (adjusted for light bg) */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Effects */
+  --glow-primary: rgba(176, 138, 58, 0.3);
+  --glow-accent: rgba(74, 106, 223, 0.3);
+  --star-color: rgba(0, 0, 0, 0.1);
+  --nebula-color: rgba(74, 106, 223, 0.05);
+
+  /* Borders */
+  --border: #e5e5ea;
+  --border-light: #d5d5da;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px var(--glow-primary);
+
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
 }
 
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+
+  --color-glow-primary: var(--glow-primary);
+  --color-glow-accent: var(--glow-accent);
+  --color-star: var(--star-color);
+  --color-nebula: var(--nebula-color);
+
+  /* Fonts */
+  --font-sans: var(--font-montserrat);
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Shadows */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-glow: var(--shadow-glow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography utilities */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--accent-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-gold {
+  box-shadow:
+    0 0 20px var(--glow-primary),
+    0 0 40px var(--glow-primary);
+}
+
+.glow-blue {
+  box-shadow:
+    0 0 20px var(--glow-accent),
+    0 0 40px var(--glow-accent);
+}
+
+.text-glow-gold {
+  text-shadow:
+    0 0 10px var(--glow-primary),
+    0 0 20px var(--glow-primary);
+}
+
+.text-glow-blue {
+  text-shadow:
+    0 0 10px var(--glow-accent),
+    0 0 20px var(--glow-accent);
+}
+
+/* Holographic effect for hero tagline */
+.holographic {
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--accent-light),
+    var(--primary-light),
+    var(--accent-light)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holographic-shift 8s ease-in-out infinite;
+}
+
+@keyframes holographic-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Bar chart fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* Skip Navigation Link - Accessibility */
+.skip-navigation {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: top var(--transition-fast);
+}
+
+.skip-navigation:focus,
+.skip-navigation:focus-visible {
+  top: var(--spacing-md);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Main content focus styles for skip navigation */
+#main-content:focus {
+  outline: none;
+}
+
+#main-content:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Selection styles */
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground-muted);
+}
+
+
+/* Click sparkle animation - product icons floating up */
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -150%) scale(1.5);
+  }
+}
+
+.animate-float-up {
+  animation: float-up 1s ease-out forwards;
 }

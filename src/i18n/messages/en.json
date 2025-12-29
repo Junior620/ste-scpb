@@ -1,0 +1,1090 @@
+{
+  "metadata": {
+    "title": "STE-SCPB | Agricultural Commodities Trading",
+    "description": "STE-SCPB - Cameroonian company specialized in agricultural commodities and raw materials trading: cocoa, coffee, wood, corn and more.",
+    "home": {
+      "title": "STE-SCPB | Agricultural Commodities and Raw Materials Trading",
+      "description": "STE-SCPB, your trusted partner for agricultural commodities trading from Africa. Cocoa, coffee, wood, corn - Export to USA, Europe, Asia."
+    },
+    "products": {
+      "title": "Our Products | Cocoa, Coffee, Wood, Corn | STE-SCPB",
+      "description": "Discover our range of quality agricultural products: cocoa, coffee, wood, corn, rubber, sesame. Rainforest Alliance, UTZ certifications."
+    },
+    "team": {
+      "title": "Our Team | Agricultural Trade Experts | STE-SCPB",
+      "description": "Meet the STE-SCPB team: passionate experts with over 20 years of experience in agricultural commodities trading."
+    },
+    "news": {
+      "title": "News | Agricultural Market and Export | STE-SCPB",
+      "description": "Stay informed about the latest agricultural market news, export trends and STE-SCPB updates."
+    },
+    "contact": {
+      "title": "Contact Us | STE-SCPB",
+      "description": "Contact STE-SCPB for your agricultural product needs. Our team responds within 24-48h. Douala-Akwa, Cameroon."
+    },
+    "rfq": {
+      "title": "Request for Quote | B2B Export | STE-SCPB",
+      "description": "Get a personalized quote for your agricultural product needs. Incoterms, quantities, certifications - Response within 24-48h."
+    },
+    "legalMentions": {
+      "title": "Legal Mentions | STE-SCPB",
+      "description": "Legal mentions of the STE-SCPB website: information about the publisher, hosting, intellectual property and terms of use."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy | GDPR | STE-SCPB",
+      "description": "STE-SCPB Privacy Policy: learn how we protect your personal data in compliance with GDPR."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "seeMore": "See more",
+    "seeAll": "See all",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "team": "Team",
+    "statistics": "Statistics",
+    "news": "News",
+    "contact": "Contact",
+    "quote": "Request a Quote",
+    "legalMentions": "Legal Mentions",
+    "privacyPolicy": "Privacy Policy",
+    "featuredProduct": "Featured – Premium Export"
+  },
+  "home": {
+    "title": "Fine Cameroon Cocoa",
+    "titleHighlight": "From bean to export",
+    "description": "We supply fine terroir cocoa from Cameroon, carefully fermented and dried, ideal for demanding chocolatiers and manufacturers.",
+    "keyPoints": {
+      "origin": "100% Cameroon origin cocoa",
+      "process": "Controlled fermentation – Natural drying – Rigorous sorting",
+      "target": "Supplier for artisan chocolatiers and manufacturers",
+      "certifications": "Certifications available (Organic, Fairtrade, UTZ)",
+      "export": "Export to United States, European Union, Africa",
+      "traceability": "Complete traceability from plantation to shipment"
+    },
+    "cta": {
+      "quote": "Request export quote",
+      "catalog": "Download our catalog",
+      "products": "Discover our cocoa",
+      "sample": "Request a sample",
+      "contactTitle": "Ready to source your premium cocoa?",
+      "contactDescription": "Get a personalized export offer. Our team supports you on volumes, specs and shipping.",
+      "contactButton": "Contact us",
+      "reassurance": {
+        "response": "Response within 24–48h",
+        "incoterms": "FOB / CIF / DAP",
+        "docs": "Complete documentation"
+      }
+    },
+    "trust": {
+      "response": "Response within 24–48h",
+      "location": "Douala, Cameroon",
+      "phone": "+237 676 905 938",
+      "email": "scpb@ste-scpb.com",
+      "destinations": "Worldwide export"
+    },
+    "welcome": {
+      "title": "Welcome to STE-SCPB",
+      "description": "The company offers sustainable, natural and value-added food products and ingredients so that consumers can enjoy healthy and gourmet products."
+    }
+  },
+  "workforce": {
+    "title": "Our Workforce",
+    "description": "SCPB relies on over 100 employees and field agents, present in all 10 regions of Cameroon, along with a network of 500+ partner producers. Our teams handle collection, lot traceability, quality control and export logistics, ensuring a reliable supply chain that meets international requirements.",
+    "stats": {
+      "employees": "Employees & field agents",
+      "regions": "Regions covered",
+      "collectionPoints": "Collection points",
+      "partners": "Producers (sourcing network)"
+    },
+    "roles": {
+      "title": "What our teams guarantee",
+      "collection": "Field collection & lot traceability",
+      "quality": "Quality control & grading",
+      "logistics": "Logistics & export documentation"
+    },
+    "cta": {
+      "careers": "Join our team",
+      "partner": "Become a partner producer"
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Discover our range of quality agricultural products",
+    "categories": {
+      "cacao": "Cocoa",
+      "cafe": "Coffee",
+      "bois": "Wood",
+      "mais": "Corn",
+      "hevea": "Rubber",
+      "sesame": "Sesame",
+      "cajou": "Cashew",
+      "amandes": "Almonds",
+      "sorgho": "Sorghum",
+      "soja": "Soy"
+    },
+    "badges": {
+      "gradeExport": "Export grade",
+      "flegt": "FLEGT compliant",
+      "nonOgm": "Non-GMO available",
+      "industrial": "Industrial grade",
+      "traceability": "Traceability",
+      "certified": "Certified"
+    },
+    "details": {
+      "origin": "Origin",
+      "season": "Season",
+      "certifications": "Certifications",
+      "packaging": "Packaging",
+      "contactSales": "Contact Sales",
+      "requestQuote": "Request a quote",
+      "viewSpecs": "View specifications",
+      "downloadDatasheet": "Download datasheet"
+    },
+    "related": "Related Products"
+  },
+  "productDetail": {
+    "technicalSpecs": "Technical Specifications",
+    "packaging": "Export Packaging",
+    "exportInfo": "Export Information",
+    "incoterms": "Incoterms",
+    "ports": "Loading Ports",
+    "destinations": "Destinations",
+    "moq": "Minimum Order",
+    "askQuestion": "Ask a Question",
+    "responseTime": "Response within 24-48h (business days)",
+    "specs": {
+      "humidity": "Moisture",
+      "fatContent": "Fat Content",
+      "fermentation": "Fermentation",
+      "grade": "Grade",
+      "standard": "Standard",
+      "varieties": "Varieties",
+      "altitude": "Altitude",
+      "process": "Process",
+      "species": "Species",
+      "compliance": "Compliance",
+      "format": "Format",
+      "docs": "Documents",
+      "impurities": "Impurities",
+      "use": "Use",
+      "type": "Type",
+      "drc": "DRC",
+      "purity": "Purity",
+      "oil": "Oil Content",
+      "broken": "Broken",
+      "shelf": "Shelf Life",
+      "protein": "Protein",
+      "ogm": "GMO",
+      "caliber": "Caliber",
+      "packaging": "Packaging",
+      "specs": "Specifications"
+    }
+  },
+  "productsPreview": {
+    "title": "Our Agricultural Products",
+    "subtitle": "We select and export premium quality products, with particular expertise in Cameroonian cocoa.",
+    "featured": {
+      "badge": "Our specialty: Cameroonian Cocoa",
+      "title": "Premium Cocoa",
+      "origin": "Origin Cameroon",
+      "terroirDesc": "From the terroirs of Central and Southern Cameroon, with rich and balanced aromatic profiles. Grown in humid forest zones, ideal for slow and homogeneous fermentation.",
+      "formatsTitle": "Available formats",
+      "formats": {
+        "beans": {
+          "name": "Beans",
+          "desc": "For roasters and chocolatiers"
+        },
+        "butter": {
+          "name": "Cocoa butter",
+          "desc": "Pure, non-deodorized"
+        },
+        "paste": {
+          "name": "Cocoa paste",
+          "desc": "Liquid or solid"
+        },
+        "powder": {
+          "name": "Cocoa powder",
+          "desc": "Alkalized or natural"
+        }
+      },
+      "guaranteesTitle": "Our quality guarantees",
+      "guarantees": {
+        "terroir": "Fine terroir cocoa",
+        "fermentation": "Controlled fermentation (6-7 days)",
+        "drying": "Natural drying – Rigorous sorting",
+        "traceability": "Guaranteed traceability from plantation to export",
+        "certifications": "Certifications available: Organic, Fairtrade, UTZ"
+      },
+      "techSpecs": {
+        "title": "Technical specifications",
+        "humidity": {
+          "value": "7-8%",
+          "label": "Moisture content"
+        },
+        "fat": {
+          "value": "52-56%",
+          "label": "Fat content"
+        },
+        "aroma": {
+          "value": "Fruity",
+          "label": "Aromatic profile"
+        }
+      },
+      "process": {
+        "title": "Our process",
+        "plantation": "Plantation",
+        "fermentation": "Fermentation",
+        "drying": "Drying",
+        "sorting": "Sorting",
+        "export": "Export"
+      },
+      "markets": {
+        "eu": {
+          "flag": "🇪🇺",
+          "name": "European Union"
+        },
+        "usa": {
+          "flag": "🇺🇸",
+          "name": "United States"
+        },
+        "africa": {
+          "flag": "🌍",
+          "name": "Africa"
+        }
+      },
+      "cta": {
+        "datasheet": "Download data sheet",
+        "sample": "Request a sample"
+      },
+      "certificationsNote": "Organic, Fairtrade, UTZ certifications",
+      "certificationsDetails": "available on request",
+      "certificationsTooltip": "Depending on origin, volume and partner supply chain",
+      "whyUs": {
+        "title": "Why choose us?",
+        "desc": "We support our clients from bean selection to export, with a single point of contact and guaranteed responsiveness."
+      }
+    }
+  },
+  "otherProducts": {
+    "title": "Other Premium Products",
+    "subtitle": "Our complementary range",
+    "viewSpecs": "View specifications",
+    "products": {
+      "cafe": {
+        "name": "Coffee",
+        "desc": "Arabica & Robusta – Grade A – Direct export",
+        "seo": "Cameroon coffee export Arabica Robusta"
+      },
+      "cajou": {
+        "name": "Cashew nuts",
+        "desc": "Grade W320/W240 – Shelled – Export quality",
+        "seo": "Central Africa shelled cashew nuts export"
+      },
+      "sesame": {
+        "name": "Sesame",
+        "desc": "Hulled – 99% purity – Export quality",
+        "seo": "Cameroon hulled sesame export quality"
+      },
+      "soja": {
+        "name": "Soy",
+        "desc": "Non-GMO (per lot) – High protein – Certificate available",
+        "seo": "Cameroon non-GMO soy export high protein"
+      },
+      "bois": {
+        "name": "Wood",
+        "desc": "Legal species – FLEGT compliant – Full traceability",
+        "seo": "Cameroon legal wood export FLEGT compliant"
+      },
+      "mais": {
+        "name": "Corn",
+        "desc": "Food grade – Dried – Sorted / calibrated",
+        "seo": "Cameroon food grade corn export"
+      },
+      "hevea": {
+        "name": "Rubber",
+        "desc": "Latex / rubber – Industrial grade – Specs on request",
+        "seo": "Cameroon natural rubber latex export"
+      }
+    },
+    "advantages": {
+      "title": "Our common strengths for all products",
+      "qualityControl": "Rigorous quality control",
+      "exportPackaging": "Export-ready packaging",
+      "documentation": "Complete compliance documents",
+      "traceability": "Guaranteed lot traceability",
+      "incoterms": "Flexible Incoterms (FOB / CIF / DAP)",
+      "volumes": "20/40ft containers – Industrial volumes"
+    },
+    "cta": {
+      "quote": "Request a personalized quote",
+      "destinations": "View our export destinations"
+    }
+  },
+  "valueChain": {
+    "title": "Our Value Chain",
+    "subtitle": "From farm to export, complete traceability",
+    "stages": {
+      "farm": {
+        "title": "Farm",
+        "description": "Trained & monitored partner producers – Traceable supply chains (certifications per lot)"
+      },
+      "collection": {
+        "title": "Collection",
+        "description": "Efficient collection network – Lot identification (zone, date, cooperative)"
+      },
+      "quality": {
+        "title": "Quality Control",
+        "description": "Moisture, defects, contaminants – Residues & mycotoxins on request"
+      },
+      "packaging": {
+        "title": "Preparation & Packaging",
+        "description": "Final sorting, export bagging, moisture/odor protection, lot sealing"
+      },
+      "export": {
+        "title": "Logistics & Export",
+        "description": "FOB / CIF / DAP – Douala & Kribi ports – Shipping to USA, Europe, Asia"
+      }
+    },
+    "cta": {
+      "title": "Convinced by our process?",
+      "process": "See our full process",
+      "docs": "Export documentation",
+      "contact": "Talk to a manager"
+    }
+  },
+  "about": {
+    "title": "About STE-SCPB",
+    "subtitle": "Cameroonian exporter of premium cocoa and agricultural products, with traceability and international compliance.",
+    "meta": {
+      "title": "About Us | STE-SCPB",
+      "description": "Discover STE-SCPB, a Cameroonian company specialized in agricultural commodities trading. Over 20 years of experience, export to USA, Europe and Asia."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "Connecting African producers to international markets with transparency and quality. We work hand in hand with local farmers to guarantee top-quality products while ensuring fair compensation.",
+      "proof": "Identified lots, rigorous quality controls, and complete export documentation (COA, phyto, origin)."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "To become the African leader in agricultural commodities trading by establishing standards of excellence in quality, traceability and sustainability. We aspire to create an ecosystem where producers and international buyers thrive together.",
+      "proof": "Raising traceability and compliance standards to sustainably meet EU/USA requirements."
+    },
+    "values": {
+      "title": "Our Values",
+      "quality": "Quality",
+      "qualityDescription": "Rigorous controls at every stage to guarantee products that meet international standards.",
+      "qualityProof": "Target moisture 7–8%, rigorous sorting, defect control per ICCO/ISO 2451.",
+      "transparency": "Transparency",
+      "transparencyDescription": "Complete traceability from farm to export, with clear and honest communication.",
+      "transparencyProof": "Lot-by-lot traceability, documents available on request.",
+      "sustainability": "Sustainability",
+      "sustainabilityDescription": "A strong commitment to responsible agricultural practices and local community development.",
+      "sustainabilityProof": "Producer partnerships + post-harvest best practices.",
+      "partnership": "Partnership",
+      "partnershipDescription": "Lasting relationships built on mutual trust with our producers and customers.",
+      "partnershipProof": "Dedicated export contact, response within 24–48h."
+    },
+    "stats": {
+      "experience": {
+        "value": "20+",
+        "label": "Years of experience"
+      },
+      "partners": {
+        "value": "500+",
+        "label": "Partner producers"
+      },
+      "destinations": {
+        "value": "30+",
+        "label": "Destination countries"
+      },
+      "volume": {
+        "value": "5000+",
+        "label": "Tonnes exported/year"
+      }
+    },
+    "cta": {
+      "title": "Ready to source your agricultural products?",
+      "datasheet": "Get cocoa data sheet",
+      "quote": "Request export quote (24–48h)"
+    }
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "A dedicated field and export team focused on quality, traceability and delivery. A single point of contact supports you from sample request to shipment.",
+    "ceoMessage": "CEO Message",
+    "ceoQuote": "At STE-SCPB, we support international buyers in sourcing premium cocoa from Cameroon. Our priority: consistent quality, lot-by-lot traceability and complete export documentation. A single point of contact follows you from sample to shipment. Let's discuss your needs.",
+    "viewAll": "View full team",
+    "contactExport": "Contact export",
+    "contactLogistics": "Contact logistics",
+    "contactSales": "Contact sales",
+    "languages": "Languages",
+    "responseTime": "Response",
+    "location": "Based in",
+    "members": {
+      "ceo": {
+        "role": "Chief Executive Officer (CEO)",
+        "bio": "20+ years in agro-export – Strategic vision & international development"
+      },
+      "gm": {
+        "role": "Operations Director (COO)",
+        "bio": "Supply chain management & field coordination – Producer network"
+      },
+      "operations": {
+        "role": "Supply Chain Manager",
+        "bio": "Export logistics, incoterms & documentation – Douala/Kribi ports"
+      },
+      "export": {
+        "role": "Export Sales Manager",
+        "bio": "International client relations – EU compliance & certifications"
+      }
+    },
+    "cta": {
+      "contact": "Talk to export team"
+    }
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Stay informed with our latest updates",
+    "readMore": "Read more",
+    "publishedOn": "Published on",
+    "categories": "Categories",
+    "tags": "Tags",
+    "share": "Share"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have a question? Need information? Our team responds within 24–48h (business days).",
+    "quoteLink": "Go to quote request →",
+    "triage": {
+      "title": "What would you like?",
+      "quote": "Request a quote",
+      "quoteDesc": "Product, volume, destination, incoterm",
+      "sample": "Request a sample",
+      "sampleDesc": "Receive a product sample",
+      "info": "Get information",
+      "infoDesc": "Questions, documents, support"
+    },
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "company": "Company",
+      "companyPlaceholder": "Your company name (optional)",
+      "subject": "Subject",
+      "subjectPlaceholder": "Select a subject",
+      "subjects": {
+        "products": "Product information",
+        "certifications": "Certifications & compliance",
+        "logistics": "Logistics & destinations",
+        "availability": "Availability / grades",
+        "other": "Support / other"
+      },
+      "message": "Message",
+      "messagePlaceholder": "Your question or request...",
+      "privacyConsent": "I accept the privacy policy",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "responseTime": "Response within 24–48h (business days)"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "docs": {
+        "question": "What documents do you provide?",
+        "answer": "COA (Certificate of Analysis), phytosanitary certificate, certificate of origin, packing list, Bill of Lading."
+      },
+      "destinations": {
+        "question": "What destinations do you cover?",
+        "answer": "Export to European Union, United States, Asia and Africa. Loading ports: Douala and Kribi."
+      },
+      "sample": {
+        "question": "How to request a sample?",
+        "answer": "Use our quote request form and select 'Sample' as volume."
+      }
+    },
+    "success": {
+      "title": "Message Sent!",
+      "description": "Our team will respond within 24–48h."
+    },
+    "error": {
+      "title": "Error",
+      "description": "An error occurred. Please try again."
+    },
+    "info": {
+      "title": "Contact Details",
+      "address": "Address",
+      "addressValue": "Douala-Akwa, Cameroon",
+      "phone": "Phone / WhatsApp",
+      "email": "Email",
+      "hours": "Hours",
+      "hoursValue": "Mon-Sat 8am-4:45pm"
+    }
+  },
+  "rfq": {
+    "title": "Export Quote Request",
+    "description": "Get a personalized proforma quote. Our export team responds within 24-48h.",
+    "subtitle": "B2B Export Quote – Response within 24-48h",
+    "meta": {
+      "title": "Request for Quote | B2B Export | STE-SCPB",
+      "description": "Get a personalized quote for your agricultural product needs. Incoterms, quantities, certifications - Response within 24-48h."
+    },
+    "form": {
+      "steps": {
+        "company": "Company",
+        "products": "Products",
+        "logistics": "Logistics",
+        "delivery": "Delivery"
+      },
+      "completed": "completed",
+      "sections": {
+        "company": "Company information",
+        "products": "Products & quantities",
+        "logistics": "Logistics & Incoterms",
+        "delivery": "Delivery period",
+        "requirements": "Special requirements"
+      },
+      "companyName": "Company",
+      "companyNamePlaceholder": "Your company name",
+      "contactPerson": "Contact",
+      "contactPersonPlaceholder": "Contact name",
+      "email": "Email",
+      "emailPlaceholder": "contact@company.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+1 XXX XXX XXXX",
+      "country": "Country (HQ)",
+      "countryPlaceholder": "E.g.: France, Belgium, Germany...",
+      "products": "Products",
+      "quantity": "Quantity",
+      "quantityPlaceholder": "E.g.: 20",
+      "unit": "Unit",
+      "units": {
+        "kg": "Kilograms",
+        "tonnes": "Tonnes",
+        "containers": "Containers"
+      },
+      "frequency": "Frequency",
+      "frequencies": {
+        "spot": "One-time order",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "contract": "Annual contract"
+      },
+      "moqNote": "MOQ: 1x 20' container (product dependent)",
+      "cocoaOptions": "Cocoa-specific options",
+      "cocoaType": "Cocoa type",
+      "cocoaTypes": {
+        "beans": "Beans",
+        "butter": "Cocoa butter",
+        "paste": "Cocoa paste",
+        "powder": "Cocoa powder"
+      },
+      "cocoaCertification": "Desired certification",
+      "cocoaCertifications": {
+        "bio": "Organic",
+        "fairtrade": "Fairtrade",
+        "utz": "UTZ / Rainforest",
+        "none": "No certification"
+      },
+      "selectOption": "Select...",
+      "incoterm": "Incoterm",
+      "incotermHelp": "FOB = you handle ocean freight. CIF = quote includes shipping. DAP = delivery to destination.",
+      "destinationPort": "Destination port / country",
+      "destinationPortPlaceholder": "E.g.: Rotterdam (NL), Le Havre (FR), Antwerp (BE)",
+      "packaging": "Packaging",
+      "packagingOptions": {
+        "jute-pe": "Jute bags + PE liner",
+        "bigbags": "Big bags (1T)",
+        "cartons": "Cartons (cashew, etc.)",
+        "bulk": "Bulk container"
+      },
+      "deliveryPeriod": "Delivery period",
+      "deliveryStart": "Start date",
+      "deliveryEnd": "End date",
+      "specialRequirements": "Special requirements",
+      "specialRequirementsPlaceholder": "Specific certifications, target moisture, grade, required analyses...",
+      "privacyConsent": "I accept the privacy policy",
+      "submit": "Get my quote (24-48h)",
+      "submitting": "Submitting...",
+      "badges": {
+        "response": "Response 24-48h",
+        "proforma": "Proforma quote",
+        "docs": "COA / Phyto on request"
+      }
+    },
+    "success": {
+      "title": "Request received!",
+      "description": "Our export team is preparing your proforma quote.",
+      "response": "Response within 24-48h",
+      "proforma": "Proforma quote included"
+    },
+    "error": {
+      "title": "Error",
+      "description": "An error occurred. Please try again."
+    }
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Stay informed about our news and offers",
+    "form": {
+      "email": "Your email",
+      "emailPlaceholder": "your@email.com",
+      "consent": "I agree to receive the newsletter",
+      "submit": "Subscribe",
+      "submitting": "Subscribing..."
+    },
+    "success": {
+      "title": "Successfully Subscribed!",
+      "description": "Check your email to confirm your subscription."
+    },
+    "error": {
+      "title": "Error",
+      "description": "An error occurred. Please try again.",
+      "alreadySubscribed": "This email address is already subscribed."
+    }
+  },
+  "map": {
+    "title": "Our Presence",
+    "subtitle": "Headquarters and export destinations",
+    "headquarters": "Headquarters",
+    "regionalOffices": "Regional Offices",
+    "exportDestinations": "Export Destinations"
+  },
+  "certifications": {
+    "title": "Quality & Compliance",
+    "subtitle": "International standards to guarantee the excellence of our products",
+    "standards": "Compliance: ICCO / ISO 2451 / EU requirements (MRL pesticides)",
+    "analyses": "Analyses: moisture, defects, mycotoxins, pesticide residues",
+    "items": {
+      "quality-control": {
+        "name": "Quality Control",
+        "description": "Rigorous testing per ICCO / ISO 2451: grading, moisture, defects, mycotoxins, pesticide residues"
+      },
+      "traceability": {
+        "name": "Complete Traceability",
+        "description": "Each lot identified (Lot ID): production zone, harvest period, treatment register. Documents downloadable on request."
+      },
+      "phytosanitary": {
+        "name": "Phytosanitary Compliance",
+        "description": "Phytosanitary certificate, Certificate of origin, COA (Certificate of Analysis), Packing list & Bill of Lading"
+      },
+      "sustainable": {
+        "name": "Sustainable Agriculture",
+        "description": "Producer training (post-harvest best practices), traceability programs, cooperative partnerships + internal audits"
+      }
+    },
+    "process": {
+      "title": "Our Process",
+      "subtitle": "From bean to container, controlled quality",
+      "fermentation": {
+        "name": "Controlled Fermentation",
+        "description": "6-7 days of natural fermentation to develop aromas"
+      },
+      "drying": {
+        "name": "Natural Drying",
+        "description": "Controlled solar drying for optimal moisture (7-8%)"
+      },
+      "sorting": {
+        "name": "Manual Sorting",
+        "description": "Visual inspection: mold, breakage, foreign matter. Defect tolerance per export grade."
+      },
+      "packaging": {
+        "name": "Export Packaging",
+        "description": "Jute bags + PE liner / big bags – moisture and odor protection. Ventilated container / fumigation as needed."
+      }
+    },
+    "qualityIndicators": {
+      "title": "Typical Quality Indicators",
+      "humidity": { "label": "Moisture", "value": "7-8%" },
+      "fermentation": { "label": "Fermentation", "value": "6-7 days" },
+      "grading": { "label": "Grading", "value": "On request" },
+      "analyses": { "label": "Analyses", "value": "Residues / mycotoxins" }
+    },
+    "stats": {
+      "0": "Tonnes exported/year (all commodities)",
+      "1": "Destination countries",
+      "2": "Partner producers",
+      "3": "Years of experience",
+      "disclaimer": "Cumulative data from partner network – 5-year average",
+      "exportTo": "Active clients in"
+    },
+    "badges": {
+      "export": "Export United States, European Union, Africa",
+      "incoterms": "Incoterms: FOB, CIF, DAP",
+      "documentation": "Complete documentation",
+      "logistics": "Integrated logistics"
+    },
+    "cta": {
+      "title": "Need more information?",
+      "coa": "Download sample COA",
+      "coaContent": "Moisture, defects, residues, lot traceability",
+      "datasheet": "Request full data sheet",
+      "contact": "Talk to an export manager"
+    },
+    "certificationsList": {
+      "title": "Certifications available per lot",
+      "items": ["Complete traceability", "Phytosanitary certificates", "Quality analyses"]
+    }
+  },
+  "footer": {
+    "company": "STE-SCPB",
+    "tagline": "Agricultural commodities and raw materials trading",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "legal": "Legal Information",
+    "followUs": "Follow Us",
+    "copyright": "© {year} STE-SCPB. All rights reserved.",
+    "newsletterDesc": "Availability, grades and market info (1 email/month)",
+    "links": {
+      "quality": "Quality & compliance",
+      "contact": "Contact us"
+    },
+    "export": {
+      "docs": "COA • Phytosanitary • Certificate of Origin",
+      "ports": "Ports: Douala / Kribi"
+    }
+  },
+  "cookies": {
+    "title": "Cookies",
+    "description": "We use cookies to improve your experience.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "customize": "Customize",
+    "preferences": {
+      "title": "Cookie Preferences",
+      "necessary": "Necessary Cookies",
+      "necessaryDescription": "These cookies are essential for the website to function.",
+      "analytics": "Analytics Cookies",
+      "analyticsDescription": "These cookies help us understand how you use the site.",
+      "marketing": "Marketing Cookies",
+      "marketingDescription": "These cookies are used to show you relevant ads."
+    },
+    "save": "Save Preferences"
+  },
+  "errors": {
+    "404": {
+      "title": "Page Not Found",
+      "description": "The page you are looking for does not exist.",
+      "backHome": "Back to Home"
+    },
+    "500": {
+      "title": "Server Error",
+      "description": "An error occurred. Please try again later.",
+      "retry": "Retry"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email",
+    "phone": "Invalid phone number",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters",
+    "positiveNumber": "Value must be positive",
+    "dateRange": "End date must be after start date",
+    "privacyRequired": "You must accept the privacy policy"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "Switch language",
+    "currentLanguage": "Current language: English"
+  },
+  "legal": {
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated",
+      "intro": "STE-SCPB is committed to protecting your privacy. This privacy policy explains how we collect, use and protect your personal data in accordance with the General Data Protection Regulation (GDPR).",
+      "sections": {
+        "dataController": {
+          "title": "1. Data Controller",
+          "content": "STE-SCPB, a Cameroonian agricultural commodities trading company, is responsible for processing your personal data.",
+          "address": "Address: Douala-Akwa, Cameroon",
+          "email": "Email: scpb@ste-scpb.com",
+          "phone": "Phone: +237 676 905 938"
+        },
+        "dataCollected": {
+          "title": "2. Data Collected",
+          "intro": "We collect the following data:",
+          "items": {
+            "contact": "Contact data: name, email, phone, company",
+            "rfq": "Quote request data: products, quantities, incoterms, destination port",
+            "newsletter": "Newsletter data: email address",
+            "navigation": "Navigation data: IP address, cookies (with your consent)"
+          }
+        },
+        "purposes": {
+          "title": "3. Processing Purposes",
+          "intro": "Your data is used to:",
+          "items": {
+            "contact": "Respond to your contact requests",
+            "rfq": "Process your quote requests",
+            "newsletter": "Send our newsletter (with your consent)",
+            "analytics": "Improve our website (anonymized analytics)",
+            "legal": "Comply with our legal obligations"
+          }
+        },
+        "legalBasis": {
+          "title": "4. Legal Basis",
+          "intro": "The processing of your data is based on:",
+          "items": {
+            "consent": "Your consent (newsletter, analytics cookies)",
+            "contract": "Performance of a contract or pre-contractual measures (quote requests)",
+            "legitimate": "Our legitimate interest (service improvement)",
+            "legal": "Our legal obligations"
+          }
+        },
+        "retention": {
+          "title": "5. Data Retention",
+          "intro": "Your data is retained:",
+          "items": {
+            "contact": "Contact requests: 3 years after last contact",
+            "rfq": "Quote requests: 5 years (accounting obligations)",
+            "newsletter": "Newsletter: until you unsubscribe",
+            "navigation": "Navigation data: maximum 13 months"
+          }
+        },
+        "rights": {
+          "title": "6. Your Rights",
+          "intro": "Under the GDPR, you have the following rights:",
+          "items": {
+            "access": "Right of access to your data",
+            "rectification": "Right to rectification",
+            "erasure": "Right to erasure ('right to be forgotten')",
+            "restriction": "Right to restriction of processing",
+            "portability": "Right to data portability",
+            "objection": "Right to object",
+            "withdraw": "Right to withdraw your consent at any time"
+          },
+          "exercise": "To exercise these rights, contact us at: privacy@ste-scpb.com"
+        },
+        "security": {
+          "title": "7. Data Security",
+          "content": "We implement appropriate technical and organizational measures to protect your data: HTTPS encryption, restricted access, secure servers."
+        },
+        "transfers": {
+          "title": "8. Data Transfers",
+          "content": "Your data may be transferred to service providers located outside the European Union. In such cases, we ensure that appropriate safeguards are in place (standard contractual clauses, adequacy decision)."
+        },
+        "cookies": {
+          "title": "9. Cookies",
+          "content": "Our website uses cookies. You can manage your preferences via our consent banner. For more information, please see our cookie policy."
+        },
+        "changes": {
+          "title": "10. Changes",
+          "content": "This policy may be updated. The last update date is indicated at the top of this page."
+        },
+        "contact": {
+          "title": "11. Contact",
+          "content": "For any questions regarding this policy or your personal data:",
+          "email": "Email: privacy@ste-scpb.com",
+          "address": "Address: STE-SCPB, Douala-Akwa, Cameroon"
+        }
+      }
+    },
+    "legalMentions": {
+      "title": "Legal Mentions",
+      "sections": {
+        "publisher": {
+          "title": "1. Website Publisher",
+          "companyName": "Company name: STE-SCPB (Société de Commerce de Produits de Base)",
+          "legalForm": "Legal form: Public Limited Company (SA)",
+          "capital": "Share capital: [To be completed] FCFA",
+          "registration": "Registration number: [To be completed]",
+          "address": "Registered office: Douala-Akwa, Cameroon",
+          "phone": "Phone: +237 676 905 938",
+          "email": "Email: scpb@ste-scpb.com",
+          "director": "Publication director: [CEO Name]"
+        },
+        "hosting": {
+          "title": "2. Hosting",
+          "provider": "Host: Vercel Inc.",
+          "address": "Address: 340 S Lemon Ave #4133, Walnut, CA 91789, USA",
+          "website": "Website: https://vercel.com"
+        },
+        "intellectual": {
+          "title": "3. Intellectual Property",
+          "content": "All content on this website (texts, images, logos, graphics, icons, sounds, software) is the exclusive property of STE-SCPB or its partners and is protected by French and international intellectual property laws.",
+          "prohibition": "Any reproduction, representation, modification, publication, adaptation of all or part of the elements of the site, by any means or process, is prohibited without prior written authorization from STE-SCPB."
+        },
+        "liability": {
+          "title": "4. Limitation of Liability",
+          "content": "STE-SCPB strives to ensure the accuracy and updating of information published on this website. However, STE-SCPB cannot guarantee the accuracy, precision or completeness of the information provided.",
+          "links": "Hyperlinks on this website may lead to other websites. STE-SCPB disclaims any responsibility for the content of these sites."
+        },
+        "personalData": {
+          "title": "5. Personal Data",
+          "content": "For any information regarding the processing of your personal data, please consult our Privacy Policy."
+        },
+        "cookies": {
+          "title": "6. Cookies",
+          "content": "This website uses cookies to improve user experience and compile visit statistics. You can configure your preferences via the consent banner."
+        },
+        "law": {
+          "title": "7. Applicable Law",
+          "content": "These legal mentions are governed by Cameroonian law. In case of dispute, Cameroonian courts shall have sole jurisdiction."
+        },
+        "contact": {
+          "title": "8. Contact",
+          "content": "For any questions regarding these legal mentions:",
+          "email": "Email: legal@ste-scpb.com",
+          "address": "Address: STE-SCPB, Douala-Akwa, Cameroon"
+        }
+      }
+    }
+  },
+  "statistics": {
+    "meta": {
+      "title": "Statistics & Export Performance | STE-SCPB",
+      "description": "Discover our key figures: exported volumes, destinations, partner producers. Consolidated data to support your purchasing decisions."
+    },
+    "hero": {
+      "title": "Statistics & Export Performance",
+      "subtitle": "Transparent figures to support your purchasing decisions. Consolidated data, updated monthly.",
+      "badges": {
+        "traceability": "Traceability",
+        "export": "Export EU/USA/Asia",
+        "docs": "COA/Phyto/Origin"
+      }
+    },
+    "kpi": {
+      "tonnes": "Tonnes exported/year",
+      "countries": "Destination countries",
+      "producers": "Partner producers",
+      "years": "Years of experience",
+      "response": "Response time",
+      "traced": "Traced lots",
+      "disclaimer": "Indicative and consolidated data (non-contractual). For a quoted offer: request a quote.",
+      "tooltips": {
+        "tonnes": "Total volume exported over the last 12 months (all commodities combined)",
+        "countries": "Number of active destination countries",
+        "producers": "Network of partner producers across Cameroon's 10 regions",
+        "years": "Years of experience in agricultural commodity exports",
+        "response": "Average response time to quote requests (business days)",
+        "traced": "Percentage of lots with full traceability (zone, date, cooperative)"
+      }
+    },
+    "filters": {
+      "title": "Filter",
+      "products": {
+        "all": "All",
+        "cacao": "Cocoa",
+        "cafe": "Coffee",
+        "cajou": "Cashew",
+        "sesame": "Sesame",
+        "soja": "Soybean"
+      },
+      "periods": {
+        "12m": "Last 12 months",
+        "24m": "Last 24 months",
+        "2024": "2024",
+        "2023": "2023"
+      },
+      "regions": {
+        "global": "Global",
+        "eu": "European Union",
+        "usa": "North America",
+        "asia": "Asia",
+        "africa": "Africa"
+      },
+      "reset": "Reset",
+      "share": "Share these stats",
+      "lastUpdated": "Last updated"
+    },
+    "empty": {
+      "title": "No data for this combination",
+      "description": "Try broadening your filters or select 'Global' and 'Last 12 months'."
+    },
+    "destinations": {
+      "title": "Export destinations",
+      "top": "Top destinations",
+      "mapPlaceholder": "Destinations map",
+      "ports": "Departure ports",
+      "cta": "See our export destinations",
+      "legend": "Distribution by region",
+      "origin": "Origin ports",
+      "countries": "Countries"
+    },
+    "volumes": {
+      "title": "Monthly volumes",
+      "seasonality": "Seasonality and availability according to harvest"
+    },
+    "productMix": {
+      "title": "Product breakdown"
+    },
+    "quality": {
+      "title": "Quality & Compliance",
+      "grading": {
+        "title": "Quality control",
+        "description": "Grading, humidity, defects per ICCO standards"
+      },
+      "traceability": {
+        "title": "Lot-by-lot traceability",
+        "description": "Each lot identified: zone, date, cooperative"
+      },
+      "phyto": {
+        "title": "Phytosanitary compliance",
+        "description": "Phyto certificates, origin, analyses"
+      },
+      "certifications": {
+        "title": "Available certifications",
+        "description": "Organic, Fairtrade, UTZ on request"
+      },
+      "downloadCOA": "Sample COA",
+      "downloadOrigin": "Certificate of origin",
+      "seeProcess": "See our quality process",
+      "requestDatasheet": "Request datasheet"
+    },
+    "productFocus": {
+      "title": "{product} Focus",
+      "formats": "Available formats",
+      "specs": "Typical specifications",
+      "certifications": "Certifications"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "volumes": {
+        "question": "How do you calculate volumes?",
+        "answer": "Volumes are aggregated from our actual shipments over the selected period. They include all commodities (cocoa, coffee, cashew, etc.) and are updated monthly."
+      },
+      "update": {
+        "question": "How often are stats updated?",
+        "answer": "Statistics are consolidated and updated once a month, usually at the beginning of the month for the previous month."
+      },
+      "products": {
+        "question": "Which products are included in the figures?",
+        "answer": "Global statistics include all our commodities: cocoa (beans, butter, paste, powder), coffee, cashew nuts, sesame, soybean, wood and other agricultural products."
+      },
+      "methodology": {
+        "question": "What methodology is used?",
+        "answer": "Data comes from our internal shipping records and logistics partners. They are consolidated and anonymized to respect our clients' confidentiality."
+      }
+    },
+    "cta": {
+      "title": "Ready to import?",
+      "subtitle": "Our export team supports you on volumes, specs and shipping.",
+      "quote": "Request a quote",
+      "sample": "Request a sample",
+      "contact": "Talk to a manager",
+      "response": "Response within 24-48h (business days)"
+    },
+    "methodology": {
+      "disclaimer": "Aggregated internal data. May vary by season, availability and zones.",
+      "source": "Source: STE-SCPB shipping records – Non-contractual data."
+    }
+  }
+}
