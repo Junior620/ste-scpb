@@ -532,7 +532,8 @@
       "phone": "Phone / WhatsApp",
       "email": "Email",
       "hours": "Hours",
-      "hoursValue": "Mon-Sat 8am-4:45pm"
+      "hoursValue": "Mon-Sat 8am-4:45pm",
+      "response": "Response within 24–48h"
     }
   },
   "rfq": {
@@ -1086,5 +1087,18 @@
       "disclaimer": "Aggregated internal data. May vary by season, availability and zones.",
       "source": "Source: STE-SCPB shipping records – Non-contractual data."
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "Sorry, the page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home",
+    "products": "View our products",
+    "contact": "Contact us",
+    "quote": "Request a quote"
+  },
+  "whatsapp": {
+    "tooltip": "Need help? Contact us on WhatsApp!",
+    "ariaLabel": "Contact on WhatsApp",
+    "defaultMessage": "Hello, I would like information about your products."
   }
 }

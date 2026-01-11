@@ -354,3 +354,120 @@ body {
 .animate-float-up {
   animation: float-up 1s ease-out forwards;
 }
+
+/* ============================================
+   Scroll Reveal Animations
+   Validates: Requirements 3.1, 3.6
+   
+   Performance optimized:
+   - Uses only transform and opacity (GPU-accelerated)
+   - No layout-affecting properties
+   - Respects prefers-reduced-motion
+   ============================================ */
+
+/* Base scroll reveal state - hidden */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  will-change: opacity, transform;
+}
+
+/* Visible state - triggered by Intersection Observer */
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Direction variants */
+.scroll-reveal-up {
+  transform: translateY(30px);
+}
+
+.scroll-reveal-down {
+  transform: translateY(-30px);
+}
+
+.scroll-reveal-left {
+  transform: translateX(30px);
+}
+
+.scroll-reveal-right {
+  transform: translateX(-30px);
+}
+
+/* Fade in up keyframes for alternative usage */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 500ms ease-out forwards;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-visible,
+  .scroll-reveal-up,
+  .scroll-reveal-down,
+  .scroll-reveal-left,
+  .scroll-reveal-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+    will-change: auto;
+  }
+  
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ============================================
+   Confetti Celebration Animation
+   Emoji falling effect for form success
+   ============================================ */
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(25vh) rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg) scale(0.9);
+  }
+  75% {
+    transform: translateY(75vh) rotate(270deg) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(360deg) scale(0.8);
+  }
+}
+
+.animate-confetti-fall {
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-confetti-fall {
+    animation: none;
+    opacity: 0;
+  }
+}

@@ -4,7 +4,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, BASE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/i18n/metadata';
-import { CookieBanner, SkipNavigation } from '@/components/ui';
+import { CookieBanner, SkipNavigation, WhatsAppWidget } from '@/components/ui';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 import { Header, Footer } from '@/components/layout';
 
@@ -70,6 +70,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <Footer />
       </AnalyticsProvider>
       <CookieBanner />
+      <WhatsAppWidget />
     </NextIntlClientProvider>
   );
 }

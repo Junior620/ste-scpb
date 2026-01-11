@@ -21,7 +21,13 @@ import { createResendEmailService } from '@/infrastructure/email/ResendEmailServ
 import {
   generateRFQNotificationHtml,
   generateRFQNotificationText,
+  generateRFQSubject,
 } from '@/infrastructure/email/templates/rfq-notification';
+import {
+  generateRFQConfirmationHtml,
+  generateRFQConfirmationText,
+  generateRFQConfirmationSubject,
+} from '@/infrastructure/email/templates/rfq-confirmation';
 
 /**
  * RFQ form submission request body
@@ -37,7 +43,7 @@ interface RFQSubmissionBody {
   unit: 'kg' | 'tonnes' | 'containers';
   incoterm: string;
   destinationPort: string;
-  packaging: 'bulk' | 'bags' | 'containers';
+  packaging: 'bulk' | 'jute-pe' | 'bigbags' | 'cartons';
   deliveryStart: string;
   deliveryEnd: string;
   specialRequirements?: string;
@@ -64,6 +70,16 @@ function logSubmission(data: {
     success: data.success,
     ...(data.errorType && { errorType: data.errorType }),
   }));
+}
+
+/**
+ * Generate a unique reference ID for tracking
+ */
+function generateReferenceId(date: Date): string {
+  const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+  const timeStr = date.toTimeString().slice(0, 5).replace(':', '');
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `RFQ-${dateStr}-${timeStr}-${random}`;
 }
 
 
@@ -175,6 +191,12 @@ export async function POST(request: NextRequest) {
 
     const validatedData = validationResult.data;
 
+    // Generate reference ID for tracking
+    const referenceId = generateReferenceId(submittedAt);
+
+    // Get locale from request headers or default to 'fr'
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const locale = acceptLanguage.includes('en') ? 'en' : 'fr';
 
     // 5. Send email notification to commercial team
     try {
@@ -201,18 +223,50 @@ export async function POST(request: NextRequest) {
         deliveryEnd: validatedData.deliveryEnd,
         specialRequirements: validatedData.specialRequirements || undefined,
         submittedAt,
+        locale,
       };
 
-      const result = await emailService.send({
+      // Send notification to team
+      const teamResult = await emailService.send({
         to: { email: recipientEmail },
-        subject: `[STE-SCPB] Nouvelle demande de devis - ${validatedData.companyName}`,
+        subject: generateRFQSubject(notificationData),
         html: generateRFQNotificationHtml(notificationData),
         text: generateRFQNotificationText(notificationData),
         replyTo: validatedData.email,
       });
 
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to send email');
+      if (!teamResult.success) {
+        throw new Error(teamResult.error || 'Failed to send email');
+      }
+
+      // Send confirmation to client
+      const confirmationData = {
+        companyName: validatedData.companyName,
+        contactPerson: validatedData.contactPerson,
+        email: validatedData.email,
+        products: validatedData.products,
+        quantity: validatedData.quantity,
+        unit: validatedData.unit,
+        incoterm: validatedData.incoterm,
+        destinationPort: validatedData.destinationPort,
+        deliveryStart: validatedData.deliveryStart,
+        deliveryEnd: validatedData.deliveryEnd,
+        submittedAt,
+        locale,
+        referenceId,
+      };
+
+      const clientResult = await emailService.send({
+        to: { email: validatedData.email, name: validatedData.contactPerson },
+        subject: generateRFQConfirmationSubject(locale),
+        html: generateRFQConfirmationHtml(confirmationData),
+        text: generateRFQConfirmationText(confirmationData),
+        replyTo: recipientEmail, // Allow client to reply to sales team
+      });
+
+      if (!clientResult.success) {
+        // Don't fail the request if client confirmation fails - team already notified
+        console.warn('[EMAIL_WARNING] Client confirmation failed:', clientResult.error);
       }
     } catch (error) {
       console.error('[EMAIL_ERROR]', error);

@@ -28,3 +28,4 @@ export { CTASection } from './CTASection';
 export { CertificationsSection, type CertificationsSectionProps } from './CertificationsSection';
 export { OtherProductsSection, type OtherProductsSectionProps } from './OtherProductsSection';
 export { StatisticsHero } from './StatisticsHero';
+export { AboutValuesSection, AboutStatsSection } from './AboutSections';

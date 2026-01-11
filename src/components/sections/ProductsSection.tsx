@@ -21,6 +21,7 @@ import { Scene3DWrapper, Starfield, Constellation, PostProcessing, StaticHeroFal
 import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 import { PRODUCT_CONSTELLATIONS, PRODUCT_COLORS } from '@/lib/scene-presets';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
+import { ScrollReveal } from '@/components/ui';
 // Button import removed - not currently used
 
 export interface ProductsSectionProps {
@@ -370,12 +371,13 @@ export function ProductsSection({
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                locale={locale}
-              />
+            {filteredProducts.map((product, index) => (
+              <ScrollReveal key={product.id} direction="up" delay={index * 50} duration={500}>
+                <ProductCard
+                  product={product}
+                  locale={locale}
+                />
+              </ScrollReveal>
             ))}
           </div>
         ) : (

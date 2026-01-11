@@ -35,6 +35,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { ScrollReveal } from '@/components/ui';
 import {
   STATISTICS_DATA,
   PRODUCT_STATS,
@@ -137,48 +138,50 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
     <div className="space-y-12">
       {/* KPI Cards */}
       <section className="text-center space-y-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          <KPICard
-            icon={<TrendingUp className="w-6 h-6" />}
-            value={`${data.kpi.tonnesExported.toLocaleString()}+`}
-            label={t('kpi.tonnes')}
-            tooltip={t('kpi.tooltips.tonnes')}
-          />
-          <KPICard
-            icon={<Globe className="w-6 h-6" />}
-            value={`${data.kpi.countriesServed}`}
-            label={t('kpi.countries')}
-            tooltip={t('kpi.tooltips.countries')}
-          />
-          <KPICard
-            icon={<Users className="w-6 h-6" />}
-            value={`${data.kpi.producerPartners}+`}
-            label={t('kpi.producers')}
-            tooltip={t('kpi.tooltips.producers')}
-          />
-          <KPICard
-            icon={<Award className="w-6 h-6" />}
-            value={`${data.kpi.yearsExperience}`}
-            label={t('kpi.years')}
-            tooltip={t('kpi.tooltips.years')}
-          />
-          <KPICard
-            icon={<Clock className="w-6 h-6" />}
-            value={data.kpi.avgResponseTime}
-            label={t('kpi.response')}
-            tooltip={t('kpi.tooltips.response')}
-          />
-          <KPICard
-            icon={<Shield className="w-6 h-6" />}
-            value={`${data.kpi.tracedLots}%`}
-            label={t('kpi.traced')}
-            tooltip={t('kpi.tooltips.traced')}
-          />
-        </div>
-        <p className="text-xs text-foreground-muted flex items-center justify-center gap-1">
-          <Info className="w-3 h-3" />
-          {t('kpi.disclaimer')}
-        </p>
+        <ScrollReveal direction="up" delay={0} duration={500}>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <KPICard
+              icon={<TrendingUp className="w-6 h-6" />}
+              value={`${data.kpi.tonnesExported.toLocaleString()}+`}
+              label={t('kpi.tonnes')}
+              tooltip={t('kpi.tooltips.tonnes')}
+            />
+            <KPICard
+              icon={<Globe className="w-6 h-6" />}
+              value={`${data.kpi.countriesServed}`}
+              label={t('kpi.countries')}
+              tooltip={t('kpi.tooltips.countries')}
+            />
+            <KPICard
+              icon={<Users className="w-6 h-6" />}
+              value={`${data.kpi.producerPartners}+`}
+              label={t('kpi.producers')}
+              tooltip={t('kpi.tooltips.producers')}
+            />
+            <KPICard
+              icon={<Award className="w-6 h-6" />}
+              value={`${data.kpi.yearsExperience}`}
+              label={t('kpi.years')}
+              tooltip={t('kpi.tooltips.years')}
+            />
+            <KPICard
+              icon={<Clock className="w-6 h-6" />}
+              value={data.kpi.avgResponseTime}
+              label={t('kpi.response')}
+              tooltip={t('kpi.tooltips.response')}
+            />
+            <KPICard
+              icon={<Shield className="w-6 h-6" />}
+              value={`${data.kpi.tracedLots}%`}
+              label={t('kpi.traced')}
+              tooltip={t('kpi.tooltips.traced')}
+            />
+          </div>
+          <p className="text-xs text-foreground-muted flex items-center justify-center gap-1">
+            <Info className="w-3 h-3" />
+            {t('kpi.disclaimer')}
+          </p>
+        </ScrollReveal>
       </section>
 
       {/* Filters */}
@@ -258,7 +261,8 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
 
       {/* Destinations */}
       {!hasNoData && (
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <ScrollReveal direction="up" delay={100} duration={500}>
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-background-secondary rounded-xl p-6 border border-border">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
               <MapPin className="w-5 h-5 text-primary" />
@@ -289,11 +293,13 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
             </Link>
           </div>
         </section>
+        </ScrollReveal>
       )}
 
       {/* Volumes & Product Mix */}
       {!hasNoData && (
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ScrollReveal direction="up" delay={150} duration={500}>
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-background-secondary rounded-xl p-6 border border-border">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-primary" />
@@ -413,10 +419,12 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
             </div>
           </div>
         </section>
+        </ScrollReveal>
       )}
 
       {/* Quality */}
-      <section className="bg-background-secondary rounded-xl p-6 md:p-8 border border-border">
+      <ScrollReveal direction="up" delay={0} duration={500}>
+        <section className="bg-background-secondary rounded-xl p-6 md:p-8 border border-border">
         <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
           <Shield className="w-5 h-5 text-primary" />
           {t('quality.title')}
@@ -433,6 +441,7 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
           <Link href="/a-propos#qualite"><Button variant="ghost" size="sm">{t('quality.seeProcess')} <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Product Focus */}
       {productData && (
@@ -500,7 +509,8 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-8 md:p-12 text-center border border-primary/20">
+      <ScrollReveal direction="up" delay={0} duration={500}>
+        <section className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-8 md:p-12 text-center border border-primary/20">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{t('cta.title')}</h2>
         <p className="text-foreground-muted mb-8 max-w-xl mx-auto">{t('cta.subtitle')}</p>
         <div className="flex flex-wrap justify-center gap-4">
@@ -513,6 +523,7 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
           {t('cta.response')}
         </p>
       </section>
+      </ScrollReveal>
 
       {/* Methodology */}
       <section className="text-center text-xs text-foreground-muted space-y-1">

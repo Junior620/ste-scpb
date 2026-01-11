@@ -26,3 +26,19 @@ export { SkipNavigation } from './SkipNavigation';
 export type { SkipNavigationProps } from './SkipNavigation';
 export { ClickSparkles } from './ClickSparkles';
 export { ThemeToggle } from './ThemeToggle';
+export { ScrollReveal } from './ScrollReveal';
+export type { ScrollRevealProps } from './ScrollReveal';
+export { Skeleton } from './Skeleton';
+export type { SkeletonProps } from './Skeleton';
+export {
+  ProductCardSkeleton,
+  TeamMemberSkeleton,
+  ArticleCardSkeleton,
+  ProductsGridSkeleton,
+  TeamGridSkeleton,
+  ArticlesGridSkeleton,
+} from './SkeletonCards';
+export { Breadcrumb } from './Breadcrumb';
+export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb';
+export { WhatsAppWidget } from './WhatsAppWidget';
+export type { WhatsAppWidgetProps } from './WhatsAppWidget';

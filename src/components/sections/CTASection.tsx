@@ -9,7 +9,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { FileText, Package, Clock, Ship, FileCheck } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, ScrollReveal } from '@/components/ui';
 
 export function CTASection() {
   const t = useTranslations('home');
@@ -17,7 +17,8 @@ export function CTASection() {
   return (
     <section className="py-16 md:py-20 bg-primary/10">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center">
+        <ScrollReveal direction="up" delay={0} duration={500}>
+          <div className="max-w-3xl mx-auto text-center">
           {/* B2B-focused headline */}
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t('cta.contactTitle')}
@@ -62,6 +63,7 @@ export function CTASection() {
             </span>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

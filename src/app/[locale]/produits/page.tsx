@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Locale, isValidLocale } from '@/domain/value-objects/Locale';
 import { generateLocalizedMetadata } from '@/i18n/metadata';
 import { ProductsSection } from '@/components/sections/ProductsSection';
 import { createCMSClient } from '@/infrastructure/cms';
 import { PRODUCT_CATEGORIES, type ProductCategory, type Product } from '@/domain/entities/Product';
+import { ProductsGridSkeleton } from '@/components/ui';
 
 // ISR: Revalidate every hour
 export const revalidate = 3600;
@@ -28,6 +30,63 @@ export async function generateMetadata({ params }: ProductsPageProps): Promise<M
   });
 }
 
+/**
+ * Async component that fetches and displays products
+ */
+async function ProductsContent({
+  locale,
+  category,
+}: {
+  locale: Locale;
+  category?: ProductCategory;
+}) {
+  // Fetch products from CMS
+  let products: Product[] = [];
+  try {
+    const cmsClient = await createCMSClient();
+    products = await cmsClient.getProducts(locale);
+    console.log('[ProductsPage] Fetched products:', products.length);
+  } catch (error) {
+    // Fallback to empty array if CMS is unavailable
+    console.error('[ProductsPage] Error fetching products:', error);
+    products = [];
+  }
+
+  return (
+    <ProductsSection
+      products={products}
+      initialCategory={category}
+      locale={locale}
+    />
+  );
+}
+
+/**
+ * Skeleton fallback for products loading state
+ */
+function ProductsLoadingFallback() {
+  return (
+    <section className="relative">
+      {/* Hero skeleton */}
+      <div className="relative h-[40vh] min-h-[300px] bg-background-secondary animate-pulse">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
+          <div className="h-12 w-64 bg-border/50 rounded-lg mb-4" />
+          <div className="h-6 w-96 max-w-full bg-border/50 rounded-lg" />
+        </div>
+      </div>
+      {/* Grid skeleton */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-10 w-24 bg-border/50 rounded-full animate-pulse" />
+          ))}
+        </div>
+        <ProductsGridSkeleton count={6} />
+      </div>
+    </section>
+  );
+}
+
 export default async function ProductsPage({ params, searchParams }: ProductsPageProps) {
   const { locale } = await params;
   const { category } = await searchParams;
@@ -42,23 +101,11 @@ export default async function ProductsPage({ params, searchParams }: ProductsPag
     ? (category as ProductCategory)
     : undefined;
 
-  // Fetch products from CMS
-  let products: Product[] = [];
-  try {
-    const cmsClient = createCMSClient();
-    products = await cmsClient.getProducts(locale as Locale);
-  } catch {
-    // Fallback to empty array if CMS is unavailable
-    products = [];
-  }
-
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
-      <ProductsSection
-        products={products}
-        initialCategory={validCategory}
-        locale={locale as Locale}
-      />
+      <Suspense fallback={<ProductsLoadingFallback />}>
+        <ProductsContent locale={locale as Locale} category={validCategory} />
+      </Suspense>
     </main>
   );
 }

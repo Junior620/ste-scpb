@@ -1,12 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateLocalizedMetadata } from '@/i18n/metadata';
 import { ProductDetailSection } from '@/components/sections/ProductDetailSection';
 import { createCMSClient } from '@/infrastructure/cms';
 import type { Product } from '@/domain/entities/Product';
 import { generateProductSchema, renderSchemaScript } from '@/lib/schema';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 // ISR: Revalidate every hour
 export const revalidate = 3600;
@@ -17,7 +18,7 @@ interface ProductDetailPageProps {
 
 export async function generateStaticParams() {
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     const slugs = await cmsClient.getAllProductSlugs();
     return slugs.flatMap((productSlug: string) =>
       SUPPORTED_LOCALES.map((locale) => ({ locale, slug: productSlug }))
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
   
   let product: Product | null = null;
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     product = await cmsClient.getProductBySlug(slug, locale as Locale);
   } catch {
     // Product not found
@@ -67,12 +68,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     setRequestLocale(locale as Locale);
   }
 
+  // Get translations for breadcrumb
+  const t = await getTranslations({ locale, namespace: 'nav' });
+
   // Fetch product from CMS
   let product: Product | null = null;
   let relatedProducts: Product[] = [];
   
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     product = await cmsClient.getProductBySlug(slug, locale as Locale);
     
     if (product && product.relatedProducts.length > 0) {
@@ -94,6 +98,14 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.com';
   const productSchema = generateProductSchema(product, locale as Locale, baseUrl);
 
+  // Breadcrumb items: Accueil > Produits > [Product Name]
+  const validLocale = isValidLocale(locale) ? (locale as Locale) : 'fr';
+  const breadcrumbItems = [
+    { label: t('home'), href: `/${validLocale}` },
+    { label: t('products'), href: `/${validLocale}/produits` },
+    { label: product.name[validLocale] },
+  ];
+
   return (
     <>
       {/* Schema.org JSON-LD for Product */}
@@ -104,6 +116,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         }}
       />
       <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
+        {/* Breadcrumb navigation */}
+        <div className="container mx-auto px-4 pt-20">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
         <ProductDetailSection
           product={product}
           relatedProducts={relatedProducts}

@@ -13,3 +13,6 @@ export {
 } from './usePerformanceMode';
 
 export { useAnalytics } from './useAnalytics';
+
+export { useScrollReveal } from './useScrollReveal';
+export type { UseScrollRevealOptions } from './useScrollReveal';

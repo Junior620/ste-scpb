@@ -19,7 +19,7 @@ import {
   Building2,
   MapPin,
 } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, ScrollReveal } from '@/components/ui';
 
 // Custom Cocoa icon
 const CocoaIcon = ({ className }: { className?: string }) => (
@@ -68,14 +68,17 @@ export function ProductsPreview() {
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
-          <p className="text-lg text-foreground-muted max-w-2xl mx-auto">{t('subtitle')}</p>
-        </div>
+        <ScrollReveal direction="up" delay={0} duration={500}>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
+            <p className="text-lg text-foreground-muted max-w-2xl mx-auto">{t('subtitle')}</p>
+          </div>
+        </ScrollReveal>
 
         {/* Featured Product: Cocoa */}
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border-2 border-primary/30 p-6 md:p-10">
+        <ScrollReveal direction="up" delay={100} duration={600}>
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border-2 border-primary/30 p-6 md:p-10">
             {/* Badge */}
             <div className="flex items-center gap-3 mb-6">
               <Award className="w-6 h-6 text-primary" />
@@ -235,6 +238,7 @@ export function ProductsPreview() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

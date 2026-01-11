@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateLocalizedMetadata, BASE_URL, SITE_NAME } from '@/i18n/metadata';
 import { ArticleDetailSection } from '@/components/sections/ArticleDetailSection';
 import { createCMSClient } from '@/infrastructure/cms';
 import type { Article } from '@/domain/entities/Article';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 // ISR: Revalidate every 30 minutes
 export const revalidate = 1800;
@@ -16,7 +17,7 @@ interface ArticleDetailPageProps {
 
 export async function generateStaticParams() {
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     const slugs = await cmsClient.getAllArticleSlugs();
     return slugs.flatMap((articleSlug: string) =>
       SUPPORTED_LOCALES.map((locale) => ({ locale, slug: articleSlug }))
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
   
   let article: Article | null = null;
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     article = await cmsClient.getArticleBySlug(slug, locale as Locale);
   } catch {
     // Article not found
@@ -78,11 +79,14 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     setRequestLocale(locale as Locale);
   }
 
+  // Get translations for breadcrumb
+  const t = await getTranslations({ locale, namespace: 'nav' });
+
   // Fetch article from CMS
   let article: Article | null = null;
   
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     article = await cmsClient.getArticleBySlug(slug, locale as Locale);
   } catch {
     // Article not found
@@ -123,6 +127,13 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     },
   };
 
+  // Breadcrumb items: Accueil > Actualités > [Article Title]
+  const breadcrumbItems = [
+    { label: t('home'), href: `/${validLocale}` },
+    { label: t('news'), href: `/${validLocale}/actualites` },
+    { label: article.title[validLocale] },
+  ];
+
   return (
     <>
       {/* Schema.org JSON-LD for Article */}
@@ -133,6 +144,10 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
         }}
       />
       <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
+        {/* Breadcrumb navigation */}
+        <div className="container mx-auto px-4 pt-20">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
         <ArticleDetailSection
           article={article}
           locale={locale as Locale}

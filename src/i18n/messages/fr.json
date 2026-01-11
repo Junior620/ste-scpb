@@ -1087,5 +1087,18 @@
       "disclaimer": "Données internes agrégées. Peut varier selon saison, disponibilité et zones.",
       "source": "Source : registres d'expédition STE-SCPB – Données non contractuelles."
     }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "message": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
+    "backHome": "Retour à l'accueil",
+    "products": "Voir nos produits",
+    "contact": "Nous contacter",
+    "quote": "Demander un devis"
+  },
+  "whatsapp": {
+    "tooltip": "Besoin d'aide ? Contactez-nous sur WhatsApp !",
+    "ariaLabel": "Contacter sur WhatsApp",
+    "defaultMessage": "Bonjour, je souhaite des informations sur vos produits."
   }
 }

@@ -2,10 +2,11 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
-import { Target, Eye, Heart, Handshake, Award, Globe, Users, TrendingUp, Package } from 'lucide-react';
+import { Target, Eye, Heart } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/Button';
 import { AboutHero } from '@/components/sections/AboutHero';
+import { AboutValuesSection, AboutStatsSection } from '@/components/sections/AboutSections';
 
 interface AboutPageProps {
   params: Promise<{ locale: string }>;
@@ -33,18 +34,35 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const t = await getTranslations({ locale, namespace: 'about' });
 
   const values = [
-    { key: 'quality', icon: Award },
-    { key: 'transparency', icon: Eye },
-    { key: 'sustainability', icon: Globe },
-    { key: 'partnership', icon: Handshake },
+    { key: 'quality', iconName: 'Award' as const },
+    { key: 'transparency', iconName: 'Eye' as const },
+    { key: 'sustainability', iconName: 'Globe' as const },
+    { key: 'partnership', iconName: 'Handshake' as const },
   ];
 
   const stats = [
-    { key: 'experience', icon: TrendingUp },
-    { key: 'partners', icon: Users },
-    { key: 'destinations', icon: Globe },
-    { key: 'volume', icon: Package },
+    { key: 'experience', iconName: 'TrendingUp' as const },
+    { key: 'partners', iconName: 'Users' as const },
+    { key: 'destinations', iconName: 'Globe' as const },
+    { key: 'volume', iconName: 'Package' as const },
   ];
+
+  // Prepare values data for client component
+  const valuesData = values.map(({ key, iconName }) => ({
+    key,
+    iconName,
+    title: t(`values.${key}`),
+    description: t(`values.${key}Description`),
+    proof: t(`values.${key}Proof`),
+  }));
+
+  // Prepare stats data for client component
+  const statsData = stats.map(({ key, iconName }) => ({
+    key,
+    iconName,
+    value: t(`stats.${key}.value`),
+    label: t(`stats.${key}.label`),
+  }));
 
   return (
     <main id="main-content" className="min-h-screen bg-background">
@@ -101,27 +119,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 {t('values.title')}
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {values.map(({ key, icon: Icon }) => (
-                <div
-                  key={key}
-                  className="bg-background-secondary rounded-lg p-5 border border-border"
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <Icon className="w-6 h-6 text-accent" />
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {t(`values.${key}`)}
-                    </h3>
-                  </div>
-                  <p className="text-foreground-muted mb-3">
-                    {t(`values.${key}Description`)}
-                  </p>
-                  <p className="text-xs text-accent font-medium bg-accent/10 px-3 py-1.5 rounded inline-block">
-                    → {t(`values.${key}Proof`)}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <AboutValuesSection values={valuesData} />
           </div>
         </div>
       </section>
@@ -153,19 +151,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <section className="py-10 md:py-14 bg-accent/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              {stats.map(({ key, icon: Icon }) => (
-                <div key={key}>
-                  <Icon className="w-8 h-8 text-accent mx-auto mb-2" />
-                  <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">
-                    {t(`stats.${key}.value`)}
-                  </div>
-                  <div className="text-sm text-foreground-muted">
-                    {t(`stats.${key}.label`)}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <AboutStatsSection stats={statsData} />
           </div>
         </div>
       </section>

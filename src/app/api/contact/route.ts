@@ -21,7 +21,13 @@ import { createResendEmailService } from '@/infrastructure/email/ResendEmailServ
 import {
   generateContactNotificationHtml,
   generateContactNotificationText,
+  generateContactSubject,
 } from '@/infrastructure/email/templates/contact-notification';
+import {
+  generateContactConfirmationHtml,
+  generateContactConfirmationText,
+  generateContactConfirmationSubject,
+} from '@/infrastructure/email/templates/contact-confirmation';
 
 /**
  * Contact form submission request body (simplified)
@@ -40,6 +46,16 @@ interface ContactSubmissionBody {
  * Email recipients - all go to main contact for simplified form
  */
 const DEFAULT_RECIPIENT = process.env.EMAIL_CONTACT_TO || process.env.EMAIL_CONTACT || process.env.EMAIL_SALES || '';
+
+/**
+ * Generate a unique reference ID for tracking
+ */
+function generateReferenceId(date: Date): string {
+  const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+  const timeStr = date.toTimeString().slice(0, 5).replace(':', '');
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `CONTACT-${dateStr}-${timeStr}-${random}`;
+}
 
 /**
  * Minimal RGPD-compliant logging
@@ -164,7 +180,10 @@ export async function POST(request: NextRequest) {
 
     const validatedData = validationResult.data;
 
-    // 5. Send email notification
+    // Generate reference ID for tracking
+    const referenceId = generateReferenceId(submittedAt);
+
+    // 5. Send email notification to team
     const notificationData = {
       name: validatedData.name,
       email: validatedData.email,
@@ -173,6 +192,10 @@ export async function POST(request: NextRequest) {
       message: validatedData.message,
       submittedAt,
     };
+
+    // Get locale from request headers or default to 'fr'
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const locale = acceptLanguage.includes('en') ? 'en' : 'fr';
 
     try {
       const recipientEmail = DEFAULT_RECIPIENT;
@@ -186,21 +209,48 @@ export async function POST(request: NextRequest) {
         throw new Error('No recipient email configured');
       } else {
         const emailService = createResendEmailService();
-        const result = await emailService.send({
+        
+        // Send notification to team
+        const teamResult = await emailService.send({
           to: { email: recipientEmail },
-          subject: `[STE-SCPB] Nouveau message - ${validatedData.subject} - ${validatedData.name}`,
+          subject: generateContactSubject(notificationData),
           html: generateContactNotificationHtml(notificationData),
           text: generateContactNotificationText(notificationData),
           replyTo: validatedData.email,
         });
 
-        if (!result.success) {
+        if (!teamResult.success) {
           // In dev, don't fail on email errors - just log and continue
           if (isDev) {
-            console.warn('[DEV] Email send failed but continuing:', result.error);
+            console.warn('[DEV] Team email send failed but continuing:', teamResult.error);
           } else {
-            throw new Error(result.error || 'Failed to send email');
+            throw new Error(teamResult.error || 'Failed to send email');
           }
+        }
+
+        // Send confirmation to client
+        const confirmationData = {
+          name: validatedData.name,
+          email: validatedData.email,
+          company: validatedData.company || undefined,
+          subject: validatedData.subject,
+          message: validatedData.message,
+          submittedAt,
+          locale,
+          referenceId,
+        };
+
+        const clientResult = await emailService.send({
+          to: { email: validatedData.email, name: validatedData.name },
+          subject: generateContactConfirmationSubject(locale),
+          html: generateContactConfirmationHtml(confirmationData),
+          text: generateContactConfirmationText(confirmationData),
+          replyTo: recipientEmail, // Allow client to reply to team
+        });
+
+        if (!clientResult.success) {
+          // Don't fail the request if client confirmation fails - team already notified
+          console.warn('[EMAIL_WARNING] Client confirmation failed:', clientResult.error);
         }
       }
     } catch (error) {

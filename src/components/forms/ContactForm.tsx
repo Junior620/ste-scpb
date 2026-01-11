@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
+import { Confetti } from '@/components/ui/Confetti';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { Clock, FileText, Package, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -46,6 +47,7 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const { trackContactSubmission } = useAnalytics();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -87,6 +89,13 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
     };
     document.head.appendChild(script);
   }, []);
+
+  // Scroll to success message when form is submitted successfully
+  useEffect(() => {
+    if (status === 'success' && containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [status]);
 
   const getRecaptchaToken = useCallback(async (): Promise<string | null> => {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -142,7 +151,11 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
 
   if (status === 'success') {
     return (
-      <div className={`bg-success/10 border border-success rounded-lg p-6 text-center ${className}`}>
+      <div 
+        ref={containerRef}
+        className={`bg-success/10 border border-success rounded-lg p-6 text-center ${className}`}
+      >
+        <Confetti active={status === 'success'} />
         <div className="text-success text-4xl mb-4">✓</div>
         <h3 className="text-xl font-semibold text-foreground mb-2">{t('success.title')}</h3>
         <p className="text-foreground-muted">{t('success.description')}</p>

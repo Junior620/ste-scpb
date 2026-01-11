@@ -36,7 +36,7 @@ export default async function HomePage({ params }: HomePageProps) {
   // Fetch products for OtherProductsSection hover images
   let products: Product[] = [];
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
     products = await cmsClient.getProducts(validLocale);
     console.log(`[HomePage] Fetched ${products.length} products:`, products.map(p => p.slug));
   } catch (error) {

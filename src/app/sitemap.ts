@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Fetch dynamic content from CMS
   try {
-    const cmsClient = createCMSClient();
+    const cmsClient = await createCMSClient();
 
     // Add product pages
     const productSlugs = await cmsClient.getAllProductSlugs();
