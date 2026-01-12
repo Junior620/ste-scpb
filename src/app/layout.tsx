@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import './globals.css';
 
@@ -34,9 +35,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/logo.png" />
       </head>
       <body className={`${inter.variable} antialiased`}>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
