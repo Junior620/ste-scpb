@@ -75,13 +75,17 @@ export function OrganizationJsonLd() {
     name: 'STE-SCPB',
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
+    image: `${BASE_URL}/logo.png`, // Google recommends image in addition to logo
     description:
       'Société camerounaise spécialisée dans le commerce de produits agricoles et matières premières: cacao, café, bois, maïs.',
     email: 'scpb@ste-scpb.com',
     telephone: '+237676905938',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Douala-Akwa',
+      streetAddress: 'Rue Franqueville, Akwa',
+      addressLocality: 'Douala',
+      postalCode: 'BP 5765',
+      addressRegion: 'Littoral',
       addressCountry: 'CM',
     },
     // B2B enrichments (P2)
