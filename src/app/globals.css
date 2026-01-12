@@ -172,7 +172,8 @@
 
   /* Fonts */
   --font-sans: var(--font-montserrat);
-  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
   /* Shadows */
   --shadow-sm: var(--shadow-sm);
@@ -338,7 +339,6 @@ body {
   background: var(--foreground-muted);
 }
 
-
 /* Click sparkle animation - product icons floating up */
 @keyframes float-up {
   0% {
@@ -369,7 +369,9 @@ body {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
   will-change: opacity, transform;
 }
 
@@ -426,14 +428,13 @@ body {
     animation: none;
     will-change: auto;
   }
-  
+
   .animate-fade-in-up {
     animation: none;
     opacity: 1;
     transform: none;
   }
 }
-
 
 /* ============================================
    Confetti Celebration Animation
@@ -470,4 +471,15 @@ body {
     animation: none;
     opacity: 0;
   }
+}
+
+/* ============================================
+   Hide reCAPTCHA Badge
+   We display the required legal text in the form,
+   so we can hide the floating badge per Google's guidelines
+   ============================================ */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
