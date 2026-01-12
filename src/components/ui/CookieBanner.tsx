@@ -36,17 +36,17 @@ let lastStoredValue: string | null = null;
  */
 function getStoredPreferences(): CookiePreferences {
   if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
-  
+
   try {
     const stored = localStorage.getItem(COOKIE_PREFERENCES_KEY);
-    
+
     // Return cached value if storage hasn't changed
     if (stored === lastStoredValue) {
       return cachedPreferences;
     }
-    
+
     lastStoredValue = stored;
-    
+
     if (stored) {
       cachedPreferences = JSON.parse(stored);
       return cachedPreferences;
@@ -54,7 +54,7 @@ function getStoredPreferences(): CookiePreferences {
   } catch {
     // Ignore parsing errors
   }
-  
+
   cachedPreferences = DEFAULT_PREFERENCES;
   return cachedPreferences;
 }
@@ -90,30 +90,27 @@ function subscribeToStorage(callback: () => void) {
  * GDPR-compliant cookie consent banner with preference management
  * Integrates with analytics based on user consent
  */
-export function CookieBanner({
-  onPreferencesSaved,
-  className = '',
-}: CookieBannerProps) {
+export function CookieBanner({ onPreferencesSaved, className = '' }: CookieBannerProps) {
   const t = useTranslations('cookies');
-  
+
   // Use useSyncExternalStore for SSR-safe localStorage access
   const shouldShowBanner = useSyncExternalStore(
     subscribeToStorage,
     getInitialVisibility,
     () => false // Server snapshot - don't show banner during SSR
   );
-  
+
   const storedPrefs = useSyncExternalStore(
     subscribeToStorage,
     getStoredPreferences,
     () => DEFAULT_PREFERENCES // Server snapshot
   );
-  
+
   // Local state for UI interactions (not synced with storage until save)
   const [showPreferences, setShowPreferences] = useState(false);
   const [localPreferences, setLocalPreferences] = useState<CookiePreferences>(storedPrefs);
   const [isHidden, setIsHidden] = useState(false);
-  
+
   // Derive visibility from external store and local hidden state
   const isVisible = shouldShowBanner && !isHidden;
 
@@ -127,9 +124,7 @@ export function CookieBanner({
       onPreferencesSaved?.(prefs);
 
       // Dispatch custom event for analytics integration
-      window.dispatchEvent(
-        new CustomEvent('cookieConsentChanged', { detail: prefs })
-      );
+      window.dispatchEvent(new CustomEvent('cookieConsentChanged', { detail: prefs }));
     },
     [onPreferencesSaved]
   );
@@ -167,7 +162,7 @@ export function CookieBanner({
   return (
     <div
       className={`
-        fixed bottom-0 left-0 right-0 z-50
+        fixed bottom-0 left-0 right-0 z-[60]
         bg-background-secondary border-t border-border
         shadow-lg
         ${className}
@@ -184,9 +179,7 @@ export function CookieBanner({
               <h2 id="cookie-banner-title" className="text-lg font-semibold text-foreground mb-1">
                 {t('title')}
               </h2>
-              <p className="text-sm text-foreground-muted">
-                {t('description')}
-              </p>
+              <p className="text-sm text-foreground-muted">{t('description')}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               <Button variant="ghost" size="sm" onClick={handleDeclineAll}>
@@ -213,7 +206,12 @@ export function CookieBanner({
                 aria-label={t('close', { ns: 'common' })}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -252,7 +250,10 @@ export function CookieBanner({
                   />
                 </div>
                 <div className="flex-1">
-                  <label htmlFor="cookie-analytics" className="text-sm font-medium text-foreground cursor-pointer">
+                  <label
+                    htmlFor="cookie-analytics"
+                    className="text-sm font-medium text-foreground cursor-pointer"
+                  >
                     {t('preferences.analytics')}
                   </label>
                   <p className="text-xs text-foreground-muted mt-0.5">
@@ -273,7 +274,10 @@ export function CookieBanner({
                   />
                 </div>
                 <div className="flex-1">
-                  <label htmlFor="cookie-marketing" className="text-sm font-medium text-foreground cursor-pointer">
+                  <label
+                    htmlFor="cookie-marketing"
+                    className="text-sm font-medium text-foreground cursor-pointer"
+                  >
                     {t('preferences.marketing')}
                   </label>
                   <p className="text-xs text-foreground-muted mt-0.5">

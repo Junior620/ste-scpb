@@ -70,6 +70,20 @@ export function Footer() {
                 <span>{tContact('hoursValue')}</span>
               </div>
             </div>
+
+            {/* USA Office - Partner */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <p className="text-xs text-foreground-muted mb-2 font-medium">{t('usaOffice')}</p>
+              <div className="flex items-center gap-2 text-foreground-muted text-sm">
+                <Phone className="w-4 h-4 text-primary" />
+                <a href="tel:+19175939310" className="hover:text-primary transition-colors">
+                  +1 917 593 9310
+                </a>
+              </div>
+              <p className="text-xs text-foreground-muted mt-2">
+                {t('partner')}: <span className="font-medium">KAMER AGRO LLC</span>
+              </p>
+            </div>
           </div>
 
           {/* Quick Links */}
