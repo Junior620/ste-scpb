@@ -1,11 +1,22 @@
 /**
- * JSON-LD Schema Components for SEO
+ * JSON-LD Schema Components for SEO (v5)
  * Clean, reusable components for structured data
+ *
+ * Changes v5:
+ * - Added @id to Organization and WebSite for deduplication
+ * - SearchAction is conditional (only if search works)
+ * - Article references @id instead of duplicating Organization
+ * - Secure image mapping (filter invalid fields)
+ * - Organization enriched with sameAs, areaServed, knowsAbout
  */
 
 import type { Locale } from '@/domain/value-objects/Locale';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
+
+// Unique IDs for schema deduplication (Google best practice)
+const ORGANIZATION_ID = `${BASE_URL}/#organization`;
+const WEBSITE_ID = `${BASE_URL}/#website`;
 
 /**
  * Generic JSON-LD script renderer
@@ -17,14 +28,19 @@ export function JsonLd<T extends object>({ data }: { data: T }) {
 }
 
 /**
- * WebSite + SearchAction schema (global, in layout)
+ * WebSite schema (global, in head.tsx)
+ * SearchAction is CONDITIONAL - only include if search actually works
  */
 export function WebSiteJsonLd({ locale }: { locale: Locale }) {
+  // TODO: Set to true when ?q= search is implemented on /produits
+  const hasWorkingSearch = false;
+
   const productsPath = locale === 'fr' ? '/fr/produits' : '/en/products';
 
-  const data = {
+  const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': WEBSITE_ID,
     name: 'STE-SCPB',
     url: BASE_URL,
     description:
@@ -32,23 +48,30 @@ export function WebSiteJsonLd({ locale }: { locale: Locale }) {
         ? 'Export de produits agricoles camerounais - Cacao, Café, Bois, Maïs'
         : 'Cameroonian agricultural products export - Cocoa, Coffee, Wood, Corn',
     inLanguage: ['fr', 'en'],
-    potentialAction: {
+    publisher: { '@id': ORGANIZATION_ID },
+  };
+
+  // Only add SearchAction if search is functional
+  if (hasWorkingSearch) {
+    data.potentialAction = {
       '@type': 'SearchAction',
       target: `${BASE_URL}${productsPath}?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
-    },
-  };
+    };
+  }
 
   return <JsonLd data={data} />;
 }
 
 /**
- * Organization schema (global, in layout)
+ * Organization schema (global, in head.tsx)
+ * Enriched with sameAs, areaServed, knowsAbout for B2B context
  */
 export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
     name: 'STE-SCPB',
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
@@ -61,6 +84,20 @@ export function OrganizationJsonLd() {
       addressLocality: 'Douala-Akwa',
       addressCountry: 'CM',
     },
+    // B2B enrichments (P2)
+    areaServed: ['CM', 'FR', 'EU', 'US'],
+    knowsAbout: [
+      'cocoa export',
+      'coffee export',
+      'wood export',
+      'corn export',
+      'phytosanitary certificate',
+      'COA certificate',
+      'agricultural commodities',
+      'B2B trading',
+    ],
+    // Add social links when available
+    // sameAs: ['https://www.linkedin.com/company/ste-scpb'],
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -84,6 +121,7 @@ export function OrganizationJsonLd() {
 
 /**
  * BreadcrumbList schema (dynamic per page)
+ * Only use if breadcrumb UI is visible on the page!
  */
 export interface BreadcrumbItem {
   name: string;
@@ -107,6 +145,7 @@ export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
 
 /**
  * Article schema (for blog posts)
+ * Uses @id reference to Organization (no duplication)
  */
 export interface ArticleJsonLdProps {
   title: string;
@@ -125,6 +164,21 @@ export function ArticleJsonLd({
   publishedAt,
   updatedAt,
 }: ArticleJsonLdProps) {
+  // Secure image mapping - filter invalid entries
+  const imageData = images
+    .filter((img) => img.url && typeof img.url === 'string')
+    .map((img) => {
+      if (img.width && img.height) {
+        return {
+          '@type': 'ImageObject',
+          url: img.url,
+          width: img.width,
+          height: img.height,
+        };
+      }
+      return img.url;
+    });
+
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -135,33 +189,12 @@ export function ArticleJsonLd({
     headline: title,
     description,
     url,
-    image:
-      images.length > 0
-        ? images.map((img) =>
-            img.width && img.height
-              ? {
-                  '@type': 'ImageObject',
-                  url: img.url,
-                  width: img.width,
-                  height: img.height,
-                }
-              : img.url
-          )
-        : undefined,
+    image: imageData.length > 0 ? imageData : undefined,
     datePublished: publishedAt,
     dateModified: updatedAt,
-    author: {
-      '@type': 'Organization',
-      name: 'STE-SCPB',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'STE-SCPB',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`,
-      },
-    },
+    // Reference @id instead of duplicating Organization
+    author: { '@id': ORGANIZATION_ID },
+    publisher: { '@id': ORGANIZATION_ID },
   };
 
   return <JsonLd data={data} />;
@@ -219,17 +252,12 @@ export function ProductJsonLd({
       '@type': 'Brand',
       name: 'STE-SCPB',
     },
-    manufacturer: {
-      '@type': 'Organization',
-      name: 'STE-SCPB',
-    },
+    // Reference @id for manufacturer
+    manufacturer: { '@id': ORGANIZATION_ID },
     offers: {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'STE-SCPB',
-      },
+      seller: { '@id': ORGANIZATION_ID },
     },
     ...(additionalProperties.length > 0 && { additionalProperty: additionalProperties }),
   };

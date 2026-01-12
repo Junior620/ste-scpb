@@ -7,7 +7,7 @@ import { generateAlternateLanguages, BASE_URL, SITE_NAME, DEFAULT_OG_IMAGE } fro
 import { CookieBanner, SkipNavigation, WhatsAppWidget } from '@/components/ui';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 import { Header, Footer } from '@/components/layout';
-import { WebSiteJsonLd, OrganizationJsonLd } from '@/components/seo/JsonLd';
+// JSON-LD schemas are now in head.tsx (not here) for proper <head> placement
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -64,9 +64,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <NextIntlClientProvider messages={messages}>
-      {/* Global SEO JSON-LD schemas */}
-      <WebSiteJsonLd locale={locale as Locale} />
-      <OrganizationJsonLd />
+      {/* JSON-LD schemas are in head.tsx for proper <head> placement */}
 
       <AnalyticsProvider>
         <SkipNavigation targetId="main-content" />

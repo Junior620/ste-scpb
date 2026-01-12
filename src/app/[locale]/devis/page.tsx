@@ -13,10 +13,17 @@ export async function generateMetadata({ params }: DevisPageProps): Promise<Meta
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'rfq' });
 
+  // Canonical always points to /devis (without query params)
+  // This prevents /devis?type=sample from being indexed as separate page
+  const canonicalUrl = `https://www.ste-scpb.com/${locale}/devis`;
+
   return {
     title: t('meta.title'),
     description: t('meta.description'),
-    alternates: generateAlternateLanguages('/devis'),
+    alternates: {
+      ...generateAlternateLanguages('/devis'),
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `${t('meta.title')} | ${SITE_NAME}`,
       description: t('meta.description'),
@@ -36,12 +43,8 @@ export default async function DevisPage({ params }: DevisPageProps) {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {t('title')}
-            </h1>
-            <p className="text-lg text-foreground-muted mb-6">
-              {t('description')}
-            </p>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h1>
+            <p className="text-lg text-foreground-muted mb-6">{t('description')}</p>
             {/* Trust badges */}
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-foreground-muted">
               <span className="flex items-center gap-1.5 bg-background-secondary px-3 py-1.5 rounded-full">
