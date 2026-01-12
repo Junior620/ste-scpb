@@ -186,6 +186,7 @@ export function generateOrganizationSchema(baseUrl: string): OrganizationSchema 
     '@type': 'Organization',
     name: 'STE-SCPB',
     url: baseUrl,
+    logo: `${baseUrl}/logo.png`,
     description:
       'Société camerounaise spécialisée dans le commerce de produits agricoles et matières premières: cacao, café, bois, maïs et plus.',
     address: {
@@ -195,10 +196,11 @@ export function generateOrganizationSchema(baseUrl: string): OrganizationSchema 
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+237 676 905 938',
+      telephone: '+237676905938',
       contactType: 'sales',
       availableLanguage: ['French', 'English'],
     },
+    sameAs: ['https://www.linkedin.com/company/ste-scpb'],
   };
 }
 

@@ -6,20 +6,18 @@ Allow: /
 
 # Block API routes
 Disallow: /api/
-Disallow: /_next/static/
-Disallow: /_next/image/
-
-# Block admin/preview
 Disallow: /studio/
+
+# Autoriser les assets Next.js (important pour le rendu)
+Allow: /_next/static/
+Allow: /_next/image/
+
+# Bloquer données internes Next.js
+Disallow: /_next/data/
+
+# Pages preview/draft (+ noindex via meta robots côté serveur)
 Disallow: /*?preview=
 Disallow: /*?draft=
-
-# Block utility pages
-Disallow: /404
-Disallow: /500
-
-# Crawl delay (optional, respecté par certains bots)
-Crawl-delay: 1
 
 # Sitemaps
 Sitemap: https://www.ste-scpb.com/sitemap.xml

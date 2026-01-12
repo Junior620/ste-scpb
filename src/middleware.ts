@@ -23,7 +23,7 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
   const cspHeader = buildCSPHeader();
   const isProduction = process.env.NODE_ENV === 'production';
   const cspHeaderName = getCSPHeaderName(isProduction);
-  
+
   response.headers.set(cspHeaderName, cspHeader);
 
   return response;
@@ -34,7 +34,15 @@ export default function middleware(request: NextRequest): NextResponse {
   const response = intlMiddleware(request);
 
   // Apply security headers to the response
-  return applySecurityHeaders(response);
+  applySecurityHeaders(response);
+
+  // Add X-Robots-Tag: noindex for preview/draft pages
+  const url = request.nextUrl;
+  if (url.searchParams.has('preview') || url.searchParams.has('draft')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+
+  return response;
 }
 
 export const config = {
