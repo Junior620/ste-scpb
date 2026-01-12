@@ -5,11 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import {
-  contactFormSchema,
-  type ContactFormData,
-  CONTACT_SUBJECTS,
-} from '@/lib/validation';
+import { contactFormSchema, type ContactFormData, CONTACT_SUBJECTS } from '@/lib/validation';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
@@ -151,7 +147,7 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
 
   if (status === 'success') {
     return (
-      <div 
+      <div
         ref={containerRef}
         className={`bg-success/10 border border-success rounded-lg p-6 text-center ${className}`}
       >
@@ -189,7 +185,9 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
         </Link>
         <button
           type="button"
-          onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() =>
+            document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })
+          }
           className="flex flex-col items-center gap-2 p-4 bg-background-secondary rounded-lg hover:bg-primary/10 transition-colors text-center border border-border"
         >
           <Clock className="w-6 h-6 text-primary" />
@@ -261,7 +259,9 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">
             {t('form.message')}
-            <span className="text-error ml-1" aria-hidden="true">*</span>
+            <span className="text-error ml-1" aria-hidden="true">
+              *
+            </span>
           </label>
           <textarea
             {...register('message')}
@@ -275,9 +275,10 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
               transition-colors duration-200
               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background
               resize-y min-h-[100px]
-              ${errors.message
-                ? 'border-error focus:ring-error focus:border-error'
-                : 'border-border focus:ring-accent focus:border-accent'
+              ${
+                errors.message
+                  ? 'border-error focus:ring-error focus:border-error'
+                  : 'border-border focus:ring-accent focus:border-accent'
               }
             `}
           />
@@ -290,16 +291,32 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
 
         {/* Privacy Consent */}
         <div className="flex items-start gap-3">
-          <input
-            {...register('privacyConsent')}
-            type="checkbox"
-            id="privacyConsent"
-            className="mt-1 h-4 w-4 rounded border-border bg-background-secondary text-accent focus:ring-accent"
-          />
+          <div className="relative flex items-center">
+            <input
+              {...register('privacyConsent')}
+              type="checkbox"
+              id="privacyConsent"
+              className="peer h-5 w-5 shrink-0 cursor-pointer appearance-none rounded border-2 border-primary/50 bg-background-secondary checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background transition-colors"
+            />
+            <svg
+              className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
           <div>
             <label htmlFor="privacyConsent" className="text-sm text-foreground cursor-pointer">
               {t('form.privacyConsent')}{' '}
-              <span className="text-error" aria-hidden="true">*</span>
+              <span className="text-error" aria-hidden="true">
+                *
+              </span>
             </label>
             {errors.privacyConsent && (
               <p className="mt-1 text-sm text-error" role="alert">
@@ -324,11 +341,21 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
         {/* reCAPTCHA Notice */}
         <p className="text-xs text-foreground-muted text-center">
           This site is protected by reCAPTCHA and the Google{' '}
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
             Privacy Policy
           </a>{' '}
           and{' '}
-          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+          <a
+            href="https://policies.google.com/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
             Terms of Service
           </a>{' '}
           apply.
