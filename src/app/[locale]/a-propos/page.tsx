@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
-import { Target, Eye, Heart } from 'lucide-react';
+import { Target, Eye, Heart, FileText } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/Button';
 import { AboutHero } from '@/components/sections/AboutHero';
@@ -109,8 +109,25 @@ export default async function AboutPage({ params }: AboutPageProps) {
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Policy Section */}
       <section className="py-10 md:py-14">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-4">
+              <FileText className="w-8 h-8 text-accent" />
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                {t('policy.title')}
+              </h2>
+            </div>
+            <p className="text-lg text-foreground-muted leading-relaxed">
+              {t('policy.description')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-10 md:py-14 bg-background-secondary">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-6">
