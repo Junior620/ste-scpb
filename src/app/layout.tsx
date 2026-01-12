@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     shortcut: '/logo.png',
     apple: '/logo.png',
   },
+  // Bing Webmaster Tools verification
+  verification: {
+    other: {
+      'msvalidate.01': '229720A4CFEF3E14FF47DEA0D88E55CE',
+    },
+  },
 };
 
 /**

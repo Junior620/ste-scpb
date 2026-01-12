@@ -100,8 +100,11 @@ export function OrganizationJsonLd() {
       'agricultural commodities',
       'B2B trading',
     ],
-    // Add social links when available
-    // sameAs: ['https://www.linkedin.com/company/ste-scpb'],
+    // Social links - add URLs when available (LinkedIn, Facebook, etc.)
+    sameAs: [
+      // 'https://www.linkedin.com/company/ste-scpb',
+      // 'https://www.facebook.com/ste-scpb',
+    ],
     contactPoint: [
       {
         '@type': 'ContactPoint',
