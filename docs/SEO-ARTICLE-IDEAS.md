@@ -212,26 +212,69 @@ Générer du trafic organique qualifié (acheteurs B2B) et positionner STE-SCPB 
 
 ---
 
-## Priorisation Recommandée
+## ✅ Top 10 Articles Prioritaires (Validé)
 
-### Phase 1 (Mois 1-2) - Articles Fondamentaux
+Les 10 articles suivants ont été sélectionnés selon ces critères:
 
-1. Guide complet du cacao camerounais (#1)
-2. Certifications cacao : guide comparatif (#8)
-3. Incoterms FOB, CIF, DAP (#19)
+- **Volume de recherche** : Mots-clés avec trafic B2B qualifié
+- **Intent acheteur** : Requêtes transactionnelles/commerciales
+- **Différenciation** : Positionnement expert STE-SCPB
+- **Facilité de création** : Expertise interne disponible
+- **Potentiel conversion** : Lien direct vers demande de devis
 
-### Phase 2 (Mois 3-4) - Produits & Technique
+### 🥇 Priorité 1 - Articles Fondamentaux (Semaines 1-4)
 
-4. Fermentation du cacao (#2)
-5. Café Cameroun : Arabica vs Robusta (#11)
-6. Documentation export agricole (#21)
+| #   | Article                                                    | Justification                                | Mots-clés cibles                      |
+| --- | ---------------------------------------------------------- | -------------------------------------------- | ------------------------------------- |
+| 1   | **Guide complet du cacao camerounais** (#1)                | Pilier SEO, positionne l'expertise terroir   | cacao Cameroun, cocoa Cameroon origin |
+| 2   | **Certifications cacao : UTZ, Rainforest, Fairtrade** (#8) | Forte demande B2B, différenciation qualité   | certification cacao, UTZ cocoa        |
+| 3   | **Incoterms FOB, CIF, DAP : guide acheteur** (#19)         | Requête transactionnelle, aide à la décision | incoterms export, FOB CIF DAP         |
 
-### Phase 3 (Mois 5-6) - Différenciation
+### 🥈 Priorité 2 - Expertise Technique (Semaines 5-8)
 
-7. Traçabilité cacao (#7)
-8. Agriculture durable au Cameroun (#25)
-9. Prix du cacao 2024-2025 (#10)
-10. Diversifier son sourcing agricole (#18)
+| #   | Article                                              | Justification                             | Mots-clés cibles                       |
+| --- | ---------------------------------------------------- | ----------------------------------------- | -------------------------------------- |
+| 4   | **Fermentation du cacao : le processus clé** (#2)    | Contenu technique différenciant           | fermentation cacao, cocoa fermentation |
+| 5   | **Documentation export : COA, phytosanitaire** (#21) | Requête pratique, forte conversion        | documents export, COA certificate      |
+| 6   | **Café Cameroun : Arabica vs Robusta** (#11)         | Diversification produits, nouveau segment | café Cameroun, Arabica Cameroon        |
+
+### 🥉 Priorité 3 - Différenciation & Confiance (Semaines 9-12)
+
+| #   | Article                                                    | Justification                             | Mots-clés cibles                       |
+| --- | ---------------------------------------------------------- | ----------------------------------------- | -------------------------------------- |
+| 7   | **Traçabilité cacao : de la plantation au conteneur** (#7) | Confiance acheteurs UE/USA, EUDR          | traçabilité cacao, cocoa traceability  |
+| 8   | **Prix du cacao 2024-2025 : tendances marché** (#10)       | Trafic récurrent, actualisation régulière | prix cacao, cocoa price forecast       |
+| 9   | **Agriculture durable au Cameroun** (#25)                  | RSE, différenciation marques engagées     | agriculture durable, sustainable cocoa |
+| 10  | **Diversifier son sourcing : pourquoi le Cameroun** (#18)  | Article hub, maillage interne             | sourcing agricole Afrique              |
+
+---
+
+## Calendrier de Publication Recommandé
+
+| Semaine | Article                         | Responsable | Status     |
+| ------- | ------------------------------- | ----------- | ---------- |
+| S1-2    | Guide complet cacao camerounais | À définir   | 📋 À créer |
+| S3-4    | Certifications cacao            | À définir   | 📋 À créer |
+| S5-6    | Incoterms FOB, CIF, DAP         | À définir   | 📋 À créer |
+| S7-8    | Fermentation du cacao           | À définir   | 📋 À créer |
+| S9-10   | Documentation export            | À définir   | 📋 À créer |
+| S11-12  | Café Cameroun                   | À définir   | 📋 À créer |
+| S13-14  | Traçabilité cacao               | À définir   | 📋 À créer |
+| S15-16  | Prix du cacao 2024-2025         | À définir   | 📋 À créer |
+| S17-18  | Agriculture durable             | À définir   | 📋 À créer |
+| S19-20  | Diversifier son sourcing        | À définir   | 📋 À créer |
+
+---
+
+## Prochaine Étape : Créer les Outlines
+
+Les 3 premiers articles nécessitent un outline détaillé avant rédaction:
+
+1. [x] Outline: Guide complet du cacao camerounais ✅
+2. [x] Outline: Certifications cacao ✅
+3. [x] Outline: Incoterms FOB, CIF, DAP ✅
+
+**→ Voir [SEO-ARTICLE-OUTLINES.md](./SEO-ARTICLE-OUTLINES.md) pour les outlines détaillés**
 
 ---
 
