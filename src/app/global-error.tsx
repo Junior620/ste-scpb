@@ -16,6 +16,10 @@ export default function GlobalError({
 
   return (
     <html lang="fr">
+      <head>
+        {/* Prevent error pages from being indexed by search engines */}
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
       <body className="bg-background text-foreground min-h-screen flex items-center justify-center">
         <div className="text-center p-8 max-w-md">
           <h1 className="text-4xl font-bold mb-4 text-primary">Erreur</h1>

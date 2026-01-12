@@ -155,7 +155,8 @@
       "viewSpecs": "View specifications",
       "downloadDatasheet": "Download datasheet"
     },
-    "related": "Related Products"
+    "related": "Related Products",
+    "similar": "Similar Products"
   },
   "productDetail": {
     "technicalSpecs": "Technical Specifications",

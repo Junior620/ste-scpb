@@ -100,7 +100,7 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
   });
 
   /**
-   * Property: Canonical URL should point to default locale
+   * Property: Canonical URL should point to default locale when no locale is provided
    */
   it('should set canonical URL to default locale', () => {
     fc.assert(
@@ -115,6 +115,34 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
   });
 
   /**
+   * Property: Canonical URL should point to the specified locale when provided (REQ-7)
+   * FR→FR, EN→EN - each language should have its own canonical
+   */
+  it('should set canonical URL to specified locale when provided', () => {
+    const localeArb = fc.constantFrom(...SUPPORTED_LOCALES);
+
+    fc.assert(
+      fc.property(pathnameArb, localeArb, (pathname, locale) => {
+        const alternates = generateAlternateLanguages(pathname, locale as Locale);
+
+        // Canonical should contain the specified locale
+        expect(alternates?.canonical).toContain(`/${locale}`);
+
+        // Canonical should NOT contain other locales (no cross-canonical)
+        for (const otherLocale of SUPPORTED_LOCALES) {
+          if (otherLocale !== locale) {
+            // The canonical URL should not have the other locale in the path position
+            // (it might appear in the domain, so we check the path specifically)
+            const canonicalPath = (alternates?.canonical as string).split('.com')[1];
+            expect(canonicalPath).not.toMatch(new RegExp(`^/${otherLocale}/`));
+          }
+        }
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  /**
    * Property: generateLocalizedMetadata should include all required fields
    */
   it('should generate complete localized metadata', () => {
@@ -123,39 +151,45 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
     const descriptionArb = fc.string({ minLength: 1, maxLength: 200 });
 
     fc.assert(
-      fc.property(localeArb, titleArb, descriptionArb, pathnameArb, (locale, title, description, pathname) => {
-        const metadata = generateLocalizedMetadata({
-          title,
-          description,
-          pathname,
-          locale: locale as Locale,
-        });
+      fc.property(
+        localeArb,
+        titleArb,
+        descriptionArb,
+        pathnameArb,
+        (locale, title, description, pathname) => {
+          const metadata = generateLocalizedMetadata({
+            title,
+            description,
+            pathname,
+            locale: locale as Locale,
+          });
 
-        // Should have title (as object with default and template)
-        expect(metadata.title).toBeDefined();
-        const titleObj = metadata.title as { default: string; template: string };
-        expect(titleObj.default).toBe(title);
-        expect(titleObj.template).toContain('%s');
-        
-        // Should have description
-        expect(metadata.description).toBe(description);
+          // Should have title (as object with default and template)
+          expect(metadata.title).toBeDefined();
+          const titleObj = metadata.title as { default: string; template: string };
+          expect(titleObj.default).toBe(title);
+          expect(titleObj.template).toContain('%s');
 
-        // Should have alternates
-        expect(metadata.alternates).toBeDefined();
+          // Should have description
+          expect(metadata.description).toBe(description);
 
-        // Should have openGraph
-        expect(metadata.openGraph).toBeDefined();
-        expect(metadata.openGraph?.title).toBe(title);
-        expect(metadata.openGraph?.description).toBe(description);
+          // Should have alternates
+          expect(metadata.alternates).toBeDefined();
 
-        // OpenGraph locale should match
-        const expectedOgLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
-        expect(metadata.openGraph?.locale).toBe(expectedOgLocale);
+          // Should have openGraph
+          expect(metadata.openGraph).toBeDefined();
+          expect(metadata.openGraph?.title).toBe(title);
+          expect(metadata.openGraph?.description).toBe(description);
 
-        // Should have twitter card
-        expect(metadata.twitter).toBeDefined();
-        expect((metadata.twitter as { card?: string })?.card).toBe('summary_large_image');
-      }),
+          // OpenGraph locale should match
+          const expectedOgLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
+          expect(metadata.openGraph?.locale).toBe(expectedOgLocale);
+
+          // Should have twitter card
+          expect(metadata.twitter).toBeDefined();
+          expect((metadata.twitter as { card?: string })?.card).toBe('summary_large_image');
+        }
+      ),
       { numRuns: 100 }
     );
   });
@@ -220,7 +254,6 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
   });
 });
 
-
 /**
  * Property-Based Tests for Meta Tags Uniqueness
  * **Feature: ste-scpb-refonte, Property 10: Meta Tags Uniqueness**
@@ -233,37 +266,34 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
    */
   it('should generate unique titles for different pages', () => {
     const pageKeys = Object.keys(PAGE_METADATA_CONFIGS);
-    
+
     fc.assert(
-      fc.property(
-        fc.constantFrom(...SUPPORTED_LOCALES),
-        (locale) => {
-          // Generate metadata for all pages
-          const metadataList = pageKeys.map((pageKey) => {
-            const config = PAGE_METADATA_CONFIGS[pageKey];
-            return {
-              pageKey,
-              metadata: generateLocalizedMetadata({
-                title: `${pageKey} - Test Title`,
-                description: `${pageKey} - Test Description`,
-                pathname: config.pathname,
-                locale: locale as Locale,
-                keywords: config.keywords,
-              }),
-            };
-          });
+      fc.property(fc.constantFrom(...SUPPORTED_LOCALES), (locale) => {
+        // Generate metadata for all pages
+        const metadataList = pageKeys.map((pageKey) => {
+          const config = PAGE_METADATA_CONFIGS[pageKey];
+          return {
+            pageKey,
+            metadata: generateLocalizedMetadata({
+              title: `${pageKey} - Test Title`,
+              description: `${pageKey} - Test Description`,
+              pathname: config.pathname,
+              locale: locale as Locale,
+              keywords: config.keywords,
+            }),
+          };
+        });
 
-          // Check that all pathnames are unique
-          const pathnames = metadataList.map((m) => PAGE_METADATA_CONFIGS[m.pageKey].pathname);
-          const uniquePathnames = new Set(pathnames);
-          expect(uniquePathnames.size).toBe(pathnames.length);
+        // Check that all pathnames are unique
+        const pathnames = metadataList.map((m) => PAGE_METADATA_CONFIGS[m.pageKey].pathname);
+        const uniquePathnames = new Set(pathnames);
+        expect(uniquePathnames.size).toBe(pathnames.length);
 
-          // Check that all canonical URLs are unique
-          const canonicals = metadataList.map((m) => m.metadata.alternates?.canonical);
-          const uniqueCanonicals = new Set(canonicals);
-          expect(uniqueCanonicals.size).toBe(canonicals.length);
-        }
-      ),
+        // Check that all canonical URLs are unique
+        const canonicals = metadataList.map((m) => m.metadata.alternates?.canonical);
+        const uniqueCanonicals = new Set(canonicals);
+        expect(uniqueCanonicals.size).toBe(canonicals.length);
+      }),
       { numRuns: 10 }
     );
   });
@@ -275,7 +305,7 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
     const pageKeys = Object.keys(PAGE_METADATA_CONFIGS);
     const pathnames = pageKeys.map((key) => PAGE_METADATA_CONFIGS[key].pathname);
     const uniquePathnames = new Set(pathnames);
-    
+
     expect(uniquePathnames.size).toBe(pathnames.length);
   });
 
@@ -308,10 +338,10 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
           expect(metadata.title).toBeDefined();
           const titleObj = metadata.title as { default: string; template: string };
           expect(titleObj.default).toBeTruthy();
-          
+
           // Description should be non-empty
           expect(metadata.description).toBeTruthy();
-          
+
           // OpenGraph title and description should match
           expect(metadata.openGraph?.title).toBe(title);
           expect(metadata.openGraph?.description).toBe(description);
@@ -326,7 +356,7 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
    */
   it('should generate different canonical URLs for different pathnames', () => {
     const localeArb = fc.constantFrom(...SUPPORTED_LOCALES);
-    
+
     fc.assert(
       fc.property(
         localeArb,
@@ -378,7 +408,7 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
 
         // OpenGraph URL should contain the locale
         expect(metadata.openGraph?.url).toContain(`/${locale}`);
-        
+
         // OpenGraph URL should contain the pathname
         if (pathname && pathname !== '/') {
           expect(metadata.openGraph?.url).toContain(pathname);

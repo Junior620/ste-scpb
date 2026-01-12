@@ -2,13 +2,15 @@
 
 /**
  * Article Detail Section Component
- * Validates: Requirements 7.2, 7.4
+ * Validates: Requirements 7.2, 7.4, REQ-9 (Maillage Interne B2B)
  *
  * Displays full article content with:
  * - Proper typography
  * - Social sharing buttons
  * - Author information
  * - Related tags
+ * - Contextual product links (SEO maillage interne)
+ * - Export team CTA
  */
 
 import { useTranslations } from 'next-intl';
@@ -19,6 +21,74 @@ import { formatArticleDate, getLocalizedArticleContent } from '@/domain/entities
 import type { Locale } from '@/domain/value-objects/Locale';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Product keywords mapping for contextual linking
+ * Maps keywords (in both FR and EN) to product slugs
+ */
+const PRODUCT_KEYWORDS: Record<string, { slug: string; nameFr: string; nameEn: string }> = {
+  // Cacao keywords
+  cacao: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  cocoa: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  chocolat: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  chocolate: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  fèves: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  beans: { slug: 'cacao', nameFr: 'Cacao', nameEn: 'Cocoa' },
+  // Café keywords
+  café: { slug: 'cafe', nameFr: 'Café', nameEn: 'Coffee' },
+  cafe: { slug: 'cafe', nameFr: 'Café', nameEn: 'Coffee' },
+  coffee: { slug: 'cafe', nameFr: 'Café', nameEn: 'Coffee' },
+  arabica: { slug: 'cafe', nameFr: 'Café', nameEn: 'Coffee' },
+  robusta: { slug: 'cafe', nameFr: 'Café', nameEn: 'Coffee' },
+  // Bois keywords
+  bois: { slug: 'bois', nameFr: 'Bois', nameEn: 'Wood' },
+  wood: { slug: 'bois', nameFr: 'Bois', nameEn: 'Wood' },
+  timber: { slug: 'bois', nameFr: 'Bois', nameEn: 'Wood' },
+  lumber: { slug: 'bois', nameFr: 'Bois', nameEn: 'Wood' },
+  // Maïs keywords
+  maïs: { slug: 'mais', nameFr: 'Maïs', nameEn: 'Corn' },
+  mais: { slug: 'mais', nameFr: 'Maïs', nameEn: 'Corn' },
+  corn: { slug: 'mais', nameFr: 'Maïs', nameEn: 'Corn' },
+  maize: { slug: 'mais', nameFr: 'Maïs', nameEn: 'Corn' },
+  // Hévéa keywords
+  hévéa: { slug: 'hevea', nameFr: 'Hévéa', nameEn: 'Rubber' },
+  hevea: { slug: 'hevea', nameFr: 'Hévéa', nameEn: 'Rubber' },
+  rubber: { slug: 'hevea', nameFr: 'Hévéa', nameEn: 'Rubber' },
+  latex: { slug: 'hevea', nameFr: 'Hévéa', nameEn: 'Rubber' },
+  caoutchouc: { slug: 'hevea', nameFr: 'Hévéa', nameEn: 'Rubber' },
+  // Sésame keywords
+  sésame: { slug: 'sesame', nameFr: 'Sésame', nameEn: 'Sesame' },
+  sesame: { slug: 'sesame', nameFr: 'Sésame', nameEn: 'Sesame' },
+  // Cajou keywords
+  cajou: { slug: 'cajou', nameFr: 'Cajou', nameEn: 'Cashew' },
+  cashew: { slug: 'cajou', nameFr: 'Cajou', nameEn: 'Cashew' },
+  anacarde: { slug: 'cajou', nameFr: 'Cajou', nameEn: 'Cashew' },
+  // Soja keywords
+  soja: { slug: 'soja', nameFr: 'Soja', nameEn: 'Soy' },
+  soy: { slug: 'soja', nameFr: 'Soja', nameEn: 'Soy' },
+  soybean: { slug: 'soja', nameFr: 'Soja', nameEn: 'Soy' },
+};
+
+/**
+ * Detects products mentioned in article content
+ * Returns unique product slugs found
+ */
+function detectMentionedProducts(
+  content: string
+): Array<{ slug: string; nameFr: string; nameEn: string }> {
+  const lowerContent = content.toLowerCase();
+  const foundProducts = new Map<string, { slug: string; nameFr: string; nameEn: string }>();
+
+  for (const [keyword, product] of Object.entries(PRODUCT_KEYWORDS)) {
+    // Use word boundary matching to avoid partial matches
+    const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+    if (regex.test(lowerContent) && !foundProducts.has(product.slug)) {
+      foundProducts.set(product.slug, product);
+    }
+  }
+
+  return Array.from(foundProducts.values());
+}
+
 export interface ArticleDetailSectionProps {
   article: Article;
   locale: Locale;
@@ -28,15 +98,9 @@ export interface ArticleDetailSectionProps {
  * Social sharing buttons component
  * Validates: Requirements 7.4
  */
-function SocialShareButtons({
-  title,
-  url,
-}: {
-  title: string;
-  url: string;
-}) {
+function SocialShareButtons({ title, url }: { title: string; url: string }) {
   const t = useTranslations('news');
-  
+
   const encodedTitle = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(url);
 
@@ -64,7 +128,11 @@ function SocialShareButtons({
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+          <path
+            fillRule="evenodd"
+            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+            clipRule="evenodd"
+          />
         </svg>
       ),
     },
@@ -72,8 +140,19 @@ function SocialShareButtons({
       name: 'Email',
       href: `mailto:?subject=${encodedTitle}&body=${encodedUrl}`,
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
         </svg>
       ),
     },
@@ -103,13 +182,7 @@ function SocialShareButtons({
 /**
  * Article tags component
  */
-function ArticleTags({
-  tags,
-  locale,
-}: {
-  tags: Article['tags'];
-  locale: Locale;
-}) {
+function ArticleTags({ tags, locale }: { tags: Article['tags']; locale: Locale }) {
   const t = useTranslations('news');
 
   if (tags.length === 0) return null;
@@ -130,18 +203,178 @@ function ArticleTags({
 }
 
 /**
+ * Contextual product links component for SEO maillage interne
+ * Validates: REQ-9 (Maillage Interne B2B)
+ */
+function ContextualProductLinks({
+  products,
+  locale,
+}: {
+  products: Array<{ slug: string; nameFr: string; nameEn: string }>;
+  locale: Locale;
+}) {
+  if (products.length === 0) return null;
+
+  const title =
+    locale === 'fr' ? 'Produits mentionnés dans cet article' : 'Products mentioned in this article';
+
+  return (
+    <div className="my-8 p-6 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
+      <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+        <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+          />
+        </svg>
+        {title}
+      </h4>
+      <div className="flex flex-wrap gap-3">
+        {products.map((product) => (
+          <Link
+            key={product.slug}
+            href={`/produits/${product.slug}`}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-background hover:bg-primary/10 border border-border hover:border-primary/30 transition-all group"
+          >
+            <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+              {locale === 'fr' ? product.nameFr : product.nameEn}
+            </span>
+            <svg
+              className="w-4 h-4 text-foreground-muted group-hover:text-primary transition-colors"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Export team CTA component for B2B maillage interne
+ * Validates: REQ-9 (Maillage Interne B2B)
+ */
+function ExportTeamCTA({
+  locale,
+  mentionedProducts,
+}: {
+  locale: Locale;
+  mentionedProducts: Array<{ slug: string; nameFr: string; nameEn: string }>;
+}) {
+  // Generate contextual message based on mentioned products
+  const productNames = mentionedProducts
+    .slice(0, 2)
+    .map((p) => (locale === 'fr' ? p.nameFr.toLowerCase() : p.nameEn.toLowerCase()))
+    .join(locale === 'fr' ? ' ou ' : ' or ');
+
+  const contextualTitle =
+    mentionedProducts.length > 0
+      ? locale === 'fr'
+        ? `Vous importez du ${productNames} ?`
+        : `Do you import ${productNames}?`
+      : locale === 'fr'
+        ? 'Intéressé par nos produits agricoles ?'
+        : 'Interested in our agricultural products?';
+
+  const contextualDescription =
+    locale === 'fr'
+      ? 'Notre équipe export vous accompagne : devis, échantillons, documentation. Réponse sous 24-48h.'
+      : 'Our export team supports you: quotes, samples, documentation. Response within 24-48h.';
+
+  return (
+    <div className="mt-12 p-8 rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-background-secondary border border-primary/20">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="flex-1">
+          <h3 className="text-xl font-semibold mb-2 text-foreground">{contextualTitle}</h3>
+          <p className="text-foreground-muted">{contextualDescription}</p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button asChild variant="primary">
+            <Link href="/devis">{locale === 'fr' ? 'Demander un devis' : 'Request a quote'}</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/contact">
+              {locale === 'fr' ? "Contacter l'équipe export" : 'Contact export team'}
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Trust badges */}
+      <div className="mt-6 pt-6 border-t border-primary/10 flex flex-wrap gap-4 text-sm text-foreground-muted">
+        <span className="flex items-center gap-2">
+          <svg
+            className="w-4 h-4 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {locale === 'fr' ? 'Réponse 24-48h' : 'Response 24-48h'}
+        </span>
+        <span className="flex items-center gap-2">
+          <svg
+            className="w-4 h-4 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {locale === 'fr' ? 'COA & Phyto disponibles' : 'COA & Phyto available'}
+        </span>
+        <span className="flex items-center gap-2">
+          <svg
+            className="w-4 h-4 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {locale === 'fr' ? 'FOB / CIF / DAP' : 'FOB / CIF / DAP'}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/**
  * Main Article Detail Section component
  */
-export function ArticleDetailSection({
-  article,
-  locale,
-}: ArticleDetailSectionProps) {
+export function ArticleDetailSection({ article, locale }: ArticleDetailSectionProps) {
   const t = useTranslations('news');
   const tNav = useTranslations('nav');
 
   // Get the current URL for sharing
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
   const articleUrl = `${baseUrl}/${locale}/actualites/${article.slug}`;
+
+  // Detect products mentioned in article content for contextual linking
+  const articleContent = getLocalizedArticleContent(article, locale);
+  const mentionedProducts = detectMentionedProducts(articleContent);
 
   return (
     <article className="py-8 md:py-16">
@@ -153,7 +386,12 @@ export function ArticleDetailSection({
             className="inline-flex items-center gap-2 text-foreground-muted hover:text-primary transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             {tNav('news')}
           </Link>
@@ -195,7 +433,12 @@ export function ArticleDetailSection({
             {/* Date */}
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
               </svg>
               <time dateTime={article.publishedAt.toISOString()}>
                 {t('publishedOn')} {formatArticleDate(article.publishedAt, locale)}
@@ -204,10 +447,7 @@ export function ArticleDetailSection({
           </div>
 
           {/* Social sharing */}
-          <SocialShareButtons
-            title={article.title[locale]}
-            url={articleUrl}
-          />
+          <SocialShareButtons title={article.title[locale]} url={articleUrl} />
         </header>
 
         {/* Featured Image */}
@@ -242,9 +482,12 @@ export function ArticleDetailSection({
               prose-code:text-primary prose-code:bg-background-secondary prose-code:px-1 prose-code:rounded
               prose-pre:bg-background-secondary prose-pre:border prose-pre:border-border"
             dangerouslySetInnerHTML={{
-              __html: getLocalizedArticleContent(article, locale),
+              __html: articleContent,
             }}
           />
+
+          {/* Contextual Product Links - SEO Maillage Interne */}
+          <ContextualProductLinks products={mentionedProducts} locale={locale} />
 
           {/* Tags */}
           {article.tags.length > 0 && (
@@ -255,28 +498,11 @@ export function ArticleDetailSection({
 
           {/* Bottom sharing */}
           <div className="mt-8 pt-8 border-t border-border">
-            <SocialShareButtons
-              title={article.title[locale]}
-              url={articleUrl}
-            />
+            <SocialShareButtons title={article.title[locale]} url={articleUrl} />
           </div>
 
-          {/* CTA */}
-          <div className="mt-12 p-8 rounded-xl bg-background-secondary text-center">
-            <h3 className="text-xl font-semibold mb-4">
-              {locale === 'fr' ? 'Intéressé par nos produits ?' : 'Interested in our products?'}
-            </h3>
-            <p className="text-foreground-muted mb-6">
-              {locale === 'fr'
-                ? 'Contactez notre équipe commerciale pour plus d\'informations.'
-                : 'Contact our sales team for more information.'}
-            </p>
-            <Button asChild>
-              <Link href="/contact">
-                {locale === 'fr' ? 'Nous contacter' : 'Contact us'}
-              </Link>
-            </Button>
-          </div>
+          {/* Export Team CTA - SEO Maillage Interne B2B */}
+          <ExportTeamCTA locale={locale} mentionedProducts={mentionedProducts} />
         </div>
       </div>
     </article>

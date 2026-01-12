@@ -2,6 +2,15 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Home, Package, Mail, FileText } from 'lucide-react';
 import { Button } from '@/components/ui';
+import type { Metadata } from 'next';
+
+// Prevent 404 pages from being indexed by search engines
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   const t = useTranslations('notFound');
@@ -14,10 +23,22 @@ export default function NotFound() {
       {/* Constellation background effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-pulse opacity-60" />
-        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-accent rounded-full animate-pulse opacity-40" style={{ animationDelay: '0.5s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-primary-light rounded-full animate-pulse opacity-50" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-accent-light rounded-full animate-pulse opacity-30" style={{ animationDelay: '1.5s' }} />
-        <div className="absolute bottom-1/3 right-1/2 w-2 h-2 bg-primary rounded-full animate-pulse opacity-40" style={{ animationDelay: '2s' }} />
+        <div
+          className="absolute top-1/3 right-1/3 w-1 h-1 bg-accent rounded-full animate-pulse opacity-40"
+          style={{ animationDelay: '0.5s' }}
+        />
+        <div
+          className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-primary-light rounded-full animate-pulse opacity-50"
+          style={{ animationDelay: '1s' }}
+        />
+        <div
+          className="absolute top-1/2 right-1/4 w-1 h-1 bg-accent-light rounded-full animate-pulse opacity-30"
+          style={{ animationDelay: '1.5s' }}
+        />
+        <div
+          className="absolute bottom-1/3 right-1/2 w-2 h-2 bg-primary rounded-full animate-pulse opacity-40"
+          style={{ animationDelay: '2s' }}
+        />
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
@@ -29,12 +50,8 @@ export default function NotFound() {
         </div>
 
         {/* Message */}
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          {t('title')}
-        </h1>
-        <p className="text-lg text-foreground-muted mb-12 max-w-md mx-auto">
-          {t('message')}
-        </p>
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h1>
+        <p className="text-lg text-foreground-muted mb-12 max-w-md mx-auto">{t('message')}</p>
 
         {/* Navigation Links */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">

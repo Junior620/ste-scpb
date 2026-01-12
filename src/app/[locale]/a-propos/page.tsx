@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
   return {
     title: t('meta.title'),
     description: t('meta.description'),
-    alternates: generateAlternateLanguages('/a-propos'),
+    alternates: generateAlternateLanguages('/a-propos', locale as Locale),
     openGraph: {
       title: `${t('meta.title')} | ${SITE_NAME}`,
       description: t('meta.description'),
@@ -128,9 +128,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <section className="py-10 md:py-14 bg-gradient-to-r from-accent/20 to-accent/5">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">
-              {t('cta.title')}
-            </h2>
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">{t('cta.title')}</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/produits/cacao">
                 <Button variant="outline" size="lg">

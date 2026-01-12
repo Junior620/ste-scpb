@@ -17,13 +17,15 @@ export function Footer() {
   const tNav = useTranslations('nav');
   const tContact = useTranslations('contact.info');
 
-  // Quick links - added B2B conversion links
+  // Quick links - added B2B conversion links + all key pages for SEO
   const quickLinks = [
     { href: '/', label: tNav('home') },
     { href: '/produits', label: tNav('products') },
     { href: '/produits/cacao', label: t('links.quality') },
     { href: '/a-propos', label: tNav('about') },
     { href: '/equipe', label: tNav('team') },
+    { href: '/actualites', label: tNav('news') },
+    { href: '/statistiques', label: tNav('statistics') },
     { href: '/devis', label: tNav('quote') },
   ];
 

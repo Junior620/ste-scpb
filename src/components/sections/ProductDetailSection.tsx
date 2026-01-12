@@ -33,6 +33,7 @@ import { Button } from '@/components/ui/Button';
 export interface ProductDetailSectionProps {
   product: Product;
   relatedProducts: Product[];
+  similarProducts: Product[];
   locale: Locale;
 }
 
@@ -41,44 +42,44 @@ export interface ProductDetailSectionProps {
  */
 const DEFAULT_DESCRIPTIONS: Record<ProductCategory, { fr: string; en: string }> = {
   cacao: {
-    fr: "Fèves de cacao fin du Cameroun, issues des terroirs du Centre et du Sud. Fermentation maîtrisée (6-7 jours), séchage naturel, tri rigoureux. Profil aromatique fruité et équilibré, idéal pour chocolatiers et industriels exigeants.",
-    en: "Fine cocoa beans from Cameroon, sourced from Central and Southern terroirs. Controlled fermentation (6-7 days), natural drying, rigorous sorting. Fruity and balanced aromatic profile, ideal for demanding chocolatiers and manufacturers.",
+    fr: 'Fèves de cacao fin du Cameroun, issues des terroirs du Centre et du Sud. Fermentation maîtrisée (6-7 jours), séchage naturel, tri rigoureux. Profil aromatique fruité et équilibré, idéal pour chocolatiers et industriels exigeants.',
+    en: 'Fine cocoa beans from Cameroon, sourced from Central and Southern terroirs. Controlled fermentation (6-7 days), natural drying, rigorous sorting. Fruity and balanced aromatic profile, ideal for demanding chocolatiers and manufacturers.',
   },
   cafe: {
     fr: "Café Arabica et Robusta du Cameroun, cultivé en altitude dans les hauts plateaux de l'Ouest. Récolte sélective, traitement humide ou naturel selon les lots. Grade export A, profil aromatique complexe avec notes de fruits et de chocolat.",
-    en: "Arabica and Robusta coffee from Cameroon, grown at altitude in the Western highlands. Selective harvesting, wet or natural processing depending on lots. Export grade A, complex aromatic profile with fruit and chocolate notes.",
+    en: 'Arabica and Robusta coffee from Cameroon, grown at altitude in the Western highlands. Selective harvesting, wet or natural processing depending on lots. Export grade A, complex aromatic profile with fruit and chocolate notes.',
   },
   bois: {
     fr: "Bois tropicaux d'essences légales, conformes à la réglementation FLEGT. Traçabilité complète de la forêt à l'export. Essences disponibles : Ayous, Sapelli, Iroko, Padouk. Documentation forestière et certificats d'origine fournis.",
-    en: "Legal tropical wood species, FLEGT compliant. Full traceability from forest to export. Available species: Ayous, Sapelli, Iroko, Padouk. Forestry documentation and certificates of origin provided.",
+    en: 'Legal tropical wood species, FLEGT compliant. Full traceability from forest to export. Available species: Ayous, Sapelli, Iroko, Padouk. Forestry documentation and certificates of origin provided.',
   },
   mais: {
     fr: "Maïs grade alimentaire du Cameroun, séché et trié mécaniquement. Taux d'humidité contrôlé (≤14%), calibrage homogène. Adapté à l'alimentation humaine et animale. Conditionnement en sacs ou vrac conteneur.",
-    en: "Food-grade corn from Cameroon, mechanically dried and sorted. Controlled moisture content (≤14%), uniform calibration. Suitable for human and animal consumption. Packaging in bags or bulk container.",
+    en: 'Food-grade corn from Cameroon, mechanically dried and sorted. Controlled moisture content (≤14%), uniform calibration. Suitable for human and animal consumption. Packaging in bags or bulk container.',
   },
   hevea: {
-    fr: "Latex et caoutchouc naturel du Cameroun, grade industriel. Spécifications techniques sur demande. Adapté aux applications industrielles : pneumatiques, joints, revêtements. Livraison en balles ou conteneurs.",
-    en: "Natural latex and rubber from Cameroon, industrial grade. Technical specifications on request. Suitable for industrial applications: tires, seals, coatings. Delivery in bales or containers.",
+    fr: 'Latex et caoutchouc naturel du Cameroun, grade industriel. Spécifications techniques sur demande. Adapté aux applications industrielles : pneumatiques, joints, revêtements. Livraison en balles ou conteneurs.',
+    en: 'Natural latex and rubber from Cameroon, industrial grade. Technical specifications on request. Suitable for industrial applications: tires, seals, coatings. Delivery in bales or containers.',
   },
   sesame: {
     fr: "Sésame décortiqué du Cameroun, pureté 99%+. Graines blanches ou naturelles selon les lots. Qualité export pour l'industrie alimentaire : huile, tahini, boulangerie. Conditionnement adapté à l'export.",
-    en: "Hulled sesame from Cameroon, 99%+ purity. White or natural seeds depending on lots. Export quality for food industry: oil, tahini, bakery. Export-adapted packaging.",
+    en: 'Hulled sesame from Cameroon, 99%+ purity. White or natural seeds depending on lots. Export quality for food industry: oil, tahini, bakery. Export-adapted packaging.',
   },
   cajou: {
     fr: "Noix de cajou décortiquées, calibre W320/W240. Qualité export premium, tri manuel. Idéal pour le snacking, la pâtisserie et l'industrie alimentaire. Conditionnement sous vide ou cartons.",
-    en: "Shelled cashew nuts, W320/W240 grade. Premium export quality, hand-sorted. Ideal for snacking, pastry and food industry. Vacuum or carton packaging.",
+    en: 'Shelled cashew nuts, W320/W240 grade. Premium export quality, hand-sorted. Ideal for snacking, pastry and food industry. Vacuum or carton packaging.',
   },
   soja: {
     fr: "Soja non-OGM (selon lots), haute teneur en protéines. Certificat de conformité disponible. Adapté à l'alimentation animale et à la transformation industrielle. Livraison en vrac ou sacs.",
-    en: "Non-GMO soy (per batch), high protein content. Certificate of conformity available. Suitable for animal feed and industrial processing. Bulk or bag delivery.",
+    en: 'Non-GMO soy (per batch), high protein content. Certificate of conformity available. Suitable for animal feed and industrial processing. Bulk or bag delivery.',
   },
   amandes: {
     fr: "Amandes de qualité premium, calibrées et triées. Origine contrôlée, traçabilité garantie. Pour l'industrie alimentaire, la pâtisserie et le snacking.",
-    en: "Premium quality almonds, calibrated and sorted. Controlled origin, guaranteed traceability. For food industry, pastry and snacking.",
+    en: 'Premium quality almonds, calibrated and sorted. Controlled origin, guaranteed traceability. For food industry, pastry and snacking.',
   },
   sorgho: {
     fr: "Sorgho grade alimentaire, séché et calibré. Adapté à l'alimentation humaine et animale. Taux d'humidité contrôlé, conditionnement export.",
-    en: "Food-grade sorghum, dried and calibrated. Suitable for human and animal consumption. Controlled moisture content, export packaging.",
+    en: 'Food-grade sorghum, dried and calibrated. Suitable for human and animal consumption. Controlled moisture content, export packaging.',
   },
 };
 
@@ -97,14 +98,22 @@ const TECHNICAL_SPECS: Record<
     { key: 'standard', value: { fr: 'ICCO / ISO 2451', en: 'ICCO / ISO 2451' }, icon: 'check' },
   ],
   cafe: [
-    { key: 'varieties', value: { fr: 'Arabica / Robusta', en: 'Arabica / Robusta' }, icon: 'coffee' },
+    {
+      key: 'varieties',
+      value: { fr: 'Arabica / Robusta', en: 'Arabica / Robusta' },
+      icon: 'coffee',
+    },
     { key: 'altitude', value: { fr: '1000-2000m', en: '1000-2000m' }, icon: 'mountain' },
     { key: 'humidity', value: { fr: '11-12%', en: '11-12%' }, icon: 'droplet' },
     { key: 'grade', value: { fr: 'Grade A export', en: 'Grade A export' }, icon: 'award' },
     { key: 'process', value: { fr: 'Lavé / Naturel', en: 'Washed / Natural' }, icon: 'settings' },
   ],
   bois: [
-    { key: 'species', value: { fr: 'Ayous, Sapelli, Iroko', en: 'Ayous, Sapelli, Iroko' }, icon: 'tree' },
+    {
+      key: 'species',
+      value: { fr: 'Ayous, Sapelli, Iroko', en: 'Ayous, Sapelli, Iroko' },
+      icon: 'tree',
+    },
     { key: 'compliance', value: { fr: 'FLEGT / CITES', en: 'FLEGT / CITES' }, icon: 'shield' },
     { key: 'humidity', value: { fr: '12-18%', en: '12-18%' }, icon: 'droplet' },
     { key: 'format', value: { fr: 'Grumes / Sciages', en: 'Logs / Sawn' }, icon: 'box' },
@@ -121,7 +130,11 @@ const TECHNICAL_SPECS: Record<
     { key: 'type', value: { fr: 'Latex / Caoutchouc', en: 'Latex / Rubber' }, icon: 'circle' },
     { key: 'grade', value: { fr: 'Grade industriel', en: 'Industrial grade' }, icon: 'award' },
     { key: 'drc', value: { fr: 'DRC 60%+', en: 'DRC 60%+' }, icon: 'percent' },
-    { key: 'packaging', value: { fr: 'Balles / Conteneurs', en: 'Bales / Containers' }, icon: 'box' },
+    {
+      key: 'packaging',
+      value: { fr: 'Balles / Conteneurs', en: 'Bales / Containers' },
+      icon: 'box',
+    },
     { key: 'specs', value: { fr: 'Sur demande', en: 'On request' }, icon: 'file' },
   ],
   sesame: [
@@ -168,17 +181,17 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string 
   cacao: [
     { fr: 'Sacs jute + liner PE (60-70kg)', en: 'Jute bags + PE liner (60-70kg)' },
     { fr: 'Big bags (1T)', en: 'Big bags (1T)' },
-    { fr: 'Conteneur 20\' (18-20T)', en: "20' container (18-20T)" },
+    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)" },
   ],
   cafe: [
     { fr: 'Sacs jute (60kg)', en: 'Jute bags (60kg)' },
     { fr: 'Sacs GrainPro', en: 'GrainPro bags' },
-    { fr: 'Conteneur 20\' (18-20T)', en: "20' container (18-20T)" },
+    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)" },
   ],
   bois: [
     { fr: 'Grumes', en: 'Logs' },
     { fr: 'Sciages (planches, madriers)', en: 'Sawn (boards, beams)' },
-    { fr: 'Conteneur 40\' / Vrac', en: "40' container / Bulk" },
+    { fr: "Conteneur 40' / Vrac", en: "40' container / Bulk" },
   ],
   mais: [
     { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)' },
@@ -187,17 +200,17 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string 
   ],
   hevea: [
     { fr: 'Balles (33.33kg)', en: 'Bales (33.33kg)' },
-    { fr: 'Conteneur 20\'', en: "20' container" },
+    { fr: "Conteneur 20'", en: "20' container" },
   ],
   sesame: [
     { fr: 'Sacs PP (25/50kg)', en: 'PP bags (25/50kg)' },
     { fr: 'Cartons', en: 'Cartons' },
-    { fr: 'Conteneur 20\'', en: "20' container" },
+    { fr: "Conteneur 20'", en: "20' container" },
   ],
   cajou: [
     { fr: 'Cartons (22.68kg)', en: 'Cartons (22.68kg)' },
     { fr: 'Sous vide', en: 'Vacuum packed' },
-    { fr: 'Conteneur 20\' (18T)', en: "20' container (18T)" },
+    { fr: "Conteneur 20' (18T)", en: "20' container (18T)" },
   ],
   soja: [
     { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)' },
@@ -220,9 +233,10 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string 
  */
 function ProductScene({ product }: { product: Product }) {
   const { config } = usePerformanceMode();
-  const constellationConfig = product.constellation.nodes.length > 0
-    ? product.constellation
-    : PRODUCT_CONSTELLATIONS[product.category];
+  const constellationConfig =
+    product.constellation.nodes.length > 0
+      ? product.constellation
+      : PRODUCT_CONSTELLATIONS[product.category];
 
   return (
     <>
@@ -282,29 +296,18 @@ function ImageGallery({
   }
 
   const currentImage = validImages[selectedIndex] || validImages[0];
-  const isSanityImage = currentImage.url.includes('cdn.sanity.io');
-
-  // Add Sanity image parameters for better quality
-  const getOptimizedUrl = (url: string, width: number, quality = 95) => {
-    if (url.includes('cdn.sanity.io')) {
-      const separator = url.includes('?') ? '&' : '?';
-      return `${url}${separator}w=${width}&q=${quality}&fit=crop&auto=format`;
-    }
-    return url;
-  };
 
   return (
     <div className="space-y-4">
       {/* Main image */}
       <div className="relative aspect-square overflow-hidden rounded-xl bg-background-secondary">
         <Image
-          src={getOptimizedUrl(currentImage.url, 1800, 95)}
+          src={currentImage.url}
           alt={currentImage.alt[locale] || productName}
           fill
           className="object-cover"
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
-          unoptimized={isSanityImage}
         />
       </div>
 
@@ -312,7 +315,6 @@ function ImageGallery({
       {validImages.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-2">
           {validImages.map((image, index) => {
-            const isThumbSanity = image.url.includes('cdn.sanity.io');
             return (
               <button
                 key={index}
@@ -326,13 +328,12 @@ function ImageGallery({
                 aria-pressed={selectedIndex === index}
               >
                 <Image
-                  src={getOptimizedUrl(image.url, 200, 85)}
+                  src={image.url}
                   alt={image.alt[locale] || `${productName} - ${index + 1}`}
                   fill
                   className="object-cover"
                   sizes="80px"
                   loading="lazy"
-                  unoptimized={isThumbSanity}
                 />
               </button>
             );
@@ -342,7 +343,6 @@ function ImageGallery({
     </div>
   );
 }
-
 
 /**
  * Icon component for specs
@@ -458,7 +458,12 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
       {specs.length > 0 && (
         <div className="bg-background-secondary/50 rounded-xl p-6 border border-border/50">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              className="w-5 h-5 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -500,10 +505,7 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
           </h3>
           <div className="flex flex-wrap gap-2">
             {packagingOpts.map((opt, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1.5 bg-background-tertiary rounded-lg text-sm"
-              >
+              <span key={idx} className="px-3 py-1.5 bg-background-tertiary rounded-lg text-sm">
                 {opt[locale]}
               </span>
             ))}
@@ -527,7 +529,10 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
           </h3>
           <div className="flex flex-wrap gap-2">
             {product.certifications.map((cert) => (
-              <span key={cert} className="px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-sm font-medium">
+              <span
+                key={cert}
+                className="px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-sm font-medium"
+              >
                 {cert}
               </span>
             ))}
@@ -538,7 +543,12 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
       {/* Export Info */}
       <div className="bg-gradient-to-r from-primary/10 to-transparent rounded-xl p-6 border border-primary/20">
         <h3 className="font-semibold mb-3 flex items-center gap-2">
-          <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            className="w-5 h-5 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -590,17 +600,10 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
   );
 }
 
-
 /**
  * Related products section
  */
-function RelatedProducts({
-  products,
-  locale,
-}: {
-  products: Product[];
-  locale: Locale;
-}) {
+function RelatedProducts({ products, locale }: { products: Product[]; locale: Locale }) {
   const t = useTranslations('products');
 
   if (products.length === 0) return null;
@@ -649,11 +652,64 @@ function RelatedProducts({
 }
 
 /**
+ * Similar products section (same category)
+ * Shows products from the same category when no explicit related products exist
+ */
+function SimilarProducts({ products, locale }: { products: Product[]; locale: Locale }) {
+  const t = useTranslations('products');
+
+  if (products.length === 0) return null;
+
+  return (
+    <section className="mt-16 pt-8 border-t border-border">
+      <h2 className="text-2xl font-bold mb-6">{t('similar')}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <Link key={product.id} href={`/produits/${product.slug}`}>
+            <Card variant="default" interactive className="h-full group">
+              {product.images.length > 0 && (
+                <div className="relative aspect-video overflow-hidden rounded-t-xl -mx-4 -mt-4 md:-mx-6 md:-mt-6 mb-4">
+                  <Image
+                    src={product.images[0].url}
+                    alt={product.images[0].alt[locale] || product.name[locale]}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <CardHeader className="mb-2">
+                <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                  {product.name[locale]}
+                </CardTitle>
+                <CardDescription className="line-clamp-2">
+                  {product.description[locale]}
+                </CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <span
+                  className="px-3 py-1 rounded-full text-xs font-medium text-white"
+                  style={{ backgroundColor: PRODUCT_COLORS[product.category] }}
+                >
+                  {t(`categories.${product.category}`)}
+                </span>
+              </CardFooter>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
  * Main Product Detail Section component
  */
 export function ProductDetailSection({
   product,
   relatedProducts,
+  similarProducts,
   locale,
 }: ProductDetailSectionProps) {
   const t = useTranslations('common');
@@ -681,12 +737,7 @@ export function ProductDetailSection({
               size="sm"
               className="gap-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background hover:border-primary"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -714,8 +765,11 @@ export function ProductDetailSection({
           <ProductInfo product={product} locale={locale} />
         </div>
 
-        {/* Related products */}
+        {/* Related products (explicitly linked) */}
         <RelatedProducts products={relatedProducts} locale={locale} />
+
+        {/* Similar products (same category) - shown when no related products or in addition */}
+        <SimilarProducts products={similarProducts} locale={locale} />
       </div>
     </article>
   );

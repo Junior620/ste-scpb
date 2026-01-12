@@ -81,17 +81,33 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   // Fetch product from CMS
   let product: Product | null = null;
   let relatedProducts: Product[] = [];
+  let similarProducts: Product[] = [];
 
   try {
     const cmsClient = await createCMSClient();
     product = await cmsClient.getProductBySlug(slug, locale as Locale);
 
-    if (product && product.relatedProducts.length > 0) {
-      // Fetch related products
+    if (product) {
+      // Fetch all products for related/similar products
       const allProducts = await cmsClient.getProducts(locale as Locale);
-      relatedProducts = allProducts.filter((p: Product) =>
-        product!.relatedProducts.includes(p.slug)
-      );
+
+      // Get explicitly related products
+      if (product.relatedProducts.length > 0) {
+        relatedProducts = allProducts.filter((p: Product) =>
+          product!.relatedProducts.includes(p.slug)
+        );
+      }
+
+      // Get similar products (same category, excluding current product and already related)
+      const relatedSlugs = new Set(product.relatedProducts);
+      similarProducts = allProducts
+        .filter(
+          (p: Product) =>
+            p.category === product!.category &&
+            p.slug !== product!.slug &&
+            !relatedSlugs.has(p.slug)
+        )
+        .slice(0, 3); // Limit to 3 similar products
     }
   } catch {
     // Product not found
@@ -131,6 +147,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <ProductDetailSection
           product={product}
           relatedProducts={relatedProducts}
+          similarProducts={similarProducts}
           locale={locale as Locale}
         />
       </main>

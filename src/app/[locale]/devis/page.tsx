@@ -15,13 +15,14 @@ export async function generateMetadata({ params }: DevisPageProps): Promise<Meta
 
   // Canonical always points to /devis (without query params)
   // This prevents /devis?type=sample from being indexed as separate page
+  // Uses locale-specific canonical (REQ-7: FR→FR, EN→EN)
   const canonicalUrl = `https://www.ste-scpb.com/${locale}/devis`;
 
   return {
     title: t('meta.title'),
     description: t('meta.description'),
     alternates: {
-      ...generateAlternateLanguages('/devis'),
+      ...generateAlternateLanguages('/devis', locale as Locale),
       canonical: canonicalUrl,
     },
     openGraph: {

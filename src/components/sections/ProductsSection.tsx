@@ -215,7 +215,6 @@ function ProductCard({ product, locale }: { product: Product; locale: Locale }) 
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-            unoptimized={imageUrl.includes('cdn.sanity.io')}
           />
           {/* B2B Badge (not category name - more useful info) */}
           <span

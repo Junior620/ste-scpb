@@ -83,7 +83,14 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
 
   // Debug: log products received
   if (typeof window !== 'undefined' && products.length > 0) {
-    console.log('OtherProductsSection products:', products.map(p => ({ slug: p.slug, normalized: normalizeSlug(p.slug), hasImage: !!p.images?.[0]?.url })));
+    console.log(
+      'OtherProductsSection products:',
+      products.map((p) => ({
+        slug: p.slug,
+        normalized: normalizeSlug(p.slug),
+        hasImage: !!p.images?.[0]?.url,
+      }))
+    );
   }
 
   return (
@@ -91,9 +98,7 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {t('title')}
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
           <p className="text-lg text-foreground-muted">{t('subtitle')}</p>
         </div>
 
@@ -125,43 +130,57 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
                       fill
                       className="object-cover"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      unoptimized={imageUrl.includes('cdn.sanity.io')}
+                      loading="lazy"
                     />
                     {/* Dark overlay for readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
                   </div>
                 )}
 
-                <div className={`relative z-10 flex flex-col h-full transition-colors duration-300 ${isHovered && imageUrl ? 'text-white' : ''}`}>
+                <div
+                  className={`relative z-10 flex flex-col h-full transition-colors duration-300 ${isHovered && imageUrl ? 'text-white' : ''}`}
+                >
                   <div className="flex items-start gap-4 mb-3">
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
-                      isHovered && imageUrl 
-                        ? 'bg-white/20 backdrop-blur-sm' 
-                        : 'bg-primary/10 group-hover:bg-primary/20'
-                    }`}>
-                      <Icon className={`w-6 h-6 ${isHovered && imageUrl ? 'text-white' : 'text-primary'}`} />
+                    <div
+                      className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isHovered && imageUrl
+                          ? 'bg-white/20 backdrop-blur-sm'
+                          : 'bg-primary/10 group-hover:bg-primary/20'
+                      }`}
+                    >
+                      <Icon
+                        className={`w-6 h-6 ${isHovered && imageUrl ? 'text-white' : 'text-primary'}`}
+                      />
                     </div>
                     <div className="flex-1">
-                      <h3 className={`font-semibold mb-1 ${isHovered && imageUrl ? 'text-white' : 'text-foreground'}`}>
+                      <h3
+                        className={`font-semibold mb-1 ${isHovered && imageUrl ? 'text-white' : 'text-foreground'}`}
+                      >
                         {t(`products.${key}.name`)}
                       </h3>
-                      <p className={`text-sm ${isHovered && imageUrl ? 'text-white/80' : 'text-foreground-muted'}`}>
+                      <p
+                        className={`text-sm ${isHovered && imageUrl ? 'text-white/80' : 'text-foreground-muted'}`}
+                      >
                         {t(`products.${key}.desc`)}
                       </p>
                     </div>
                   </div>
                   {/* SEO tag */}
-                  <p className={`text-xs mt-auto pt-3 border-t ${
-                    isHovered && imageUrl 
-                      ? 'text-white/60 border-white/20' 
-                      : 'text-foreground-muted/70 border-border/50'
-                  }`}>
+                  <p
+                    className={`text-xs mt-auto pt-3 border-t ${
+                      isHovered && imageUrl
+                        ? 'text-white/60 border-white/20'
+                        : 'text-foreground-muted/70 border-border/50'
+                    }`}
+                  >
                     {t(`products.${key}.seo`)}
                   </p>
                   {/* Hover CTA */}
-                  <div className={`flex items-center gap-1 text-sm font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity ${
-                    isHovered && imageUrl ? 'text-white' : 'text-primary'
-                  }`}>
+                  <div
+                    className={`flex items-center gap-1 text-sm font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                      isHovered && imageUrl ? 'text-white' : 'text-primary'
+                    }`}
+                  >
                     {t('viewSpecs')}
                     <ArrowRight className="w-4 h-4" />
                   </div>
@@ -186,9 +205,7 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
                 ) : (
                   <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
                 )}
-                <span className="text-foreground">
-                  {t(`advantages.${advantage}`)}
-                </span>
+                <span className="text-foreground">{t(`advantages.${advantage}`)}</span>
               </div>
             ))}
           </div>

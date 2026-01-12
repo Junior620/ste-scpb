@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: ContactPageProps): Promise<Me
   return {
     title: t('title'),
     description: t('description'),
-    alternates: generateAlternateLanguages('/contact'),
+    alternates: generateAlternateLanguages('/contact', locale as Locale),
     openGraph: {
       title: `${t('title')} | ${SITE_NAME}`,
       description: t('description'),
@@ -35,7 +35,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
   return (
     <main id="main-content" className="min-h-screen bg-background">
       {/* 3D Hero */}
-      <ContactHero 
+      <ContactHero
         title={t('title')}
         subtitle={t('subtitle')}
         quoteLink="/devis"
@@ -48,10 +48,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
             {/* Contact Info */}
             <div className="lg:col-span-1 space-y-6">
               <div className="bg-background-secondary rounded-lg p-6 border border-border">
-                <h2 className="text-xl font-semibold text-foreground mb-6">
-                  {t('info.title')}
-                </h2>
-                
+                <h2 className="text-xl font-semibold text-foreground mb-6">{t('info.title')}</h2>
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-primary mt-0.5" />
@@ -65,8 +63,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     <Phone className="w-5 h-5 text-primary mt-0.5" />
                     <div>
                       <p className="font-medium text-foreground">{t('info.phone')}</p>
-                      <a 
-                        href="tel:+237676905938" 
+                      <a
+                        href="tel:+237676905938"
                         className="text-foreground-muted hover:text-primary transition-colors"
                       >
                         +237 676 905 938
@@ -78,8 +76,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     <Mail className="w-5 h-5 text-primary mt-0.5" />
                     <div>
                       <p className="font-medium text-foreground">{t('info.email')}</p>
-                      <a 
-                        href="mailto:scpb@ste-scpb.com" 
+                      <a
+                        href="mailto:scpb@ste-scpb.com"
                         className="text-foreground-muted hover:text-primary transition-colors"
                       >
                         scpb@ste-scpb.com

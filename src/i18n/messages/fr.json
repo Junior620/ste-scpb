@@ -155,7 +155,8 @@
       "viewSpecs": "Voir les spécifications",
       "downloadDatasheet": "Télécharger la fiche technique"
     },
-    "related": "Produits similaires"
+    "related": "Produits associés",
+    "similar": "Produits de la même catégorie"
   },
   "productDetail": {
     "technicalSpecs": "Caractéristiques techniques",

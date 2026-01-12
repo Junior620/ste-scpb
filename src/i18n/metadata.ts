@@ -24,9 +24,16 @@ export const SITE_NAME = 'STE-SCPB';
 /**
  * Generate alternate language links for hreflang tags
  * @param pathname - The current pathname without locale prefix
+ * @param currentLocale - The current locale (optional, for locale-specific canonical)
  * @returns Object with alternates for metadata
+ *
+ * SEO Rule (REQ-7): Each language should have its own canonical (FR→FR, EN→EN)
+ * Never cross-canonical between languages
  */
-export function generateAlternateLanguages(pathname: string = ''): Metadata['alternates'] {
+export function generateAlternateLanguages(
+  pathname: string = '',
+  currentLocale?: Locale
+): Metadata['alternates'] {
   // Ensure pathname starts with /
   const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
 
@@ -37,8 +44,12 @@ export function generateAlternateLanguages(pathname: string = ''): Metadata['alt
     languages[locale] = `${BASE_URL}/${locale}${normalizedPath}`;
   }
 
+  // Canonical should point to the current locale's URL (FR→FR, EN→EN)
+  // If no locale provided, default to DEFAULT_LOCALE for backwards compatibility
+  const canonicalLocale = currentLocale || DEFAULT_LOCALE;
+
   return {
-    canonical: `${BASE_URL}/${DEFAULT_LOCALE}${normalizedPath}`,
+    canonical: `${BASE_URL}/${canonicalLocale}${normalizedPath}`,
     languages,
   };
 }
@@ -84,7 +95,8 @@ export function generateLocalizedMetadata({
       template: `%s | ${SITE_NAME}`,
     },
     description,
-    alternates: generateAlternateLanguages(pathname),
+    // Pass current locale to ensure canonical points to current language (REQ-7)
+    alternates: generateAlternateLanguages(pathname, locale),
     openGraph: {
       title,
       description,

@@ -105,6 +105,43 @@ Copier chaque schema dans les outils de validation:
 
 ---
 
+## � MPesure LCP (Largest Contentful Paint)
+
+### Méthode Manuelle (Recommandée)
+
+1. Ouvrir https://pagespeed.web.dev
+2. Entrer l'URL: `https://www.ste-scpb.com`
+3. Cliquer "Analyze"
+4. Noter les valeurs LCP pour Mobile et Desktop
+
+### Méthode Automatisée
+
+```bash
+# Depuis le dossier ste-scpb-website
+npx ts-node scripts/measure-lcp.ts
+
+# Avec clé API (pour plus de requêtes)
+PAGESPEED_API_KEY=your_key npx ts-node scripts/measure-lcp.ts
+```
+
+### Interprétation des Résultats LCP
+
+| Valeur LCP  | Status               | Action                      |
+| ----------- | -------------------- | --------------------------- |
+| < 2.5s      | ✅ Good              | Maintenir                   |
+| 2.5s - 4.0s | ⚠️ Needs Improvement | Optimiser images, lazy load |
+| > 4.0s      | ❌ Poor              | Action urgente requise      |
+
+### Pages à Mesurer
+
+- Homepage: `https://www.ste-scpb.com/`
+- Produits: `https://www.ste-scpb.com/fr/produits`
+- À propos: `https://www.ste-scpb.com/fr/a-propos`
+- Contact: `https://www.ste-scpb.com/fr/contact`
+- Devis: `https://www.ste-scpb.com/fr/devis`
+
+---
+
 ## 📈 KPIs à Suivre
 
 | Métrique         | Outil          | Cible     |

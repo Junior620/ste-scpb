@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { StatisticsSection } from '@/components/sections/StatisticsSection';
 import { StatisticsHero } from '@/components/sections/StatisticsHero';
 import { createSanityClient, type ExportStatisticsData } from '@/infrastructure/cms';
+import { Locale } from '@/domain/value-objects/Locale';
+import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -15,8 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('meta.title'),
     description: t('meta.description'),
+    alternates: generateAlternateLanguages('/statistiques', locale as Locale),
     openGraph: {
-      title: t('meta.title'),
+      title: `${t('meta.title')} | ${SITE_NAME}`,
       description: t('meta.description'),
     },
   };
