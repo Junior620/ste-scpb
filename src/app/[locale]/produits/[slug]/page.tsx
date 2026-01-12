@@ -8,6 +8,7 @@ import { createCMSClient } from '@/infrastructure/cms';
 import type { Product } from '@/domain/entities/Product';
 import { generateProductSchema, renderSchemaScript } from '@/lib/schema';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 
 // ISR: Revalidate every hour
 export const revalidate = 3600;
@@ -30,7 +31,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  
+
   let product: Product | null = null;
   try {
     const cmsClient = await createCMSClient();
@@ -56,7 +57,14 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
     pathname: `/produits/${slug}`,
     locale: validLocale,
     ogImage,
-    keywords: [productName, product.category, 'export', 'B2B', 'Cameroun', ...product.certifications],
+    keywords: [
+      productName,
+      product.category,
+      'export',
+      'B2B',
+      'Cameroun',
+      ...product.certifications,
+    ],
   });
 }
 
@@ -74,11 +82,11 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   // Fetch product from CMS
   let product: Product | null = null;
   let relatedProducts: Product[] = [];
-  
+
   try {
     const cmsClient = await createCMSClient();
     product = await cmsClient.getProductBySlug(slug, locale as Locale);
-    
+
     if (product && product.relatedProducts.length > 0) {
       // Fetch related products
       const allProducts = await cmsClient.getProducts(locale as Locale);
@@ -106,6 +114,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     { label: product.name[validLocale] },
   ];
 
+  // Breadcrumb JSON-LD items (with full URLs)
+  const breadcrumbJsonLdItems = [
+    { name: t('home'), url: `${baseUrl}/${validLocale}` },
+    { name: t('products'), url: `${baseUrl}/${validLocale}/produits` },
+    { name: product.name[validLocale], url: `${baseUrl}/${validLocale}/produits/${slug}` },
+  ];
+
   return (
     <>
       {/* Schema.org JSON-LD for Product */}
@@ -115,6 +130,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           __html: renderSchemaScript(productSchema),
         }}
       />
+      {/* Breadcrumb JSON-LD */}
+      <BreadcrumbJsonLd items={breadcrumbJsonLdItems} />
       <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
         {/* Breadcrumb navigation */}
         <div className="container mx-auto px-4 pt-20">
