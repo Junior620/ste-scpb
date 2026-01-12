@@ -18,6 +18,29 @@
 | **Rich Results Test**       | Test rich snippets Google       | https://search.google.com/test/rich-results    |
 | **Mobile-Friendly Test**    | Test responsive mobile          | https://search.google.com/test/mobile-friendly |
 
+### Validation des Schemas JSON-LD
+
+Pour générer les schemas JSON-LD et les valider manuellement:
+
+```bash
+# Générer les schemas pour validation
+cd ste-scpb-website
+node scripts/validate-schemas.ts
+```
+
+Copier chaque schema dans les outils de validation:
+
+1. **Schema Markup Validator** - Coller le JSON-LD, vérifier qu'il n'y a pas d'erreurs
+2. **Rich Results Test** - Tester l'URL de production pour voir les rich snippets
+
+#### Schemas implémentés:
+
+- ✅ **Organization** - Avec @id pour déduplication
+- ✅ **WebSite** - Avec SearchAction conditionnel
+- ✅ **BreadcrumbList** - Sur pages produits
+- ✅ **Article** - Sur pages actualités
+- ✅ **Product** - Sur pages produits
+
 ---
 
 ## 🔧 Audit SEO Technique

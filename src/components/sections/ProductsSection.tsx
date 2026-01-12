@@ -17,16 +17,30 @@ import Image from 'next/image';
 import type { Product, ProductCategory } from '@/domain/entities/Product';
 import { PRODUCT_CATEGORIES } from '@/domain/entities/Product';
 import type { Locale } from '@/domain/value-objects/Locale';
-import { Scene3DWrapper, Starfield, Constellation, PostProcessing, StaticHeroFallback } from '@/components/3d';
+import {
+  Scene3DWrapper,
+  Starfield,
+  Constellation,
+  PostProcessing,
+  StaticHeroFallback,
+} from '@/components/3d';
 import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 import { PRODUCT_CONSTELLATIONS, PRODUCT_COLORS } from '@/lib/scene-presets';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/Card';
 import { ScrollReveal } from '@/components/ui';
 // Button import removed - not currently used
 
 export interface ProductsSectionProps {
   products: Product[];
   initialCategory?: ProductCategory;
+  initialSearchQuery?: string;
   locale: Locale;
 }
 
@@ -78,7 +92,6 @@ function CategoryFilter({
   );
 }
 
-
 /**
  * 3D Scene for products constellation
  */
@@ -105,10 +118,10 @@ function ProductsScene({
           size: 0.3,
           label: cat,
         })),
-        connections: PRODUCT_CATEGORIES.map((_, i) => [
-          i,
-          (i + 1) % PRODUCT_CATEGORIES.length,
-        ]) as [number, number][],
+        connections: PRODUCT_CATEGORIES.map((_, i) => [i, (i + 1) % PRODUCT_CATEGORIES.length]) as [
+          number,
+          number,
+        ][],
         color: '#fbbf24',
         glowIntensity: 1.0,
         animationSpeed: 0.8,
@@ -124,11 +137,7 @@ function ProductsScene({
         parallaxIntensity={0.05}
         enableParallax={true}
       />
-      <Constellation
-        config={constellationConfig}
-        isActive={true}
-        onNodeClick={onNodeClick}
-      />
+      <Constellation config={constellationConfig} isActive={true} onNodeClick={onNodeClick} />
       <PostProcessing config={config} />
       <ambientLight intensity={0.3} />
     </>
@@ -176,21 +185,15 @@ function getProductTagline(category: ProductCategory, locale: Locale): string {
 /**
  * Product card component - B2B optimized
  */
-function ProductCard({
-  product,
-  locale,
-}: {
-  product: Product;
-  locale: Locale;
-}) {
+function ProductCard({ product, locale }: { product: Product; locale: Locale }) {
   const t = useTranslations('products');
   const categoryColor = PRODUCT_COLORS[product.category];
-  
+
   // Get image URL with fallback
   const imageUrl = product.images?.[0]?.url || '/images/placeholder-product.svg';
   const imageAlt = product.images?.[0]?.alt?.[locale] || product.name[locale];
   const hasValidImage = imageUrl && !imageUrl.includes('placeholder');
-  
+
   // Get B2B badge and tagline
   const badge = getProductBadge(product.category, t);
   const tagline = getProductTagline(product.category, locale);
@@ -243,9 +246,24 @@ function ProductCard({
           {/* Origin if available */}
           {product.origin.length > 0 && (
             <div className="flex items-center gap-2 text-sm text-foreground-muted mb-2">
-              <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <svg
+                className="w-4 h-4 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
               </svg>
               <span>{product.origin.join(', ')}</span>
             </div>
@@ -274,13 +292,18 @@ function ProductCard({
         <CardFooter className="pt-4 border-t border-border/50">
           <span className="text-primary text-sm font-medium group-hover:underline flex items-center gap-1">
             {t('details.requestQuote')}
-            <svg 
-              className="w-4 h-4 transition-transform group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            <svg
+              className="w-4 h-4 transition-transform group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
             </svg>
           </span>
         </CardFooter>
@@ -289,25 +312,53 @@ function ProductCard({
   );
 }
 
-
 /**
  * Main Products Section component
  */
 export function ProductsSection({
   products,
   initialCategory,
+  initialSearchQuery,
   locale,
 }: ProductsSectionProps) {
   const t = useTranslations('products');
+  const tCommon = useTranslations('common');
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(
     initialCategory ?? null
   );
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery ?? '');
 
-  // Filter products by category
+  // Filter products by category and search query
   const filteredProducts = useMemo(() => {
-    if (!selectedCategory) return products;
-    return products.filter((p) => p.category === selectedCategory);
-  }, [products, selectedCategory]);
+    let result = products;
+
+    // Filter by category
+    if (selectedCategory) {
+      result = result.filter((p) => p.category === selectedCategory);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      result = result.filter((p) => {
+        const name = p.name[locale]?.toLowerCase() || '';
+        const description = p.description?.[locale]?.toLowerCase() || '';
+        const category = p.category.toLowerCase();
+        const certifications = p.certifications.join(' ').toLowerCase();
+        const origin = p.origin.join(' ').toLowerCase();
+
+        return (
+          name.includes(query) ||
+          description.includes(query) ||
+          category.includes(query) ||
+          certifications.includes(query) ||
+          origin.includes(query)
+        );
+      });
+    }
+
+    return result;
+  }, [products, selectedCategory, searchQuery, locale]);
 
   // Handle category change
   const handleCategoryChange = useCallback((category: ProductCategory | null) => {
@@ -322,12 +373,30 @@ export function ProductsSection({
     window.history.replaceState({}, '', url.toString());
   }, []);
 
-  // Handle constellation node click
-  const handleNodeClick = useCallback((nodeId: string) => {
-    if (PRODUCT_CATEGORIES.includes(nodeId as ProductCategory)) {
-      handleCategoryChange(nodeId as ProductCategory);
+  // Handle search change
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Update URL with search query
+    const url = new URL(window.location.href);
+    if (value.trim()) {
+      url.searchParams.set('q', value.trim());
+    } else {
+      url.searchParams.delete('q');
     }
-  }, [handleCategoryChange]);
+    window.history.replaceState({}, '', url.toString());
+  }, []);
+
+  // Handle constellation node click
+  const handleNodeClick = useCallback(
+    (nodeId: string) => {
+      if (PRODUCT_CATEGORIES.includes(nodeId as ProductCategory)) {
+        handleCategoryChange(nodeId as ProductCategory);
+      }
+    },
+    [handleCategoryChange]
+  );
 
   return (
     <section className="relative" aria-label={t('title')}>
@@ -339,10 +408,7 @@ export function ProductsSection({
             fallback={<StaticHeroFallback starCount={100} />}
             camera={{ position: [0, 0, 8], fov: 60 }}
           >
-            <ProductsScene
-              selectedCategory={selectedCategory}
-              onNodeClick={handleNodeClick}
-            />
+            <ProductsScene selectedCategory={selectedCategory} onNodeClick={handleNodeClick} />
           </Scene3DWrapper>
         </div>
 
@@ -354,14 +420,39 @@ export function ProductsSection({
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl holographic">
             {t('title')}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
-            {t('subtitle')}
-          </p>
+          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">{t('subtitle')}</p>
         </div>
       </div>
 
       {/* Category Filter */}
       <div className="container mx-auto px-4 py-8">
+        {/* Search Input */}
+        <div className="max-w-md mx-auto mb-6">
+          <div className="relative">
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder={tCommon('search')}
+              className="w-full px-4 py-3 pl-12 rounded-full bg-background-secondary border border-border/50 text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+              aria-label={tCommon('search')}
+            />
+            <svg
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground-muted"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </div>
+
         <CategoryFilter
           categories={PRODUCT_CATEGORIES}
           selectedCategory={selectedCategory}
@@ -373,10 +464,7 @@ export function ProductsSection({
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredProducts.map((product, index) => (
               <ScrollReveal key={product.id} direction="up" delay={index * 50} duration={500}>
-                <ProductCard
-                  product={product}
-                  locale={locale}
-                />
+                <ProductCard product={product} locale={locale} />
               </ScrollReveal>
             ))}
           </div>

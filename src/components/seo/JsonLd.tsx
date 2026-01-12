@@ -32,8 +32,8 @@ export function JsonLd<T extends object>({ data }: { data: T }) {
  * SearchAction is CONDITIONAL - only include if search actually works
  */
 export function WebSiteJsonLd({ locale }: { locale: Locale }) {
-  // TODO: Set to true when ?q= search is implemented on /produits
-  const hasWorkingSearch = false;
+  // Search is now implemented on /produits with ?q= parameter
+  const hasWorkingSearch = true;
 
   const productsPath = locale === 'fr' ? '/fr/produits' : '/en/products';
 

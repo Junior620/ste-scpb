@@ -2,11 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
-import { generateLocalizedMetadata, BASE_URL, SITE_NAME } from '@/i18n/metadata';
+import { generateLocalizedMetadata, BASE_URL } from '@/i18n/metadata';
 import { ArticleDetailSection } from '@/components/sections/ArticleDetailSection';
 import { createCMSClient } from '@/infrastructure/cms';
 import type { Article } from '@/domain/entities/Article';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { ArticleJsonLd } from '@/components/seo/JsonLd';
 
 // ISR: Revalidate every 30 minutes
 export const revalidate = 1800;
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ArticleDetailPageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  
+
   let article: Article | null = null;
   try {
     const cmsClient = await createCMSClient();
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
     pathname: `/actualites/${slug}`,
     locale: validLocale,
     ogImage,
-    keywords: article.tags.map(tag => tag.name[validLocale]),
+    keywords: article.tags.map((tag) => tag.name[validLocale]),
   });
 
   // Add article-specific Open Graph properties
@@ -84,7 +85,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
 
   // Fetch article from CMS
   let article: Article | null = null;
-  
+
   try {
     const cmsClient = await createCMSClient();
     article = await cmsClient.getArticleBySlug(slug, locale as Locale);
@@ -96,36 +97,20 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     notFound();
   }
 
-  // Generate schema.org JSON-LD for Article
+  // Generate schema.org JSON-LD for Article using the ArticleJsonLd component
   const validLocale = isValidLocale(locale) ? (locale as Locale) : 'fr';
-  
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title[validLocale],
-    description: article.excerpt[validLocale],
-    image: article.featuredImage?.url,
-    datePublished: article.publishedAt.toISOString(),
-    dateModified: article.updatedAt.toISOString(),
-    author: article.author
-      ? {
-          '@type': 'Person',
-          name: article.author.name,
-        }
-      : undefined,
-    publisher: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`,
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${BASE_URL}/${locale}/actualites/${slug}`,
-    },
-  };
+  const articleUrl = `${BASE_URL}/${locale}/actualites/${slug}`;
+
+  // Prepare images array for ArticleJsonLd (secure mapping)
+  const articleImages = article.featuredImage
+    ? [
+        {
+          url: article.featuredImage.url,
+          width: article.featuredImage.width,
+          height: article.featuredImage.height,
+        },
+      ]
+    : [];
 
   // Breadcrumb items: Accueil > Actualités > [Article Title]
   const breadcrumbItems = [
@@ -136,22 +121,21 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
 
   return (
     <>
-      {/* Schema.org JSON-LD for Article */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleSchema),
-        }}
+      {/* Schema.org JSON-LD for Article - uses @id reference to Organization */}
+      <ArticleJsonLd
+        title={article.title[validLocale]}
+        description={article.excerpt[validLocale]}
+        url={articleUrl}
+        images={articleImages}
+        publishedAt={article.publishedAt.toISOString()}
+        updatedAt={article.updatedAt.toISOString()}
       />
       <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
         {/* Breadcrumb navigation */}
         <div className="container mx-auto px-4 pt-20">
           <Breadcrumb items={breadcrumbItems} />
         </div>
-        <ArticleDetailSection
-          article={article}
-          locale={locale as Locale}
-        />
+        <ArticleDetailSection article={article} locale={locale as Locale} />
       </main>
     </>
   );

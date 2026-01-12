@@ -13,7 +13,7 @@ export const revalidate = 3600;
 
 interface ProductsPageProps {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }
 
 export async function generateMetadata({ params }: ProductsPageProps): Promise<Metadata> {
@@ -36,9 +36,11 @@ export async function generateMetadata({ params }: ProductsPageProps): Promise<M
 async function ProductsContent({
   locale,
   category,
+  searchQuery,
 }: {
   locale: Locale;
   category?: ProductCategory;
+  searchQuery?: string;
 }) {
   // Fetch products from CMS
   let products: Product[] = [];
@@ -56,6 +58,7 @@ async function ProductsContent({
     <ProductsSection
       products={products}
       initialCategory={category}
+      initialSearchQuery={searchQuery}
       locale={locale}
     />
   );
@@ -89,7 +92,7 @@ function ProductsLoadingFallback() {
 
 export default async function ProductsPage({ params, searchParams }: ProductsPageProps) {
   const { locale } = await params;
-  const { category } = await searchParams;
+  const { category, q } = await searchParams;
 
   // Enable static rendering
   if (isValidLocale(locale)) {
@@ -97,14 +100,22 @@ export default async function ProductsPage({ params, searchParams }: ProductsPag
   }
 
   // Validate category filter
-  const validCategory = category && PRODUCT_CATEGORIES.includes(category as ProductCategory)
-    ? (category as ProductCategory)
-    : undefined;
+  const validCategory =
+    category && PRODUCT_CATEGORIES.includes(category as ProductCategory)
+      ? (category as ProductCategory)
+      : undefined;
+
+  // Sanitize search query
+  const searchQuery = q?.trim() || undefined;
 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
       <Suspense fallback={<ProductsLoadingFallback />}>
-        <ProductsContent locale={locale as Locale} category={validCategory} />
+        <ProductsContent
+          locale={locale as Locale}
+          category={validCategory}
+          searchQuery={searchQuery}
+        />
       </Suspense>
     </main>
   );

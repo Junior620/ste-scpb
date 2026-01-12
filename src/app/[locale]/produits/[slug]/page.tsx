@@ -8,7 +8,6 @@ import { createCMSClient } from '@/infrastructure/cms';
 import type { Product } from '@/domain/entities/Product';
 import { generateProductSchema, renderSchemaScript } from '@/lib/schema';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 
 // ISR: Revalidate every hour
 export const revalidate = 3600;
@@ -103,7 +102,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   }
 
   // Generate schema.org JSON-LD
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
   const productSchema = generateProductSchema(product, locale as Locale, baseUrl);
 
   // Breadcrumb items: Accueil > Produits > [Product Name]
@@ -112,13 +111,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     { label: t('home'), href: `/${validLocale}` },
     { label: t('products'), href: `/${validLocale}/produits` },
     { label: product.name[validLocale] },
-  ];
-
-  // Breadcrumb JSON-LD items (with full URLs)
-  const breadcrumbJsonLdItems = [
-    { name: t('home'), url: `${baseUrl}/${validLocale}` },
-    { name: t('products'), url: `${baseUrl}/${validLocale}/produits` },
-    { name: product.name[validLocale], url: `${baseUrl}/${validLocale}/produits/${slug}` },
   ];
 
   return (
@@ -130,8 +122,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           __html: renderSchemaScript(productSchema),
         }}
       />
-      {/* Breadcrumb JSON-LD */}
-      <BreadcrumbJsonLd items={breadcrumbJsonLdItems} />
+      {/* Breadcrumb JSON-LD is included in the Breadcrumb UI component */}
       <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
         {/* Breadcrumb navigation */}
         <div className="container mx-auto px-4 pt-20">

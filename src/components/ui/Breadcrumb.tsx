@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
+
 export interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -14,16 +16,25 @@ export interface BreadcrumbProps {
 }
 
 export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
-  // Generate JSON-LD for SEO
+  // Generate JSON-LD for SEO with full URLs (Google best practice)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      ...(item.href && { item: item.href }),
-    })),
+    itemListElement: items.map((item, index) => {
+      // Build full URL for JSON-LD (Google recommends absolute URLs)
+      const fullUrl = item.href
+        ? item.href.startsWith('http')
+          ? item.href
+          : `${BASE_URL}${item.href}`
+        : undefined;
+
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.label,
+        ...(fullUrl && { item: fullUrl }),
+      };
+    }),
   };
 
   return (
