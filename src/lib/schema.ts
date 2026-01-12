@@ -211,8 +211,7 @@ export function generateLocalBusinessSchema(baseUrl: string): LocalBusinessSchem
     '@type': 'LocalBusiness',
     name: 'STE-SCPB',
     url: baseUrl,
-    description:
-      'Commerce de produits agricoles et matières premières - Cacao, Café, Bois, Maïs',
+    description: 'Commerce de produits agricoles et matières premières - Cacao, Café, Bois, Maïs',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Douala-Akwa',
@@ -233,4 +232,179 @@ export function generateLocalBusinessSchema(baseUrl: string): LocalBusinessSchem
  */
 export function renderSchemaScript<T extends object>(schema: T): string {
   return JSON.stringify(schema, null, 0);
+}
+
+/**
+ * Schema.org WebSite type with SearchAction
+ */
+export interface WebSiteSchema {
+  '@context': 'https://schema.org';
+  '@type': 'WebSite';
+  name: string;
+  url: string;
+  description: string;
+  inLanguage: string[];
+  potentialAction?: {
+    '@type': 'SearchAction';
+    target: string;
+    'query-input': string;
+  };
+}
+
+/**
+ * Generates WebSite schema.org JSON-LD with SearchAction
+ */
+export function generateWebSiteSchema(baseUrl: string): WebSiteSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'STE-SCPB',
+    url: baseUrl,
+    description:
+      'Export de produits agricoles camerounais - Cacao, Café, Bois, Maïs. Commerce B2B international.',
+    inLanguage: ['fr', 'en'],
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${baseUrl}/fr/produits?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+/**
+ * Schema.org BreadcrumbList type
+ */
+export interface BreadcrumbSchema {
+  '@context': 'https://schema.org';
+  '@type': 'BreadcrumbList';
+  itemListElement: Array<{
+    '@type': 'ListItem';
+    position: number;
+    name: string;
+    item: string;
+  }>;
+}
+
+/**
+ * Generates BreadcrumbList schema.org JSON-LD
+ */
+export function generateBreadcrumbSchema(
+  breadcrumbs: Array<{ name: string; url: string }>,
+  baseUrl: string
+): BreadcrumbSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url.startsWith('http') ? crumb.url : `${baseUrl}${crumb.url}`,
+    })),
+  };
+}
+
+/**
+ * Schema.org Article type
+ */
+export interface ArticleSchema {
+  '@context': 'https://schema.org';
+  '@type': 'Article';
+  headline: string;
+  description: string;
+  image?: string;
+  datePublished: string;
+  dateModified: string;
+  author: {
+    '@type': 'Organization';
+    name: string;
+  };
+  publisher: {
+    '@type': 'Organization';
+    name: string;
+    logo: {
+      '@type': 'ImageObject';
+      url: string;
+    };
+  };
+  mainEntityOfPage: {
+    '@type': 'WebPage';
+    '@id': string;
+  };
+}
+
+/**
+ * Generates Article schema.org JSON-LD
+ */
+export function generateArticleSchema(
+  article: {
+    title: string;
+    description: string;
+    image?: string;
+    publishedAt: Date;
+    updatedAt?: Date;
+    slug: string;
+  },
+  locale: string,
+  baseUrl: string
+): ArticleSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: article.image,
+    datePublished: article.publishedAt.toISOString(),
+    dateModified: (article.updatedAt || article.publishedAt).toISOString(),
+    author: {
+      '@type': 'Organization',
+      name: 'STE-SCPB',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'STE-SCPB',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/${locale}/actualites/${article.slug}`,
+    },
+  };
+}
+
+/**
+ * Schema.org FAQPage type
+ */
+export interface FAQSchema {
+  '@context': 'https://schema.org';
+  '@type': 'FAQPage';
+  mainEntity: Array<{
+    '@type': 'Question';
+    name: string;
+    acceptedAnswer: {
+      '@type': 'Answer';
+      text: string;
+    };
+  }>;
+}
+
+/**
+ * Generates FAQPage schema.org JSON-LD
+ */
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>): FAQSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
 }

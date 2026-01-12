@@ -1,0 +1,25 @@
+# Robots.txt for STE-SCPB
+# https://www.ste-scpb.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Block API routes
+Disallow: /api/
+Disallow: /_next/static/
+Disallow: /_next/image/
+
+# Block admin/preview
+Disallow: /studio/
+Disallow: /*?preview=
+Disallow: /*?draft=
+
+# Block utility pages
+Disallow: /404
+Disallow: /500
+
+# Crawl delay (optional, respecté par certains bots)
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://www.ste-scpb.com/sitemap.xml
