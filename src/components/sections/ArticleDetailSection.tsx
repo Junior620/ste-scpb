@@ -20,6 +20,7 @@ import type { Article } from '@/domain/entities/Article';
 import { formatArticleDate, getLocalizedArticleContent } from '@/domain/entities/Article';
 import type { Locale } from '@/domain/value-objects/Locale';
 import { Button } from '@/components/ui/Button';
+import { PortableTextRenderer } from '@/components/ui/PortableTextRenderer';
 
 /**
  * Product keywords mapping for contextual linking
@@ -481,10 +482,9 @@ export function ArticleDetailSection({ article, locale }: ArticleDetailSectionPr
               prose-blockquote:border-l-primary prose-blockquote:text-foreground-muted
               prose-code:text-primary prose-code:bg-background-secondary prose-code:px-1 prose-code:rounded
               prose-pre:bg-background-secondary prose-pre:border prose-pre:border-border"
-            dangerouslySetInnerHTML={{
-              __html: articleContent,
-            }}
-          />
+          >
+            <PortableTextRenderer content={articleContent} />
+          </div>
 
           {/* Contextual Product Links - SEO Maillage Interne */}
           <ContextualProductLinks products={mentionedProducts} locale={locale} />
