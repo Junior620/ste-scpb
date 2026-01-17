@@ -1,5 +1,12 @@
 import type { Product, ConstellationConfig, ProductImage } from '@/domain/entities/Product';
-import type { Article, ArticleListItem, ArticleCategory, ArticleTag, ArticleAuthor, ArticleImage } from '@/domain/entities/Article';
+import type {
+  Article,
+  ArticleListItem,
+  ArticleCategory,
+  ArticleTag,
+  ArticleAuthor,
+  ArticleImage,
+} from '@/domain/entities/Article';
 import type { TeamMember, TeamMemberPhoto } from '@/domain/entities/TeamMember';
 import type { LocalizedContent } from '@/domain/value-objects/Locale';
 import type {
@@ -14,10 +21,10 @@ import type {
 } from './types';
 
 /**
- * Transforms CMS i18n fields (_fr, _en) to LocalizedContent Record
+ * Transforms CMS i18n fields (_fr, _en, _ru) to LocalizedContent Record
  */
-function toLocalizedContent(fr: string, en: string): LocalizedContent {
-  return { fr, en };
+function toLocalizedContent(fr: string, en: string, ru: string = ''): LocalizedContent {
+  return { fr, en, ru };
 }
 
 /**

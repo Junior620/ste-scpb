@@ -72,7 +72,7 @@ interface SanityArticle {
   slug: { current: string };
   category?: string;
   excerpt?: { fr: string; en: string };
-  content?: { fr: unknown[]; en: unknown[] };
+  content?: { fr: unknown[]; en: unknown[]; ru?: unknown[] };
   image?: SanityImage;
   publishedAt: string;
   author?: {
@@ -378,6 +378,7 @@ export class SanityClient implements CMSClient {
       content: {
         fr: sanityArticle.content?.fr ? JSON.stringify(sanityArticle.content.fr) : '',
         en: sanityArticle.content?.en ? JSON.stringify(sanityArticle.content.en) : '',
+        ru: sanityArticle.content?.ru ? JSON.stringify(sanityArticle.content.ru) : '',
       },
       featuredImage: sanityArticle.image
         ? {
@@ -391,7 +392,11 @@ export class SanityClient implements CMSClient {
         ? {
             id: sanityArticle.category,
             slug: sanityArticle.category,
-            name: { fr: sanityArticle.category, en: sanityArticle.category },
+            name: {
+              fr: sanityArticle.category,
+              en: sanityArticle.category,
+              ru: sanityArticle.category,
+            },
           }
         : undefined,
       tags: [],
@@ -437,7 +442,11 @@ export class SanityClient implements CMSClient {
         ? {
             id: sanityArticle.category,
             slug: sanityArticle.category,
-            name: { fr: sanityArticle.category, en: sanityArticle.category },
+            name: {
+              fr: sanityArticle.category,
+              en: sanityArticle.category,
+              ru: sanityArticle.category,
+            },
           }
         : undefined,
       publishedAt: new Date(sanityArticle.publishedAt),
