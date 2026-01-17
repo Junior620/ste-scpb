@@ -167,17 +167,57 @@ function getProductBadge(category: ProductCategory, t: ReturnType<typeof useTran
  * Get product tagline based on category
  */
 function getProductTagline(category: ProductCategory, locale: Locale): string {
-  const taglines: Record<ProductCategory, { fr: string; en: string }> = {
-    cacao: { fr: 'Fèves fermentées – Grade export', en: 'Fermented beans – Export grade' },
-    cafe: { fr: 'Arabica & Robusta – Grade export', en: 'Arabica & Robusta – Export grade' },
-    bois: { fr: 'Essences légales – Traçabilité FLEGT', en: 'Legal species – FLEGT traceability' },
-    mais: { fr: 'Grade alimentaire – Séché & trié', en: 'Food grade – Dried & sorted' },
-    hevea: { fr: 'Latex / caoutchouc – Grade industriel', en: 'Latex / rubber – Industrial grade' },
-    sesame: { fr: 'Décortiqué – Pureté 99%', en: 'Hulled – 99% purity' },
-    cajou: { fr: 'Calibre W320/W240 – Qualité export', en: 'W320/W240 grade – Export quality' },
-    soja: { fr: 'Non-OGM (selon lots) – Haute protéine', en: 'Non-GMO (per batch) – High protein' },
-    amandes: { fr: 'Qualité premium – Grade export', en: 'Premium quality – Export grade' },
-    sorgho: { fr: 'Grade alimentaire – Trié & calibré', en: 'Food grade – Sorted & calibrated' },
+  const taglines: Record<ProductCategory, { fr: string; en: string; ru: string }> = {
+    cacao: {
+      fr: 'Fèves fermentées – Grade export',
+      en: 'Fermented beans – Export grade',
+      ru: 'Ферментированные бобы – Экспортный сорт',
+    },
+    cafe: {
+      fr: 'Arabica & Robusta – Grade export',
+      en: 'Arabica & Robusta – Export grade',
+      ru: 'Арабика и Робуста – Экспортный сорт',
+    },
+    bois: {
+      fr: 'Essences légales – Traçabilité FLEGT',
+      en: 'Legal species – FLEGT traceability',
+      ru: 'Легальные породы – Отслеживаемость FLEGT',
+    },
+    mais: {
+      fr: 'Grade alimentaire – Séché & trié',
+      en: 'Food grade – Dried & sorted',
+      ru: 'Пищевой сорт – Сушеная и отсортированная',
+    },
+    hevea: {
+      fr: 'Latex / caoutchouc – Grade industriel',
+      en: 'Latex / rubber – Industrial grade',
+      ru: 'Латекс / каучук – Промышленный сорт',
+    },
+    sesame: {
+      fr: 'Décortiqué – Pureté 99%',
+      en: 'Hulled – 99% purity',
+      ru: 'Очищенный – Чистота 99%',
+    },
+    cajou: {
+      fr: 'Calibre W320/W240 – Qualité export',
+      en: 'W320/W240 grade – Export quality',
+      ru: 'Калибр W320/W240 – Экспортное качество',
+    },
+    soja: {
+      fr: 'Non-OGM (selon lots) – Haute protéine',
+      en: 'Non-GMO (per batch) – High protein',
+      ru: 'Без ГМО (по партиям) – Высокий белок',
+    },
+    amandes: {
+      fr: 'Qualité premium – Grade export',
+      en: 'Premium quality – Export grade',
+      ru: 'Премиум качество – Экспортный сорт',
+    },
+    sorgho: {
+      fr: 'Grade alimentaire – Trié & calibré',
+      en: 'Food grade – Sorted & calibrated',
+      ru: 'Пищевой сорт – Отсортированное и калиброванное',
+    },
   };
   return taglines[category]?.[locale] || taglines[category]?.fr || '';
 }
