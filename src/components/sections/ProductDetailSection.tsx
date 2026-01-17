@@ -40,46 +40,56 @@ export interface ProductDetailSectionProps {
 /**
  * Default product descriptions for B2B when CMS data is missing
  */
-const DEFAULT_DESCRIPTIONS: Record<ProductCategory, { fr: string; en: string }> = {
+const DEFAULT_DESCRIPTIONS: Record<ProductCategory, { fr: string; en: string; ru: string }> = {
   cacao: {
     fr: 'Fèves de cacao fin du Cameroun, issues des terroirs du Centre et du Sud. Fermentation maîtrisée (6-7 jours), séchage naturel, tri rigoureux. Profil aromatique fruité et équilibré, idéal pour chocolatiers et industriels exigeants.',
     en: 'Fine cocoa beans from Cameroon, sourced from Central and Southern terroirs. Controlled fermentation (6-7 days), natural drying, rigorous sorting. Fruity and balanced aromatic profile, ideal for demanding chocolatiers and manufacturers.',
+    ru: 'Отборные какао-бобы из Камеруна, происходящие из терруаров Центрального и Южного регионов. Контролируемая ферментация (6-7 дней), естественная сушка, строгая сортировка. Фруктовый и сбалансированный ароматический профиль, идеально для требовательных шоколатье и производителей.',
   },
   cafe: {
     fr: "Café Arabica et Robusta du Cameroun, cultivé en altitude dans les hauts plateaux de l'Ouest. Récolte sélective, traitement humide ou naturel selon les lots. Grade export A, profil aromatique complexe avec notes de fruits et de chocolat.",
     en: 'Arabica and Robusta coffee from Cameroon, grown at altitude in the Western highlands. Selective harvesting, wet or natural processing depending on lots. Export grade A, complex aromatic profile with fruit and chocolate notes.',
+    ru: 'Кофе Арабика и Робуста из Камеруна, выращенный на высоте в западных нагорьях. Селективный сбор, влажная или натуральная обработка в зависимости от партий. Экспортный сорт A, сложный ароматический профиль с нотами фруктов и шоколада.',
   },
   bois: {
     fr: "Bois tropicaux d'essences légales, conformes à la réglementation FLEGT. Traçabilité complète de la forêt à l'export. Essences disponibles : Ayous, Sapelli, Iroko, Padouk. Documentation forestière et certificats d'origine fournis.",
     en: 'Legal tropical wood species, FLEGT compliant. Full traceability from forest to export. Available species: Ayous, Sapelli, Iroko, Padouk. Forestry documentation and certificates of origin provided.',
+    ru: 'Легальные тропические породы древесины, соответствующие требованиям FLEGT. Полная прослеживаемость от леса до экспорта. Доступные породы: Айоус, Сапелли, Ироко, Падук. Предоставляется лесная документация и сертификаты происхождения.',
   },
   mais: {
     fr: "Maïs grade alimentaire du Cameroun, séché et trié mécaniquement. Taux d'humidité contrôlé (≤14%), calibrage homogène. Adapté à l'alimentation humaine et animale. Conditionnement en sacs ou vrac conteneur.",
     en: 'Food-grade corn from Cameroon, mechanically dried and sorted. Controlled moisture content (≤14%), uniform calibration. Suitable for human and animal consumption. Packaging in bags or bulk container.',
+    ru: 'Пищевая кукуруза из Камеруна, механически высушенная и отсортированная. Контролируемое содержание влаги (≤14%), однородная калибровка. Подходит для питания людей и животных. Упаковка в мешках или насыпью в контейнере.',
   },
   hevea: {
     fr: 'Latex et caoutchouc naturel du Cameroun, grade industriel. Spécifications techniques sur demande. Adapté aux applications industrielles : pneumatiques, joints, revêtements. Livraison en balles ou conteneurs.',
     en: 'Natural latex and rubber from Cameroon, industrial grade. Technical specifications on request. Suitable for industrial applications: tires, seals, coatings. Delivery in bales or containers.',
+    ru: 'Натуральный латекс и каучук из Камеруна, промышленный сорт. Технические спецификации по запросу. Подходит для промышленных применений: шины, уплотнители, покрытия. Доставка в тюках или контейнерах.',
   },
   sesame: {
     fr: "Sésame décortiqué du Cameroun, pureté 99%+. Graines blanches ou naturelles selon les lots. Qualité export pour l'industrie alimentaire : huile, tahini, boulangerie. Conditionnement adapté à l'export.",
     en: 'Hulled sesame from Cameroon, 99%+ purity. White or natural seeds depending on lots. Export quality for food industry: oil, tahini, bakery. Export-adapted packaging.',
+    ru: 'Очищенный кунжут из Камеруна, чистота 99%+. Белые или натуральные семена в зависимости от партий. Экспортное качество для пищевой промышленности: масло, тахини, выпечка. Упаковка, адаптированная для экспорта.',
   },
   cajou: {
     fr: "Noix de cajou décortiquées, calibre W320/W240. Qualité export premium, tri manuel. Idéal pour le snacking, la pâtisserie et l'industrie alimentaire. Conditionnement sous vide ou cartons.",
     en: 'Shelled cashew nuts, W320/W240 grade. Premium export quality, hand-sorted. Ideal for snacking, pastry and food industry. Vacuum or carton packaging.',
+    ru: 'Очищенные орехи кешью, калибр W320/W240. Премиальное экспортное качество, ручная сортировка. Идеально для снеков, кондитерских изделий и пищевой промышленности. Вакуумная упаковка или картонные коробки.',
   },
   soja: {
     fr: "Soja non-OGM (selon lots), haute teneur en protéines. Certificat de conformité disponible. Adapté à l'alimentation animale et à la transformation industrielle. Livraison en vrac ou sacs.",
     en: 'Non-GMO soy (per batch), high protein content. Certificate of conformity available. Suitable for animal feed and industrial processing. Bulk or bag delivery.',
+    ru: 'Соя без ГМО (в зависимости от партий), высокое содержание белка. Доступен сертификат соответствия. Подходит для кормов для животных и промышленной переработки. Доставка насыпью или в мешках.',
   },
   amandes: {
     fr: "Amandes de qualité premium, calibrées et triées. Origine contrôlée, traçabilité garantie. Pour l'industrie alimentaire, la pâtisserie et le snacking.",
     en: 'Premium quality almonds, calibrated and sorted. Controlled origin, guaranteed traceability. For food industry, pastry and snacking.',
+    ru: 'Миндаль премиального качества, откалиброванный и отсортированный. Контролируемое происхождение, гарантированная прослеживаемость. Для пищевой промышленности, кондитерских изделий и снеков.',
   },
   sorgho: {
     fr: "Sorgho grade alimentaire, séché et calibré. Adapté à l'alimentation humaine et animale. Taux d'humidité contrôlé, conditionnement export.",
     en: 'Food-grade sorghum, dried and calibrated. Suitable for human and animal consumption. Controlled moisture content, export packaging.',
+    ru: 'Пищевое сорго, высушенное и откалиброванное. Подходит для питания людей и животных. Контролируемое содержание влаги, экспортная упаковка.',
   },
 };
 
