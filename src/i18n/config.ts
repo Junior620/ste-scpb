@@ -22,6 +22,7 @@ export const localeConfig = {
 export const localeLabels: Record<Locale, string> = {
   fr: 'Français',
   en: 'English',
+  ru: 'Русский',
 };
 
 /**
@@ -30,4 +31,5 @@ export const localeLabels: Record<Locale, string> = {
 export const localeFlags: Record<Locale, string> = {
   fr: '🇫🇷',
   en: '🇬🇧',
+  ru: '🇷🇺',
 };

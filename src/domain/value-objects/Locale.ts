@@ -1,10 +1,10 @@
 /**
  * Locale value object
- * Supported languages: French (default) and English
+ * Supported languages: French (default), English, and Russian
  */
-export type Locale = 'fr' | 'en';
+export type Locale = 'fr' | 'en' | 'ru';
 
-export const SUPPORTED_LOCALES: readonly Locale[] = ['fr', 'en'] as const;
+export const SUPPORTED_LOCALES: readonly Locale[] = ['fr', 'en', 'ru'] as const;
 export const DEFAULT_LOCALE: Locale = 'fr';
 
 export function isValidLocale(value: string): value is Locale {
