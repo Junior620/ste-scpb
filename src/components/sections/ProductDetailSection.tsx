@@ -98,143 +98,259 @@ const DEFAULT_DESCRIPTIONS: Record<ProductCategory, { fr: string; en: string; ru
  */
 const TECHNICAL_SPECS: Record<
   ProductCategory,
-  Array<{ key: string; value: { fr: string; en: string }; icon: string }>
+  Array<{ key: string; value: { fr: string; en: string; ru: string }; icon: string }>
 > = {
   cacao: [
-    { key: 'humidity', value: { fr: '7-8%', en: '7-8%' }, icon: 'droplet' },
-    { key: 'fatContent', value: { fr: '52-56%', en: '52-56%' }, icon: 'flask' },
-    { key: 'fermentation', value: { fr: '6-7 jours', en: '6-7 days' }, icon: 'clock' },
-    { key: 'grade', value: { fr: 'Grade I / II', en: 'Grade I / II' }, icon: 'award' },
-    { key: 'standard', value: { fr: 'ICCO / ISO 2451', en: 'ICCO / ISO 2451' }, icon: 'check' },
+    { key: 'humidity', value: { fr: '7-8%', en: '7-8%', ru: '7-8%' }, icon: 'droplet' },
+    { key: 'fatContent', value: { fr: '52-56%', en: '52-56%', ru: '52-56%' }, icon: 'flask' },
+    {
+      key: 'fermentation',
+      value: { fr: '6-7 jours', en: '6-7 days', ru: '6-7 дней' },
+      icon: 'clock',
+    },
+    {
+      key: 'grade',
+      value: { fr: 'Grade I / II', en: 'Grade I / II', ru: 'Grade I / II' },
+      icon: 'award',
+    },
+    {
+      key: 'standard',
+      value: { fr: 'ICCO / ISO 2451', en: 'ICCO / ISO 2451', ru: 'ICCO / ISO 2451' },
+      icon: 'check',
+    },
   ],
   cafe: [
     {
       key: 'varieties',
-      value: { fr: 'Arabica / Robusta', en: 'Arabica / Robusta' },
+      value: { fr: 'Arabica / Robusta', en: 'Arabica / Robusta', ru: 'Arabica / Robusta' },
       icon: 'coffee',
     },
-    { key: 'altitude', value: { fr: '1000-2000m', en: '1000-2000m' }, icon: 'mountain' },
-    { key: 'humidity', value: { fr: '11-12%', en: '11-12%' }, icon: 'droplet' },
-    { key: 'grade', value: { fr: 'Grade A export', en: 'Grade A export' }, icon: 'award' },
-    { key: 'process', value: { fr: 'Lavé / Naturel', en: 'Washed / Natural' }, icon: 'settings' },
+    {
+      key: 'altitude',
+      value: { fr: '1000-2000m', en: '1000-2000m', ru: '1000-2000м' },
+      icon: 'mountain',
+    },
+    { key: 'humidity', value: { fr: '11-12%', en: '11-12%', ru: '11-12%' }, icon: 'droplet' },
+    {
+      key: 'grade',
+      value: { fr: 'Grade A export', en: 'Grade A export', ru: 'Grade A export' },
+      icon: 'award',
+    },
+    {
+      key: 'process',
+      value: { fr: 'Lavé / Naturel', en: 'Washed / Natural', ru: 'Влажная / Натуральная' },
+      icon: 'settings',
+    },
   ],
   bois: [
     {
       key: 'species',
-      value: { fr: 'Ayous, Sapelli, Iroko', en: 'Ayous, Sapelli, Iroko' },
+      value: {
+        fr: 'Ayous, Sapelli, Iroko',
+        en: 'Ayous, Sapelli, Iroko',
+        ru: 'Ayous, Sapelli, Iroko',
+      },
       icon: 'tree',
     },
-    { key: 'compliance', value: { fr: 'FLEGT / CITES', en: 'FLEGT / CITES' }, icon: 'shield' },
-    { key: 'humidity', value: { fr: '12-18%', en: '12-18%' }, icon: 'droplet' },
-    { key: 'format', value: { fr: 'Grumes / Sciages', en: 'Logs / Sawn' }, icon: 'box' },
-    { key: 'docs', value: { fr: 'Certificat origine', en: 'Origin certificate' }, icon: 'file' },
-  ],
-  mais: [
-    { key: 'grade', value: { fr: 'Grade alimentaire', en: 'Food grade' }, icon: 'award' },
-    { key: 'humidity', value: { fr: '≤14%', en: '≤14%' }, icon: 'droplet' },
-    { key: 'impurities', value: { fr: '<2%', en: '<2%' }, icon: 'filter' },
-    { key: 'packaging', value: { fr: 'Sacs 50kg / Vrac', en: 'Bags 50kg / Bulk' }, icon: 'box' },
-    { key: 'use', value: { fr: 'Humain / Animal', en: 'Human / Animal' }, icon: 'users' },
-  ],
-  hevea: [
-    { key: 'type', value: { fr: 'Latex / Caoutchouc', en: 'Latex / Rubber' }, icon: 'circle' },
-    { key: 'grade', value: { fr: 'Grade industriel', en: 'Industrial grade' }, icon: 'award' },
-    { key: 'drc', value: { fr: 'DRC 60%+', en: 'DRC 60%+' }, icon: 'percent' },
     {
-      key: 'packaging',
-      value: { fr: 'Balles / Conteneurs', en: 'Bales / Containers' },
+      key: 'compliance',
+      value: { fr: 'FLEGT / CITES', en: 'FLEGT / CITES', ru: 'FLEGT / CITES' },
+      icon: 'shield',
+    },
+    { key: 'humidity', value: { fr: '12-18%', en: '12-18%', ru: '12-18%' }, icon: 'droplet' },
+    {
+      key: 'format',
+      value: { fr: 'Grumes / Sciages', en: 'Logs / Sawn', ru: 'Брёвна / Пиломатериалы' },
       icon: 'box',
     },
-    { key: 'specs', value: { fr: 'Sur demande', en: 'On request' }, icon: 'file' },
+    {
+      key: 'docs',
+      value: { fr: 'Certificat origine', en: 'Origin certificate', ru: 'Сертификат происхождения' },
+      icon: 'file',
+    },
+  ],
+  mais: [
+    {
+      key: 'grade',
+      value: { fr: 'Grade alimentaire', en: 'Food grade', ru: 'Пищевой сорт' },
+      icon: 'award',
+    },
+    { key: 'humidity', value: { fr: '≤14%', en: '≤14%', ru: '≤14%' }, icon: 'droplet' },
+    { key: 'impurities', value: { fr: '<2%', en: '<2%', ru: '<2%' }, icon: 'filter' },
+    {
+      key: 'packaging',
+      value: { fr: 'Sacs 50kg / Vrac', en: 'Bags 50kg / Bulk', ru: 'Мешки 50кг / Насыпью' },
+      icon: 'box',
+    },
+    {
+      key: 'use',
+      value: { fr: 'Humain / Animal', en: 'Human / Animal', ru: 'Люди / Животные' },
+      icon: 'users',
+    },
+  ],
+  hevea: [
+    {
+      key: 'type',
+      value: { fr: 'Latex / Caoutchouc', en: 'Latex / Rubber', ru: 'Латекс / Каучук' },
+      icon: 'circle',
+    },
+    {
+      key: 'grade',
+      value: { fr: 'Grade industriel', en: 'Industrial grade', ru: 'Промышленный сорт' },
+      icon: 'award',
+    },
+    { key: 'drc', value: { fr: 'DRC 60%+', en: 'DRC 60%+', ru: 'DRC 60%+' }, icon: 'percent' },
+    {
+      key: 'packaging',
+      value: { fr: 'Balles / Conteneurs', en: 'Bales / Containers', ru: 'Тюки / Контейнеры' },
+      icon: 'box',
+    },
+    {
+      key: 'specs',
+      value: { fr: 'Sur demande', en: 'On request', ru: 'По запросу' },
+      icon: 'file',
+    },
   ],
   sesame: [
-    { key: 'purity', value: { fr: '99%+', en: '99%+' }, icon: 'check' },
-    { key: 'type', value: { fr: 'Blanc / Naturel', en: 'White / Natural' }, icon: 'circle' },
-    { key: 'humidity', value: { fr: '≤6%', en: '≤6%' }, icon: 'droplet' },
-    { key: 'oil', value: { fr: '48-52%', en: '48-52%' }, icon: 'flask' },
-    { key: 'packaging', value: { fr: 'Sacs 25/50kg', en: 'Bags 25/50kg' }, icon: 'box' },
+    { key: 'purity', value: { fr: '99%+', en: '99%+', ru: '99%+' }, icon: 'check' },
+    {
+      key: 'type',
+      value: { fr: 'Blanc / Naturel', en: 'White / Natural', ru: 'Белый / Натуральный' },
+      icon: 'circle',
+    },
+    { key: 'humidity', value: { fr: '≤6%', en: '≤6%', ru: '≤6%' }, icon: 'droplet' },
+    { key: 'oil', value: { fr: '48-52%', en: '48-52%', ru: '48-52%' }, icon: 'flask' },
+    {
+      key: 'packaging',
+      value: { fr: 'Sacs 25/50kg', en: 'Bags 25/50kg', ru: 'Мешки 25/50кг' },
+      icon: 'box',
+    },
   ],
   cajou: [
-    { key: 'grade', value: { fr: 'W320 / W240', en: 'W320 / W240' }, icon: 'award' },
-    { key: 'humidity', value: { fr: '≤5%', en: '≤5%' }, icon: 'droplet' },
-    { key: 'broken', value: { fr: '<5%', en: '<5%' }, icon: 'filter' },
-    { key: 'packaging', value: { fr: 'Cartons / Vide', en: 'Cartons / Vacuum' }, icon: 'box' },
-    { key: 'shelf', value: { fr: '12 mois', en: '12 months' }, icon: 'calendar' },
+    {
+      key: 'grade',
+      value: { fr: 'W320 / W240', en: 'W320 / W240', ru: 'W320 / W240' },
+      icon: 'award',
+    },
+    { key: 'humidity', value: { fr: '≤5%', en: '≤5%', ru: '≤5%' }, icon: 'droplet' },
+    { key: 'broken', value: { fr: '<5%', en: '<5%', ru: '<5%' }, icon: 'filter' },
+    {
+      key: 'packaging',
+      value: { fr: 'Cartons / Vide', en: 'Cartons / Vacuum', ru: 'Коробки / Вакуум' },
+      icon: 'box',
+    },
+    { key: 'shelf', value: { fr: '12 mois', en: '12 months', ru: '12 месяцев' }, icon: 'calendar' },
   ],
   soja: [
-    { key: 'protein', value: { fr: '36-40%', en: '36-40%' }, icon: 'flask' },
-    { key: 'ogm', value: { fr: 'Non-OGM (selon lots)', en: 'Non-GMO (per batch)' }, icon: 'leaf' },
-    { key: 'humidity', value: { fr: '≤13%', en: '≤13%' }, icon: 'droplet' },
-    { key: 'impurities', value: { fr: '<2%', en: '<2%' }, icon: 'filter' },
-    { key: 'packaging', value: { fr: 'Sacs / Vrac', en: 'Bags / Bulk' }, icon: 'box' },
+    { key: 'protein', value: { fr: '36-40%', en: '36-40%', ru: '36-40%' }, icon: 'flask' },
+    {
+      key: 'ogm',
+      value: { fr: 'Non-OGM (selon lots)', en: 'Non-GMO (per batch)', ru: 'Без ГМО (по партиям)' },
+      icon: 'leaf',
+    },
+    { key: 'humidity', value: { fr: '≤13%', en: '≤13%', ru: '≤13%' }, icon: 'droplet' },
+    { key: 'impurities', value: { fr: '<2%', en: '<2%', ru: '<2%' }, icon: 'filter' },
+    {
+      key: 'packaging',
+      value: { fr: 'Sacs / Vrac', en: 'Bags / Bulk', ru: 'Мешки / Насыпью' },
+      icon: 'box',
+    },
   ],
   amandes: [
-    { key: 'grade', value: { fr: 'Premium', en: 'Premium' }, icon: 'award' },
-    { key: 'humidity', value: { fr: '≤6%', en: '≤6%' }, icon: 'droplet' },
-    { key: 'caliber', value: { fr: 'Calibré', en: 'Calibrated' }, icon: 'ruler' },
-    { key: 'packaging', value: { fr: 'Cartons / Vrac', en: 'Cartons / Bulk' }, icon: 'box' },
-    { key: 'shelf', value: { fr: '12 mois', en: '12 months' }, icon: 'calendar' },
+    { key: 'grade', value: { fr: 'Premium', en: 'Premium', ru: 'Premium' }, icon: 'award' },
+    { key: 'humidity', value: { fr: '≤6%', en: '≤6%', ru: '≤6%' }, icon: 'droplet' },
+    {
+      key: 'caliber',
+      value: { fr: 'Calibré', en: 'Calibrated', ru: 'Откалиброванный' },
+      icon: 'ruler',
+    },
+    {
+      key: 'packaging',
+      value: { fr: 'Cartons / Vrac', en: 'Cartons / Bulk', ru: 'Коробки / Насыпью' },
+      icon: 'box',
+    },
+    { key: 'shelf', value: { fr: '12 mois', en: '12 months', ru: '12 месяцев' }, icon: 'calendar' },
   ],
   sorgho: [
-    { key: 'grade', value: { fr: 'Grade alimentaire', en: 'Food grade' }, icon: 'award' },
-    { key: 'humidity', value: { fr: '≤13%', en: '≤13%' }, icon: 'droplet' },
-    { key: 'impurities', value: { fr: '<2%', en: '<2%' }, icon: 'filter' },
-    { key: 'packaging', value: { fr: 'Sacs 50kg / Vrac', en: 'Bags 50kg / Bulk' }, icon: 'box' },
-    { key: 'use', value: { fr: 'Humain / Animal', en: 'Human / Animal' }, icon: 'users' },
+    {
+      key: 'grade',
+      value: { fr: 'Grade alimentaire', en: 'Food grade', ru: 'Пищевой сорт' },
+      icon: 'award',
+    },
+    { key: 'humidity', value: { fr: '≤13%', en: '≤13%', ru: '≤13%' }, icon: 'droplet' },
+    { key: 'impurities', value: { fr: '<2%', en: '<2%', ru: '<2%' }, icon: 'filter' },
+    {
+      key: 'packaging',
+      value: { fr: 'Sacs 50kg / Vrac', en: 'Bags 50kg / Bulk', ru: 'Мешки 50кг / Насыпью' },
+      icon: 'box',
+    },
+    {
+      key: 'use',
+      value: { fr: 'Humain / Animal', en: 'Human / Animal', ru: 'Люди / Животные' },
+      icon: 'users',
+    },
   ],
 };
 
 /**
  * Packaging options by category
  */
-const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string }>> = {
+const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string; ru: string }>> = {
   cacao: [
-    { fr: 'Sacs jute + liner PE (60-70kg)', en: 'Jute bags + PE liner (60-70kg)' },
-    { fr: 'Big bags (1T)', en: 'Big bags (1T)' },
-    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)" },
+    {
+      fr: 'Sacs jute + liner PE (60-70kg)',
+      en: 'Jute bags + PE liner (60-70kg)',
+      ru: 'Джутовые мешки + PE-вкладыш (60-70кг)',
+    },
+    { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
+    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)", ru: "Контейнер 20' (18-20т)" },
   ],
   cafe: [
-    { fr: 'Sacs jute (60kg)', en: 'Jute bags (60kg)' },
-    { fr: 'Sacs GrainPro', en: 'GrainPro bags' },
-    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)" },
+    { fr: 'Sacs jute (60kg)', en: 'Jute bags (60kg)', ru: 'Джутовые мешки (60кг)' },
+    { fr: 'Sacs GrainPro', en: 'GrainPro bags', ru: 'Мешки GrainPro' },
+    { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)", ru: "Контейнер 20' (18-20т)" },
   ],
   bois: [
-    { fr: 'Grumes', en: 'Logs' },
-    { fr: 'Sciages (planches, madriers)', en: 'Sawn (boards, beams)' },
-    { fr: "Conteneur 40' / Vrac", en: "40' container / Bulk" },
+    { fr: 'Grumes', en: 'Logs', ru: 'Брёвна' },
+    {
+      fr: 'Sciages (planches, madriers)',
+      en: 'Sawn (boards, beams)',
+      ru: 'Пиломатериалы (доски, брусья)',
+    },
+    { fr: "Conteneur 40' / Vrac", en: "40' container / Bulk", ru: "Контейнер 40' / Насыпью" },
   ],
   mais: [
-    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)' },
-    { fr: 'Big bags (1T)', en: 'Big bags (1T)' },
-    { fr: 'Vrac conteneur', en: 'Bulk container' },
+    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
+    { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
+    { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
   ],
   hevea: [
-    { fr: 'Balles (33.33kg)', en: 'Bales (33.33kg)' },
-    { fr: "Conteneur 20'", en: "20' container" },
+    { fr: 'Balles (33.33kg)', en: 'Bales (33.33kg)', ru: 'Тюки (33.33кг)' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
   ],
   sesame: [
-    { fr: 'Sacs PP (25/50kg)', en: 'PP bags (25/50kg)' },
-    { fr: 'Cartons', en: 'Cartons' },
-    { fr: "Conteneur 20'", en: "20' container" },
+    { fr: 'Sacs PP (25/50kg)', en: 'PP bags (25/50kg)', ru: 'Мешки PP (25/50кг)' },
+    { fr: 'Cartons', en: 'Cartons', ru: 'Коробки' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
   ],
   cajou: [
-    { fr: 'Cartons (22.68kg)', en: 'Cartons (22.68kg)' },
-    { fr: 'Sous vide', en: 'Vacuum packed' },
-    { fr: "Conteneur 20' (18T)", en: "20' container (18T)" },
+    { fr: 'Cartons (22.68kg)', en: 'Cartons (22.68kg)', ru: 'Коробки (22.68кг)' },
+    { fr: 'Sous vide', en: 'Vacuum packed', ru: 'Вакуумная упаковка' },
+    { fr: "Conteneur 20' (18T)", en: "20' container (18T)", ru: "Контейнер 20' (18т)" },
   ],
   soja: [
-    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)' },
-    { fr: 'Big bags (1T)', en: 'Big bags (1T)' },
-    { fr: 'Vrac conteneur', en: 'Bulk container' },
+    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
+    { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
+    { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
   ],
   amandes: [
-    { fr: 'Cartons (10/25kg)', en: 'Cartons (10/25kg)' },
-    { fr: 'Sous vide', en: 'Vacuum packed' },
+    { fr: 'Cartons (10/25kg)', en: 'Cartons (10/25kg)', ru: 'Коробки (10/25кг)' },
+    { fr: 'Sous vide', en: 'Vacuum packed', ru: 'Вакуумная упаковка' },
   ],
   sorgho: [
-    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)' },
-    { fr: 'Big bags (1T)', en: 'Big bags (1T)' },
-    { fr: 'Vrac conteneur', en: 'Bulk container' },
+    { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
+    { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
+    { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
   ],
 };
 
