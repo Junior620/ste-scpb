@@ -45,7 +45,7 @@ interface SanityProduct {
     fatContent?: number;
     grainCount?: number;
     fermentationDays?: number;
-    aromaticProfile?: { fr?: string; en?: string };
+    aromaticProfile?: { fr?: string; en?: string; ru?: string };
     grade?: string;
     standard?: string;
   };
@@ -56,7 +56,7 @@ interface SanityProduct {
   };
   certifications?: string[];
   moq?: string;
-  availability?: { fr?: string; en?: string };
+  availability?: { fr?: string; en?: string; ru?: string };
   incoterms?: string[];
   order?: number;
   _createdAt: string;
@@ -194,7 +194,6 @@ interface SanityImage {
   };
 }
 
-
 /**
  * Sanity CMS Client implementation
  * Implements CMSClient interface for Sanity
@@ -281,10 +280,7 @@ export class SanityClient implements CMSClient {
   /**
    * Gets data from cache or fetches from API
    */
-  private async getWithCache<T>(
-    cacheKey: string,
-    fetcher: () => Promise<T>
-  ): Promise<T> {
+  private async getWithCache<T>(cacheKey: string, fetcher: () => Promise<T>): Promise<T> {
     const cached = this.cache.get(cacheKey) as CacheEntry<T> | undefined;
     const now = Date.now();
 
@@ -319,9 +315,10 @@ export class SanityClient implements CMSClient {
    * Transforms Sanity product to domain Product
    */
   private transformProduct(sanityProduct: SanityProduct): Product {
-    const toLocalized = (obj?: { fr?: string; en?: string }): LocalizedContent => ({
+    const toLocalized = (obj?: { fr?: string; en?: string; ru?: string }): LocalizedContent => ({
       fr: obj?.fr || '',
       en: obj?.en || '',
+      ru: obj?.ru || '',
     });
 
     const defaultConstellation: ConstellationConfig = {
@@ -367,9 +364,10 @@ export class SanityClient implements CMSClient {
    * Transforms Sanity article to domain Article
    */
   private transformArticle(sanityArticle: SanityArticle): Article {
-    const toLocalized = (obj?: { fr?: string; en?: string }): LocalizedContent => ({
+    const toLocalized = (obj?: { fr?: string; en?: string; ru?: string }): LocalizedContent => ({
       fr: obj?.fr || '',
       en: obj?.en || '',
+      ru: obj?.ru || '',
     });
 
     return {
@@ -381,23 +379,31 @@ export class SanityClient implements CMSClient {
         fr: sanityArticle.content?.fr ? JSON.stringify(sanityArticle.content.fr) : '',
         en: sanityArticle.content?.en ? JSON.stringify(sanityArticle.content.en) : '',
       },
-      featuredImage: sanityArticle.image ? {
-        url: this.getImageUrl(sanityArticle.image),
-        alt: toLocalized(sanityArticle.title),
-        width: 1200,
-        height: 630,
-      } : undefined,
-      category: sanityArticle.category ? {
-        id: sanityArticle.category,
-        slug: sanityArticle.category,
-        name: { fr: sanityArticle.category, en: sanityArticle.category },
-      } : undefined,
+      featuredImage: sanityArticle.image
+        ? {
+            url: this.getImageUrl(sanityArticle.image),
+            alt: toLocalized(sanityArticle.title),
+            width: 1200,
+            height: 630,
+          }
+        : undefined,
+      category: sanityArticle.category
+        ? {
+            id: sanityArticle.category,
+            slug: sanityArticle.category,
+            name: { fr: sanityArticle.category, en: sanityArticle.category },
+          }
+        : undefined,
       tags: [],
-      author: sanityArticle.author ? {
-        id: sanityArticle.author._id,
-        name: sanityArticle.author.name,
-        avatar: sanityArticle.author.photo ? this.getImageUrl(sanityArticle.author.photo, 100) : undefined,
-      } : undefined,
+      author: sanityArticle.author
+        ? {
+            id: sanityArticle.author._id,
+            name: sanityArticle.author.name,
+            avatar: sanityArticle.author.photo
+              ? this.getImageUrl(sanityArticle.author.photo, 100)
+              : undefined,
+          }
+        : undefined,
       publishedAt: new Date(sanityArticle.publishedAt),
       createdAt: new Date(sanityArticle._createdAt),
       updatedAt: new Date(sanityArticle._updatedAt),
@@ -408,9 +414,10 @@ export class SanityClient implements CMSClient {
    * Transforms Sanity article to ArticleListItem
    */
   private transformArticleListItem(sanityArticle: SanityArticle): ArticleListItem {
-    const toLocalized = (obj?: { fr?: string; en?: string }): LocalizedContent => ({
+    const toLocalized = (obj?: { fr?: string; en?: string; ru?: string }): LocalizedContent => ({
       fr: obj?.fr || '',
       en: obj?.en || '',
+      ru: obj?.ru || '',
     });
 
     return {
@@ -418,17 +425,21 @@ export class SanityClient implements CMSClient {
       slug: sanityArticle.slug.current,
       title: toLocalized(sanityArticle.title),
       excerpt: toLocalized(sanityArticle.excerpt),
-      featuredImage: sanityArticle.image ? {
-        url: this.getImageUrl(sanityArticle.image),
-        alt: toLocalized(sanityArticle.title),
-        width: 800,
-        height: 450,
-      } : undefined,
-      category: sanityArticle.category ? {
-        id: sanityArticle.category,
-        slug: sanityArticle.category,
-        name: { fr: sanityArticle.category, en: sanityArticle.category },
-      } : undefined,
+      featuredImage: sanityArticle.image
+        ? {
+            url: this.getImageUrl(sanityArticle.image),
+            alt: toLocalized(sanityArticle.title),
+            width: 800,
+            height: 450,
+          }
+        : undefined,
+      category: sanityArticle.category
+        ? {
+            id: sanityArticle.category,
+            slug: sanityArticle.category,
+            name: { fr: sanityArticle.category, en: sanityArticle.category },
+          }
+        : undefined,
       publishedAt: new Date(sanityArticle.publishedAt),
     };
   }
@@ -437,9 +448,10 @@ export class SanityClient implements CMSClient {
    * Transforms Sanity team member to domain TeamMember
    */
   private transformTeamMember(sanityMember: SanityTeamMember): TeamMember {
-    const toLocalized = (obj?: { fr?: string; en?: string }): LocalizedContent => ({
+    const toLocalized = (obj?: { fr?: string; en?: string; ru?: string }): LocalizedContent => ({
       fr: obj?.fr || '',
       en: obj?.en || '',
+      ru: obj?.ru || '',
     });
 
     return {
@@ -447,19 +459,20 @@ export class SanityClient implements CMSClient {
       name: sanityMember.name,
       role: toLocalized(sanityMember.role),
       bio: toLocalized(sanityMember.bio),
-      photo: sanityMember.photo ? {
-        url: this.getImageUrl(sanityMember.photo, 400),
-        alt: sanityMember.name,
-        width: 400,
-        height: 400,
-      } : undefined,
+      photo: sanityMember.photo
+        ? {
+            url: this.getImageUrl(sanityMember.photo, 400),
+            alt: sanityMember.name,
+            width: 400,
+            height: 400,
+          }
+        : undefined,
       isCEO: sanityMember.department === 'management',
       order: sanityMember.order || 0,
       email: sanityMember.email,
       linkedIn: sanityMember.linkedin,
     };
   }
-
 
   // ============================================
   // Products
