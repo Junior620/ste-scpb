@@ -121,6 +121,8 @@ function transformAuthor(author: CMSAuthor): ArticleAuthor {
     id: author.id,
     name: author.name,
     avatar: author.avatar,
+    link: author.link,
+    isExternal: author.isExternal,
   };
 }
 

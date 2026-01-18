@@ -427,7 +427,18 @@ export function ArticleDetailSection({ article, locale }: ArticleDetailSectionPr
                     loading="lazy"
                   />
                 )}
-                <span>{article.author.name}</span>
+                {article.author.link ? (
+                  <a
+                    href={article.author.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                  >
+                    {article.author.name}
+                  </a>
+                ) : (
+                  <span>{article.author.name}</span>
+                )}
               </div>
             )}
 

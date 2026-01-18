@@ -101,6 +101,8 @@ export interface CMSAuthor {
   id: string;
   name: string;
   avatar?: string;
+  link?: string;
+  isExternal?: boolean;
 }
 
 /**

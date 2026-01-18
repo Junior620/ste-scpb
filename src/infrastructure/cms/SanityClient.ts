@@ -75,11 +75,24 @@ interface SanityArticle {
   content?: { fr: unknown[]; en: unknown[]; ru?: unknown[] };
   image?: SanityImage;
   publishedAt: string;
-  author?: {
-    _id: string;
-    name: string;
-    photo?: SanityImage;
-  };
+  author?:
+    | {
+        // New format (object with authorType)
+        authorType?: string;
+        teamMember?: {
+          _id: string;
+          name: string;
+          photo?: SanityImage;
+        };
+        externalName?: string;
+        externalLink?: string;
+      }
+    | {
+        // Old format (direct reference to team member)
+        _id: string;
+        name: string;
+        photo?: SanityImage;
+      };
   relatedProducts?: Array<{ slug: { current: string } }>;
   featured?: boolean;
   _createdAt: string;
@@ -370,6 +383,43 @@ export class SanityClient implements CMSClient {
       ru: obj?.ru || '',
     });
 
+    // Transform author - handle both old and new formats
+    let author: Article['author'] = undefined;
+    if (sanityArticle.author) {
+      // Check if it's the new format (has authorType field)
+      if ('authorType' in sanityArticle.author) {
+        const authorType = sanityArticle.author.authorType || 'team';
+
+        if (authorType === 'team' && sanityArticle.author.teamMember) {
+          author = {
+            id: sanityArticle.author.teamMember._id,
+            name: sanityArticle.author.teamMember.name,
+            avatar: sanityArticle.author.teamMember.photo
+              ? this.getImageUrl(sanityArticle.author.teamMember.photo, 100)
+              : undefined,
+            isExternal: false,
+          };
+        } else if (authorType === 'external' && sanityArticle.author.externalName) {
+          author = {
+            id: `external-${sanityArticle._id}`,
+            name: sanityArticle.author.externalName,
+            link: sanityArticle.author.externalLink,
+            isExternal: true,
+          };
+        }
+      } else if ('_id' in sanityArticle.author && '_id' in sanityArticle.author) {
+        // Old format - direct reference to team member
+        author = {
+          id: sanityArticle.author._id,
+          name: sanityArticle.author.name,
+          avatar: sanityArticle.author.photo
+            ? this.getImageUrl(sanityArticle.author.photo, 100)
+            : undefined,
+          isExternal: false,
+        };
+      }
+    }
+
     return {
       id: sanityArticle._id,
       slug: sanityArticle.slug.current,
@@ -400,15 +450,7 @@ export class SanityClient implements CMSClient {
           }
         : undefined,
       tags: [],
-      author: sanityArticle.author
-        ? {
-            id: sanityArticle.author._id,
-            name: sanityArticle.author.name,
-            avatar: sanityArticle.author.photo
-              ? this.getImageUrl(sanityArticle.author.photo, 100)
-              : undefined,
-          }
-        : undefined,
+      author,
       publishedAt: new Date(sanityArticle.publishedAt),
       createdAt: new Date(sanityArticle._createdAt),
       updatedAt: new Date(sanityArticle._updatedAt),
@@ -605,7 +647,16 @@ export class SanityClient implements CMSClient {
           content,
           image,
           publishedAt,
-          author->{
+          author {
+            authorType,
+            teamMember->{
+              _id,
+              name,
+              photo
+            },
+            externalName,
+            externalLink,
+            // Also fetch old format for backward compatibility
             _id,
             name,
             photo

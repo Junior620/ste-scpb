@@ -26,6 +26,8 @@ export interface ArticleAuthor {
   id: string;
   name: string;
   avatar?: string;
+  link?: string; // Optional external link
+  isExternal?: boolean; // Flag to indicate if author is external
 }
 
 /**
@@ -73,14 +75,20 @@ export interface ArticleListItem {
 /**
  * Gets localized article title
  */
-export function getLocalizedArticleTitle(article: Article | ArticleListItem, locale: Locale): string {
+export function getLocalizedArticleTitle(
+  article: Article | ArticleListItem,
+  locale: Locale
+): string {
   return article.title[locale];
 }
 
 /**
  * Gets localized article excerpt
  */
-export function getLocalizedArticleExcerpt(article: Article | ArticleListItem, locale: Locale): string {
+export function getLocalizedArticleExcerpt(
+  article: Article | ArticleListItem,
+  locale: Locale
+): string {
   return article.excerpt[locale];
 }
 
