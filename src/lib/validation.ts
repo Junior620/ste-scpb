@@ -14,10 +14,7 @@ import { QUANTITY_UNITS } from '@/domain/value-objects/Quantity';
  * Email validation schema
  * Validates: Requirements 5.1, 17.1
  */
-export const emailSchema = z
-  .string()
-  .min(1, 'Email requis')
-  .email('Email invalide');
+export const emailSchema = z.string().min(1, 'Email requis').email('Email invalide');
 
 /**
  * Phone validation schema
@@ -81,13 +78,29 @@ export type InquiryType = (typeof INQUIRY_TYPES)[number];
 /**
  * Subject options for simplified contact form
  */
-export const CONTACT_SUBJECTS = ['products', 'certifications', 'logistics', 'availability', 'other'] as const;
+export const CONTACT_SUBJECTS = [
+  'products',
+  'certifications',
+  'logistics',
+  'availability',
+  'other',
+] as const;
 export type ContactSubject = (typeof CONTACT_SUBJECTS)[number];
 
 /**
  * Product options for contact form
  */
-export const CONTACT_PRODUCTS = ['cacao', 'cafe', 'cajou', 'sesame', 'soja', 'bois', 'mais', 'hevea', 'other'] as const;
+export const CONTACT_PRODUCTS = [
+  'cacao',
+  'cafe',
+  'cajou',
+  'sesame',
+  'soja',
+  'bois',
+  'mais',
+  'hevea',
+  'other',
+] as const;
 export type ContactProduct = (typeof CONTACT_PRODUCTS)[number];
 
 /**
@@ -179,7 +192,10 @@ export const rfqFormSchema = z
     incoterm: incotermSchema,
 
     // Destination (17.5)
-    destinationPort: z.string().min(2, 'Port/Pays de destination requis').max(200, 'Destination trop longue'),
+    destinationPort: z
+      .string()
+      .min(2, 'Port/Pays de destination requis')
+      .max(200, 'Destination trop longue'),
 
     // Packaging (17.6)
     packaging: packagingSchema,
@@ -225,9 +241,62 @@ export const newsletterSchema = z.object({
 });
 
 // =============================================================================
+// Sample Request Schema
+// =============================================================================
+
+/**
+ * Sample request form validation schema - For cocoa and beans
+ * Free samples up to 2kg
+ */
+export const sampleRequestSchema = z.object({
+  // Contact information
+  name: z
+    .string()
+    .min(2, 'Nom requis (min 2 caractères)')
+    .max(100, 'Nom trop long (max 100 caractères)'),
+  email: emailSchema,
+  phone: phoneSchema,
+  company: z
+    .string()
+    .min(2, 'Nom de société requis (min 2 caractères)')
+    .max(200, 'Nom de société trop long'),
+
+  // Product selection
+  product: z.string().min(1, 'Produit requis'),
+
+  // Sample details
+  sampleWeight: z
+    .number({ message: 'Poids doit être un nombre' })
+    .positive('Poids doit être positif')
+    .max(2, 'Échantillon gratuit limité à 2kg maximum'),
+
+  // Shipping address
+  addressLine1: z
+    .string()
+    .min(5, 'Adresse requise (min 5 caractères)')
+    .max(200, 'Adresse trop longue'),
+  addressLine2: z.string().max(200, 'Adresse trop longue').optional().or(z.literal('')),
+  city: z.string().min(2, 'Ville requise').max(100, 'Nom de ville trop long'),
+  postalCode: z.string().min(2, 'Code postal requis').max(20, 'Code postal trop long'),
+  country: z.string().min(2, 'Pays requis').max(100, 'Nom de pays trop long'),
+
+  // Purpose
+  purpose: z
+    .string()
+    .min(10, "Veuillez décrire l'utilisation prévue (min 10 caractères)")
+    .max(1000, 'Description trop longue (max 1000 caractères)'),
+
+  // Privacy consent
+  privacyConsent: z.literal(true, {
+    error: 'Vous devez accepter la politique de confidentialité',
+  }),
+});
+
+// =============================================================================
 // Type Exports
 // =============================================================================
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 export type RFQFormData = z.infer<typeof rfqFormSchema>;
 export type NewsletterFormData = z.infer<typeof newsletterSchema>;
+export type SampleRequestFormData = z.infer<typeof sampleRequestSchema>;

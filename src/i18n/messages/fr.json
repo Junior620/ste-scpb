@@ -167,6 +167,7 @@
     "destinations": "Destinations",
     "moq": "Quantité minimum",
     "askQuestion": "Poser une question",
+    "contactByEmail": "Contacter par email",
     "responseTime": "Réponse sous 24-48h (jours ouvrés)",
     "specs": {
       "humidity": "Humidité",
@@ -670,6 +671,43 @@
       "title": "Erreur",
       "description": "Une erreur est survenue. Veuillez réessayer.",
       "alreadySubscribed": "Cette adresse email est déjà inscrite."
+    }
+  },
+  "sampleRequest": {
+    "title": "Demande d'échantillon gratuit",
+    "subtitle": "Recevez un échantillon gratuit pour tester la qualité de nos produits",
+    "freeUpTo2kg": "✓ Échantillon gratuit jusqu'à 2 kg",
+    "sections": {
+      "contact": "Informations de contact",
+      "sample": "Détails de l'échantillon",
+      "shipping": "Adresse de livraison"
+    },
+    "fields": {
+      "name": "Nom",
+      "company": "Société",
+      "email": "Email",
+      "phone": "Téléphone",
+      "sampleWeight": "Poids de l'échantillon (kg)",
+      "sampleWeightHelper": "Maximum 2 kg gratuit",
+      "purpose": "Objectif de la demande",
+      "purposePlaceholder": "Décrivez comment vous prévoyez d'utiliser l'échantillon...",
+      "addressLine1": "Adresse (ligne 1)",
+      "addressLine2": "Adresse (ligne 2)",
+      "city": "Ville",
+      "postalCode": "Code postal",
+      "country": "Pays",
+      "privacyConsent": "J'accepte la",
+      "privacyPolicy": "politique de confidentialité"
+    },
+    "submit": "Envoyer la demande",
+    "submitting": "Envoi en cours...",
+    "recaptchaNotice": "Ce site est protégé par reCAPTCHA et les Règles de confidentialité et Conditions d'utilisation de Google s'appliquent.",
+    "errors": {
+      "submitFailed": "Échec de l'envoi de la demande. Veuillez réessayer."
+    },
+    "success": {
+      "title": "Demande envoyée !",
+      "message": "Nous vous contacterons sous 24-48h pour confirmer l'expédition."
     }
   },
   "map": {

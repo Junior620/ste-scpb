@@ -45,18 +45,19 @@ const TRANSLATIONS = {
     nextSteps: 'Prochaines étapes',
     step1: 'Analyse de votre demande',
     step2: 'Vérification disponibilités',
-    step3: 'Envoi de l\'offre de prix',
+    step3: "Envoi de l'offre de prix",
     step4: 'Discussion et ajustements',
     prepareTitle: 'Pour accélérer le traitement',
-    prepareText: 'Préparez vos certifications requises (UTZ, Rainforest, Bio...) et conditions de paiement souhaitées.',
-    needHelp: 'Besoin d\'une réponse urgente ?',
+    prepareText:
+      'Préparez vos certifications requises (UTZ, Rainforest, Bio...) et conditions de paiement souhaitées.',
+    needHelp: "Besoin d'une réponse urgente ?",
     callUs: 'Appelez-nous',
     whatsappUs: 'WhatsApp',
     mainCta: 'Voir nos produits',
     footer: 'Vous pouvez répondre directement à cet email pour compléter votre demande.',
     whyEmail: 'Vous recevez cet email suite à votre demande de devis sur ste-scpb.com',
     regards: 'Cordialement,',
-    team: 'L\'équipe commerciale STE-SCPB',
+    team: "L'équipe commerciale STE-SCPB",
     tagline: 'Exportateur de commodités agricoles du Cameroun',
     address: 'STE-SCPB • BP 12345 Douala, Cameroun',
     privacy: 'Politique de confidentialité',
@@ -83,7 +84,8 @@ const TRANSLATIONS = {
     step3: 'Price offer sent',
     step4: 'Discussion and adjustments',
     prepareTitle: 'To speed up processing',
-    prepareText: 'Please prepare your required certifications (UTZ, Rainforest, Organic...) and preferred payment terms.',
+    prepareText:
+      'Please prepare your required certifications (UTZ, Rainforest, Organic...) and preferred payment terms.',
     needHelp: 'Need an urgent response?',
     callUs: 'Call us',
     whatsappUs: 'WhatsApp',
@@ -109,9 +111,16 @@ export function generateRFQConfirmationHtml(data: RFQConfirmationData): string {
   const unitLabels = UNIT_LABELS[locale] || UNIT_LABELS.fr;
   const firstName = data.contactPerson.split(' ')[0];
   const siteUrl = locale === 'en' ? 'https://ste-scpb.com/en' : 'https://ste-scpb.com';
-  
-  const deliveryStart = data.deliveryStart.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short' });
-  const deliveryEnd = data.deliveryEnd.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  const deliveryStart = data.deliveryStart.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+  });
+  const deliveryEnd = data.deliveryEnd.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="${locale}">
@@ -172,7 +181,7 @@ export function generateRFQConfirmationHtml(data: RFQConfirmationData): string {
                       <tr>
                         <td style="padding: 6px 0; color: #737373; font-size: 13px; vertical-align: top;">${t.products}:</td>
                         <td style="padding: 6px 0;">
-                          ${data.products.map(p => `<span style="display: inline-block; background-color: #d4af37; color: #1a1a2e; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; margin: 2px 4px 2px 0;">${escapeHtml(p.toUpperCase())}</span>`).join('')}
+                          ${data.products.map((p) => `<span style="display: inline-block; background-color: #d4af37; color: #1a1a2e; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; margin: 2px 4px 2px 0;">${escapeHtml(p.toUpperCase())}</span>`).join('')}
                         </td>
                       </tr>
                       <tr>
@@ -241,9 +250,9 @@ export function generateRFQConfirmationHtml(data: RFQConfirmationData): string {
                   <td style="padding: 16px;">
                     <p style="margin: 0 0 10px; color: #854d0e; font-size: 13px; font-weight: 600;">${t.needHelp}</p>
                     <p style="margin: 0; color: #78716c; font-size: 13px;">
-                      <a href="tel:+237699999999" style="color: #1a1a2e; text-decoration: none; font-weight: 500;">${t.callUs}: +237 6 99 99 99 99</a>
+                      <a href="tel:+237676905938" style="color: #1a1a2e; text-decoration: none; font-weight: 500;">${t.callUs}: +237 676 905 938</a>
                       &nbsp;|&nbsp;
-                      <a href="https://wa.me/237699999999" style="color: #16a34a; text-decoration: none; font-weight: 500;">${t.whatsappUs}</a>
+                      <a href="https://wa.me/237676905938" style="color: #16a34a; text-decoration: none; font-weight: 500;">${t.whatsappUs}</a>
                       &nbsp;|&nbsp;
                       <a href="mailto:scpb@ste-scpb.com" style="color: #2563eb; text-decoration: none;">scpb@ste-scpb.com</a>
                     </p>
@@ -287,9 +296,16 @@ export function generateRFQConfirmationText(data: RFQConfirmationData): string {
   const t = TRANSLATIONS[locale as keyof typeof TRANSLATIONS] || TRANSLATIONS.fr;
   const unitLabels = UNIT_LABELS[locale] || UNIT_LABELS.fr;
   const firstName = data.contactPerson.split(' ')[0];
-  
-  const deliveryStart = data.deliveryStart.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short' });
-  const deliveryEnd = data.deliveryEnd.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  const deliveryStart = data.deliveryStart.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+  });
+  const deliveryEnd = data.deliveryEnd.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 
   return `
 ${t.greeting} ${firstName},
@@ -318,8 +334,8 @@ ${t.nextSteps}
 ${t.prepareTitle}: ${t.prepareText}
 
 ${t.needHelp}
-${t.callUs}: +237 6 99 99 99 99
-${t.whatsappUs}: https://wa.me/237699999999
+${t.callUs}: +237 676 905 938
+${t.whatsappUs}: https://wa.me/237676905938
 Email: scpb@ste-scpb.com
 
 ${t.regards}

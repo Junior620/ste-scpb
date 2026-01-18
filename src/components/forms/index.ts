@@ -11,3 +11,6 @@ export type { RFQFormProps } from './RFQForm';
 
 export { NewsletterForm } from './NewsletterForm';
 export type { NewsletterFormProps } from './NewsletterForm';
+
+export { SampleRequestForm } from './SampleRequestForm';
+export type { SampleRequestFormProps } from './SampleRequestForm';

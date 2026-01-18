@@ -47,10 +47,12 @@ const TRANSLATIONS = {
     yourMessage: 'Votre message',
     reference: 'Référence',
     nextSteps: 'Prochaine étape',
-    nextStepText: 'Un responsable commercial vous contactera par email ou WhatsApp pour répondre à votre demande.',
+    nextStepText:
+      'Un responsable commercial vous contactera par email ou WhatsApp pour répondre à votre demande.',
     prepareTitle: 'Pour accélérer le traitement',
-    prepareText: 'Préparez si possible : produit souhaité, volume estimé, destination, incoterm préféré.',
-    needHelp: 'Besoin d\'une réponse urgente ?',
+    prepareText:
+      'Préparez si possible : produit souhaité, volume estimé, destination, incoterm préféré.',
+    needHelp: "Besoin d'une réponse urgente ?",
     callUs: 'Appelez-nous',
     whatsappUs: 'WhatsApp',
     orEmail: 'ou écrivez à',
@@ -58,7 +60,7 @@ const TRANSLATIONS = {
     footer: 'Vous pouvez répondre directement à cet email pour compléter votre demande.',
     whyEmail: 'Vous recevez cet email suite à votre message envoyé via ste-scpb.com',
     regards: 'Cordialement,',
-    team: 'L\'équipe STE-SCPB',
+    team: "L'équipe STE-SCPB",
     tagline: 'Exportateur de commodités agricoles du Cameroun',
     address: 'STE-SCPB • BP 12345 Douala, Cameroun',
     privacy: 'Politique de confidentialité',
@@ -75,9 +77,11 @@ const TRANSLATIONS = {
     yourMessage: 'Your message',
     reference: 'Reference',
     nextSteps: 'Next step',
-    nextStepText: 'A sales representative will contact you by email or WhatsApp to address your request.',
+    nextStepText:
+      'A sales representative will contact you by email or WhatsApp to address your request.',
     prepareTitle: 'To speed up processing',
-    prepareText: 'Please prepare if possible: desired product, estimated volume, destination, preferred incoterm.',
+    prepareText:
+      'Please prepare if possible: desired product, estimated volume, destination, preferred incoterm.',
     needHelp: 'Need an urgent response?',
     callUs: 'Call us',
     whatsappUs: 'WhatsApp',
@@ -165,12 +169,16 @@ export function generateContactConfirmationHtml(data: ContactConfirmationData): 
                           </span>
                         </td>
                       </tr>
-                      ${data.company ? `
+                      ${
+                        data.company
+                          ? `
                       <tr>
                         <td style="padding: 6px 0; color: #737373; font-size: 13px;">${locale === 'fr' ? 'Société' : 'Company'}:</td>
                         <td style="padding: 6px 0; color: #1a1a2e; font-size: 13px;">${escapeHtml(data.company)}</td>
                       </tr>
-                      ` : ''}
+                      `
+                          : ''
+                      }
                     </table>
                     
                     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #e5e5e5;">
@@ -215,9 +223,9 @@ export function generateContactConfirmationHtml(data: ContactConfirmationData): 
                   <td style="padding: 16px;">
                     <p style="margin: 0 0 10px; color: #854d0e; font-size: 13px; font-weight: 600;">${t.needHelp}</p>
                     <p style="margin: 0; color: #78716c; font-size: 13px;">
-                      <a href="tel:+237699999999" style="color: #1a1a2e; text-decoration: none; font-weight: 500;">${t.callUs}: +237 6 99 99 99 99</a>
+                      <a href="tel:+237676905938" style="color: #1a1a2e; text-decoration: none; font-weight: 500;">${t.callUs}: +237 676 905 938</a>
                       &nbsp;|&nbsp;
-                      <a href="https://wa.me/237699999999" style="color: #16a34a; text-decoration: none; font-weight: 500;">${t.whatsappUs}</a>
+                      <a href="https://wa.me/237676905938" style="color: #16a34a; text-decoration: none; font-weight: 500;">${t.whatsappUs}</a>
                       &nbsp;|&nbsp;
                       <a href="mailto:scpb@ste-scpb.com" style="color: #2563eb; text-decoration: none;">scpb@ste-scpb.com</a>
                     </p>
@@ -285,8 +293,8 @@ ${t.nextStepText}
 ${t.prepareTitle}: ${t.prepareText}
 
 ${t.needHelp}
-${t.callUs}: +237 6 99 99 99 99
-${t.whatsappUs}: https://wa.me/237699999999
+${t.callUs}: +237 676 905 938
+${t.whatsappUs}: https://wa.me/237676905938
 Email: scpb@ste-scpb.com
 
 ${t.regards}

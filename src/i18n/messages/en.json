@@ -167,6 +167,7 @@
     "destinations": "Destinations",
     "moq": "Minimum Order",
     "askQuestion": "Ask a Question",
+    "contactByEmail": "Contact by Email",
     "responseTime": "Response within 24-48h (business days)",
     "specs": {
       "humidity": "Moisture",
@@ -670,6 +671,43 @@
       "title": "Error",
       "description": "An error occurred. Please try again.",
       "alreadySubscribed": "This email address is already subscribed."
+    }
+  },
+  "sampleRequest": {
+    "title": "Free Sample Request",
+    "subtitle": "Receive a free sample to test the quality of our products",
+    "freeUpTo2kg": "✓ Free sample up to 2 kg",
+    "sections": {
+      "contact": "Contact Information",
+      "sample": "Sample Details",
+      "shipping": "Shipping Address"
+    },
+    "fields": {
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "sampleWeight": "Sample Weight (kg)",
+      "sampleWeightHelper": "Maximum 2 kg free",
+      "purpose": "Request Purpose",
+      "purposePlaceholder": "Describe how you plan to use the sample...",
+      "addressLine1": "Address (line 1)",
+      "addressLine2": "Address (line 2)",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "privacyConsent": "I accept the",
+      "privacyPolicy": "privacy policy"
+    },
+    "submit": "Send Request",
+    "submitting": "Sending...",
+    "recaptchaNotice": "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+    "errors": {
+      "submitFailed": "Failed to send request. Please try again."
+    },
+    "success": {
+      "title": "Request Sent!",
+      "message": "We will contact you within 24-48h to confirm shipment."
     }
   },
   "map": {

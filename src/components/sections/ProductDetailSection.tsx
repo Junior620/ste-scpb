@@ -9,6 +9,7 @@
  * - Product details (name, description, origin, certifications, etc.)
  * - Technical specifications for B2B
  * - Contact commercial CTA
+ * - Sample request modal
  * - Related products
  */
 
@@ -29,6 +30,8 @@ import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 import { PRODUCT_CONSTELLATIONS, PRODUCT_COLORS } from '@/lib/scene-presets';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
+import { SampleRequestForm } from '@/components/forms/SampleRequestForm';
 
 export interface ProductDetailSectionProps {
   product: Product;
@@ -550,7 +553,9 @@ function SpecIcon({ name }: { name: string }) {
 function ProductInfo({ product, locale }: { product: Product; locale: Locale }) {
   const t = useTranslations('products');
   const tDetail = useTranslations('productDetail');
+  const tSample = useTranslations('sampleRequest');
   const categoryColor = PRODUCT_COLORS[product.category];
+  const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
 
   // Get description from CMS or fallback to default
   const description =
@@ -711,17 +716,46 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
             {t('details.requestQuote')}
           </Button>
         </Link>
-        <Link href="/contact" className="flex-1 sm:flex-none">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="flex-1 sm:flex-none"
+          onClick={() => setIsSampleModalOpen(true)}
+        >
+          {tSample('title')}
+        </Button>
+        <a
+          href={`mailto:scpb@ste-scpb.com?subject=${encodeURIComponent(`Demande d'information - ${product.name[locale]}`)}`}
+          className="flex-1 sm:flex-none"
+        >
           <Button variant="outline" size="lg" className="w-full">
-            {tDetail('askQuestion')}
+            {tDetail('contactByEmail')}
           </Button>
-        </Link>
+        </a>
       </div>
 
       {/* Response time */}
       <p className="text-sm text-foreground-muted text-center sm:text-left">
         {tDetail('responseTime')}
       </p>
+
+      {/* Sample Request Modal */}
+      <Modal
+        isOpen={isSampleModalOpen}
+        onClose={() => setIsSampleModalOpen(false)}
+        title={tSample('title')}
+        size="full"
+        closeOnBackdropClick={false}
+      >
+        <SampleRequestForm
+          productName={product.name[locale]}
+          productSlug={product.slug}
+          onSuccess={() => {
+            setIsSampleModalOpen(false);
+          }}
+          onCancel={() => setIsSampleModalOpen(false)}
+        />
+      </Modal>
     </div>
   );
 }

@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  HTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-  useCallback,
-} from 'react';
+import { forwardRef, HTMLAttributes, ReactNode, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -140,10 +133,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     if (!isOpen) return null;
 
     const modalContent = (
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
-        role="presentation"
-      >
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="presentation">
         {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black/70 backdrop-blur-sm"
@@ -178,10 +168,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           {(title || showCloseButton) && (
             <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">
               {title && (
-                <h2
-                  id="modal-title"
-                  className="text-lg font-semibold text-foreground"
-                >
+                <h2 id="modal-title" className="text-lg font-semibold text-foreground">
                   {title}
                 </h2>
               )}
@@ -223,8 +210,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </p>
           )}
 
-          {/* Content */}
-          <div className="p-4 md:p-6">{children}</div>
+          {/* Content - Scrollable */}
+          <div className="p-4 md:p-6 max-h-[calc(90vh-8rem)] overflow-y-auto">{children}</div>
         </div>
       </div>
     );
