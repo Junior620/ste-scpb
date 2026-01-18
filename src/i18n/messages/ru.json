@@ -406,19 +406,19 @@
     },
     "stats": {
       "experience": {
-        "value": "20+",
+        "value": "5+",
         "label": "Лет опыта"
       },
       "partners": {
-        "value": "500+",
+        "value": "20+",
         "label": "Партнёрских производителей"
       },
       "destinations": {
-        "value": "30+",
+        "value": "5+",
         "label": "Стран назначения"
       },
       "volume": {
-        "value": "5000+",
+        "value": "50+",
         "label": "Тонн экспортируется/год"
       }
     },
@@ -539,6 +539,15 @@
       "hours": "Часы работы",
       "hoursValue": "Пн–Сб 08:00–16:45",
       "response": "Ответ в течение 24–48 часов"
+    },
+    "infoUsa": {
+      "title": "Контактные данные США",
+      "address": "Адрес",
+      "addressValue": "Нью-Йорк, США",
+      "phone": "Телефон",
+      "email": "Email",
+      "hours": "Часы работы",
+      "hoursValue": "Пн–Сб 08:00–16:45"
     }
   },
   "rfq": {

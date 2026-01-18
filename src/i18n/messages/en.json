@@ -406,19 +406,19 @@
     },
     "stats": {
       "experience": {
-        "value": "20+",
+        "value": "5+",
         "label": "Years of experience"
       },
       "partners": {
-        "value": "500+",
+        "value": "20+",
         "label": "Partner producers"
       },
       "destinations": {
-        "value": "30+",
+        "value": "5+",
         "label": "Destination countries"
       },
       "volume": {
-        "value": "5000+",
+        "value": "50+",
         "label": "Tonnes exported/year"
       }
     },
@@ -539,6 +539,15 @@
       "hours": "Hours",
       "hoursValue": "Mon-Sat 8am-4:45pm",
       "response": "Response within 24–48h"
+    },
+    "infoUsa": {
+      "title": "USA Contact Details",
+      "address": "Address",
+      "addressValue": "New York, USA",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Hours",
+      "hoursValue": "Mon-Sat 8am-4:45pm"
     }
   },
   "rfq": {

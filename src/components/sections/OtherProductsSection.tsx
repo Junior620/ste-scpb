@@ -218,7 +218,7 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
                 {t('cta.quote')}
               </Button>
             </Link>
-            <Link href="/produits">
+            <Link href="/statistiques">
               <Button variant="outline" size="lg">
                 <Globe className="w-4 h-4 mr-2" />
                 {t('cta.destinations')}

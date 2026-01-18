@@ -406,19 +406,19 @@
     },
     "stats": {
       "experience": {
-        "value": "20+",
+        "value": "5+",
         "label": "Années d'expérience"
       },
       "partners": {
-        "value": "500+",
+        "value": "20+",
         "label": "Producteurs partenaires"
       },
       "destinations": {
-        "value": "30+",
+        "value": "5+",
         "label": "Pays de destination"
       },
       "volume": {
-        "value": "5000+",
+        "value": "50+",
         "label": "Tonnes exportées/an"
       }
     },
@@ -539,6 +539,15 @@
       "hours": "Horaires",
       "hoursValue": "Lun-Sam 08h-16h45",
       "response": "Réponse sous 24–48h"
+    },
+    "infoUsa": {
+      "title": "Coordonnées USA",
+      "address": "Adresse",
+      "addressValue": "New York, USA",
+      "phone": "Téléphone",
+      "email": "Email",
+      "hours": "Horaires",
+      "hoursValue": "Lun-Sam 08h-16h45"
     }
   },
   "rfq": {

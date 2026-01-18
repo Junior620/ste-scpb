@@ -47,6 +47,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Info */}
             <div className="lg:col-span-1 space-y-6">
+              {/* Cameroon Office */}
               <div className="bg-background-secondary rounded-lg p-6 border border-border">
                 <h2 className="text-xl font-semibold text-foreground mb-6">{t('info.title')}</h2>
 
@@ -99,6 +100,55 @@ export default async function ContactPage({ params }: ContactPageProps) {
                   <div className="flex items-center gap-2 text-sm text-primary">
                     <Clock className="w-4 h-4" />
                     <span>{t('info.response')}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* USA Office */}
+              <div className="bg-background-secondary rounded-lg p-6 border border-border">
+                <h2 className="text-xl font-semibold text-foreground mb-6">{t('infoUsa.title')}</h2>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-primary mt-0.5" />
+                    <div>
+                      <p className="font-medium text-foreground">{t('infoUsa.address')}</p>
+                      <p className="text-foreground-muted">{t('infoUsa.addressValue')}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Phone className="w-5 h-5 text-primary mt-0.5" />
+                    <div>
+                      <p className="font-medium text-foreground">{t('infoUsa.phone')}</p>
+                      <a
+                        href="tel:+19175939310"
+                        className="text-foreground-muted hover:text-primary transition-colors"
+                      >
+                        +1 917 593 9310
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-primary mt-0.5" />
+                    <div>
+                      <p className="font-medium text-foreground">{t('infoUsa.email')}</p>
+                      <a
+                        href="mailto:kameragro@yahoo.com"
+                        className="text-foreground-muted hover:text-primary transition-colors"
+                      >
+                        kameragro@yahoo.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-primary mt-0.5" />
+                    <div>
+                      <p className="font-medium text-foreground">{t('infoUsa.hours')}</p>
+                      <p className="text-foreground-muted">{t('infoUsa.hoursValue')}</p>
+                    </div>
                   </div>
                 </div>
               </div>

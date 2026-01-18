@@ -51,10 +51,10 @@ const PROCESS_STEPS = [
 ];
 
 const STATS = [
-  { value: '5000+', key: '0' },
-  { value: '30+', key: '1' },
-  { value: '500+', key: '2' },
-  { value: '20+', key: '3' },
+  { value: '50+', key: '0' },
+  { value: '5+', key: '1' },
+  { value: '20+', key: '2' },
+  { value: '5+', key: '3' },
 ];
 
 const BADGES = [
@@ -83,12 +83,8 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
         {/* Header */}
         <ScrollReveal direction="up" delay={0} duration={500}>
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {t('title')}
-            </h2>
-            <p className="text-lg text-foreground-muted max-w-2xl mx-auto mb-4">
-              {t('subtitle')}
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
+            <p className="text-lg text-foreground-muted max-w-2xl mx-auto mb-4">{t('subtitle')}</p>
             {/* Standards reference */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-sm text-primary">
               <span className="font-medium">{t('standards')}</span>
@@ -102,9 +98,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
             const IconComponent = cert.icon;
             return (
               <ScrollReveal key={cert.id} direction="up" delay={index * 100} duration={500}>
-                <div
-                  className="bg-background rounded-xl p-6 border border-border hover:border-primary/50 transition-colors h-full"
-                >
+                <div className="bg-background rounded-xl p-6 border border-border hover:border-primary/50 transition-colors h-full">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <IconComponent className="w-6 h-6 text-primary" />
                   </div>
@@ -127,9 +121,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 {t('process.title')}
               </h3>
-              <p className="text-foreground-muted">
-                {t('process.subtitle')}
-              </p>
+              <p className="text-foreground-muted">{t('process.subtitle')}</p>
             </div>
           </ScrollReveal>
 
@@ -138,9 +130,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
               const IconComponent = step.icon;
               return (
                 <ScrollReveal key={step.id} direction="up" delay={index * 100} duration={500}>
-                  <div
-                    className="relative bg-background rounded-xl p-6 border border-border hover:border-primary/50 transition-colors h-full"
-                  >
+                  <div className="relative bg-background rounded-xl p-6 border border-border hover:border-primary/50 transition-colors h-full">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-primary text-background flex items-center justify-center text-sm font-bold">
                       {index + 1}
@@ -199,9 +189,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
                   <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-foreground-muted">
-                    {t(`stats.${stat.key}`)}
-                  </div>
+                  <div className="text-sm text-foreground-muted">{t(`stats.${stat.key}`)}</div>
                 </div>
               ))}
             </div>
@@ -217,18 +205,14 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
         <div className="text-center mb-16">
           <p className="text-sm text-foreground-muted">
             {t('stats.exportTo')}{' '}
-            <span className="text-foreground font-medium">
-              {EXPORT_DESTINATIONS.join(', ')}...
-            </span>
+            <span className="text-foreground font-medium">{EXPORT_DESTINATIONS.join(', ')}...</span>
           </p>
         </div>
 
         {/* CTA Section - Capture leads at peak trust */}
         <div className="mb-12">
           <div className="bg-background rounded-2xl p-8 border-2 border-primary/30 text-center">
-            <h3 className="text-xl font-bold text-foreground mb-6">
-              {t('cta.title')}
-            </h3>
+            <h3 className="text-xl font-bold text-foreground mb-6">{t('cta.title')}</h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {/* Primary CTA - Contact (highest value) */}
               <Link href="/contact">
@@ -247,14 +231,16 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
               {/* Tertiary CTA - COA download */}
               <div className="flex flex-col items-center">
                 <Link href="/devis">
-                  <Button variant="ghost" size="lg" className="text-foreground-muted hover:text-foreground">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    className="text-foreground-muted hover:text-foreground"
+                  >
                     <Download className="w-4 h-4 mr-2" />
                     {t('cta.coa')}
                   </Button>
                 </Link>
-                <span className="text-xs text-foreground-muted/70 mt-1">
-                  {t('cta.coaContent')}
-                </span>
+                <span className="text-xs text-foreground-muted/70 mt-1">{t('cta.coaContent')}</span>
               </div>
             </div>
           </div>

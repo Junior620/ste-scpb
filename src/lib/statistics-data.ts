@@ -59,18 +59,22 @@ export interface StatisticsData {
 // Static data - can be updated monthly or connected to CMS
 export const STATISTICS_DATA: StatisticsData = {
   kpi: {
-    tonnesExported: 2500,
-    countriesServed: 15,
-    producerPartners: 120,
-    yearsExperience: 8,
+    tonnesExported: 50,
+    countriesServed: 5,
+    producerPartners: 20,
+    yearsExperience: 5,
     avgResponseTime: '24-48h',
     tracedLots: 95,
   },
   exportsByRegion: [
-    { region: 'eu', percentage: 55, countries: ['France', 'Belgique', 'Allemagne', 'Pays-Bas', 'Italie'] },
+    {
+      region: 'eu',
+      percentage: 55,
+      countries: ['France', 'Belgique', 'Allemagne', 'Pays-Bas', 'Italie'],
+    },
     { region: 'asia', percentage: 25, countries: ['Chine', 'Inde', 'Vietnam', 'Malaisie'] },
     { region: 'usa', percentage: 12, countries: ['États-Unis', 'Canada'] },
-    { region: 'africa', percentage: 5, countries: ['Maroc', 'Sénégal', 'Côte d\'Ivoire'] },
+    { region: 'africa', percentage: 5, countries: ['Maroc', 'Sénégal', "Côte d'Ivoire"] },
     { region: 'other', percentage: 3, countries: ['Autres'] },
   ],
   topDestinations: [
@@ -112,12 +116,15 @@ export const STATISTICS_DATA: StatisticsData = {
 };
 
 // Product-specific data
-export const PRODUCT_STATS: Record<string, {
-  formats: string[];
-  certifications: string[];
-  specs: { label: string; value: string }[];
-  seasonality: string;
-}> = {
+export const PRODUCT_STATS: Record<
+  string,
+  {
+    formats: string[];
+    certifications: string[];
+    specs: { label: string; value: string }[];
+    seasonality: string;
+  }
+> = {
   cacao: {
     formats: ['Fèves', 'Beurre', 'Pâte', 'Poudre'],
     certifications: ['Bio (sur demande)', 'Fairtrade (sur demande)', 'UTZ/Rainforest'],
