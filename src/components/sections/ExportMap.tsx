@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Map, { Marker, Popup, NavigationControl } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Ship } from 'lucide-react';
+import { getTranslatedCountryName } from '@/lib/statistics-data';
 
 /**
  * Export destination with coordinates and percentage
@@ -227,6 +228,7 @@ export function ExportMap({
   topDestinations,
 }: ExportMapProps) {
   const t = useTranslations('statistics');
+  const locale = useLocale() as 'fr' | 'en' | 'ru';
   const [selectedDestination, setSelectedDestination] = useState<ExportDestination | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<TopDestinationCountry | null>(null);
 
@@ -278,14 +280,18 @@ export function ExportMap({
   // Fallback if no token
   if (!mapboxToken) {
     return (
-      <div className={`h-[400px] bg-background rounded-lg flex items-center justify-center border border-border ${className}`}>
+      <div
+        className={`h-[400px] bg-background rounded-lg flex items-center justify-center border border-border ${className}`}
+      >
         <p className="text-foreground-muted">Carte non disponible - Token Mapbox non configuré</p>
       </div>
     );
   }
 
   return (
-    <div className={`relative h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-border ${className}`}>
+    <div
+      className={`relative h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-border ${className}`}
+    >
       <Map
         mapboxAccessToken={mapboxToken}
         initialViewState={INITIAL_VIEW_STATE}
@@ -314,57 +320,59 @@ export function ExportMap({
         ))}
 
         {/* Region bubbles */}
-        {showRegions && destinations.map((dest) => (
-          <Marker
-            key={dest.id}
-            latitude={dest.coordinates.latitude}
-            longitude={dest.coordinates.longitude}
-            anchor="center"
-            onClick={(e) => {
-              e.originalEvent?.stopPropagation();
-              handleRegionClick(dest);
-            }}
-          >
-            <button
-              type="button"
-              className="cursor-pointer transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
-              aria-label={`${dest.region}: ${dest.percentage}%`}
-              style={{
-                width: Math.max(40, dest.percentage * 1.2),
-                height: Math.max(40, dest.percentage * 1.2),
+        {showRegions &&
+          destinations.map((dest) => (
+            <Marker
+              key={dest.id}
+              latitude={dest.coordinates.latitude}
+              longitude={dest.coordinates.longitude}
+              anchor="center"
+              onClick={(e) => {
+                e.originalEvent?.stopPropagation();
+                handleRegionClick(dest);
               }}
             >
-              <div
-                className="w-full h-full rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-white/30"
-                style={{ backgroundColor: dest.color }}
+              <button
+                type="button"
+                className="cursor-pointer transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+                aria-label={`${dest.region}: ${dest.percentage}%`}
+                style={{
+                  width: Math.max(40, dest.percentage * 1.2),
+                  height: Math.max(40, dest.percentage * 1.2),
+                }}
               >
-                {dest.percentage}%
-              </div>
-            </button>
-          </Marker>
-        ))}
+                <div
+                  className="w-full h-full rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-white/30"
+                  style={{ backgroundColor: dest.color }}
+                >
+                  {dest.percentage}%
+                </div>
+              </button>
+            </Marker>
+          ))}
 
         {/* Top destination countries (smaller markers) */}
-        {showCountries && topDests.map((country) => (
-          <Marker
-            key={country.countryCode}
-            latitude={country.coordinates.latitude}
-            longitude={country.coordinates.longitude}
-            anchor="center"
-            onClick={(e) => {
-              e.originalEvent?.stopPropagation();
-              handleCountryClick(country);
-            }}
-          >
-            <button
-              type="button"
-              className="cursor-pointer transition-transform hover:scale-125 focus:outline-none"
-              aria-label={`${country.country}: ${country.percentage}%`}
+        {showCountries &&
+          topDests.map((country) => (
+            <Marker
+              key={country.countryCode}
+              latitude={country.coordinates.latitude}
+              longitude={country.coordinates.longitude}
+              anchor="center"
+              onClick={(e) => {
+                e.originalEvent?.stopPropagation();
+                handleCountryClick(country);
+              }}
             >
-              <div className="w-3 h-3 bg-primary rounded-full border border-white shadow-md" />
-            </button>
-          </Marker>
-        ))}
+              <button
+                type="button"
+                className="cursor-pointer transition-transform hover:scale-125 focus:outline-none"
+                aria-label={`${country.country}: ${country.percentage}%`}
+              >
+                <div className="w-3 h-3 bg-primary rounded-full border border-white shadow-md" />
+              </button>
+            </Marker>
+          ))}
 
         {/* Region popup */}
         {selectedDestination && (
@@ -384,7 +392,9 @@ export function ExportMap({
                 />
                 <span className="font-semibold">{selectedDestination.region}</span>
               </div>
-              <p className="text-2xl font-bold text-primary mb-2">{selectedDestination.percentage}%</p>
+              <p className="text-2xl font-bold text-primary mb-2">
+                {selectedDestination.percentage}%
+              </p>
               <p className="text-xs text-gray-400 mb-1">{t('destinations.countries')}:</p>
               <p className="text-sm text-gray-300">{selectedDestination.countries.join(', ')}</p>
             </div>
@@ -402,7 +412,9 @@ export function ExportMap({
             offset={15}
           >
             <div className="p-3 min-w-[160px] bg-gray-900 text-white rounded-lg">
-              <p className="font-semibold mb-1">{selectedCountry.country}</p>
+              <p className="font-semibold mb-1">
+                {getTranslatedCountryName(selectedCountry.countryCode, locale)}
+              </p>
               <p className="text-xl font-bold text-primary mb-2">{selectedCountry.percentage}%</p>
               {selectedCountry.port && (
                 <p className="text-xs text-gray-400 flex items-center gap-1">
@@ -420,10 +432,7 @@ export function ExportMap({
         <ul className="space-y-1.5">
           {destinations.slice(0, 4).map((dest) => (
             <li key={dest.id} className="flex items-center gap-2 text-xs text-gray-300">
-              <span
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: dest.color }}
-              />
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: dest.color }} />
               <span>{dest.region}</span>
               <span className="ml-auto font-medium">{dest.percentage}%</span>
             </li>

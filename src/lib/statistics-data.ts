@@ -160,3 +160,32 @@ export const PRODUCT_STATS: Record<
 export type ProductFilter = 'all' | 'cacao' | 'cafe' | 'cajou' | 'sesame' | 'soja';
 export type PeriodFilter = '12m' | '24m' | '2024' | '2023';
 export type RegionFilter = 'global' | 'eu' | 'usa' | 'asia' | 'africa';
+
+/**
+ * Get translated country name by country code
+ */
+export function getTranslatedCountryName(
+  countryCode: string,
+  locale: 'fr' | 'en' | 'ru' = 'fr'
+): string {
+  const countryNames: Record<string, { fr: string; en: string; ru: string }> = {
+    NL: { fr: 'Pays-Bas', en: 'Netherlands', ru: 'Нидерланды' },
+    BE: { fr: 'Belgique', en: 'Belgium', ru: 'Бельгия' },
+    DE: { fr: 'Allemagne', en: 'Germany', ru: 'Германия' },
+    FR: { fr: 'France', en: 'France', ru: 'Франция' },
+    CN: { fr: 'Chine', en: 'China', ru: 'Китай' },
+    US: { fr: 'États-Unis', en: 'United States', ru: 'США' },
+    CA: { fr: 'Canada', en: 'Canada', ru: 'Канада' },
+    IN: { fr: 'Inde', en: 'India', ru: 'Индия' },
+    VN: { fr: 'Vietnam', en: 'Vietnam', ru: 'Вьетнам' },
+    MY: { fr: 'Malaisie', en: 'Malaysia', ru: 'Малайзия' },
+    MA: { fr: 'Maroc', en: 'Morocco', ru: 'Марокко' },
+    SN: { fr: 'Sénégal', en: 'Senegal', ru: 'Сенегал' },
+    CI: { fr: "Côte d'Ivoire", en: 'Ivory Coast', ru: "Кот-д'Ивуар" },
+    IT: { fr: 'Italie', en: 'Italy', ru: 'Италия' },
+    ES: { fr: 'Espagne', en: 'Spain', ru: 'Испания' },
+    ID: { fr: 'Indonésie', en: 'Indonesia', ru: 'Индонезия' },
+  };
+
+  return countryNames[countryCode]?.[locale] || countryCode;
+}

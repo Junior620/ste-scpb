@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import {
   TrendingUp,
@@ -39,6 +39,7 @@ import { ScrollReveal } from '@/components/ui';
 import {
   STATISTICS_DATA,
   PRODUCT_STATS,
+  getTranslatedCountryName,
   type ProductFilter,
   type PeriodFilter,
   type RegionFilter,
@@ -65,6 +66,7 @@ const REGIONS: RegionFilter[] = ['global', 'eu', 'usa', 'asia', 'africa'];
 
 export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
   const t = useTranslations('statistics');
+  const locale = useLocale() as 'fr' | 'en' | 'ru';
   const [productFilter, setProductFilter] = useState<ProductFilter>('all');
   const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('12m');
   const [regionFilter, setRegionFilter] = useState<RegionFilter>('global');
@@ -303,7 +305,9 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                         {idx + 1}
                       </span>
                       <div className="flex-1">
-                        <p className="font-medium text-foreground">{dest.country}</p>
+                        <p className="font-medium text-foreground">
+                          {getTranslatedCountryName(dest.countryCode, locale)}
+                        </p>
                         {dest.port && (
                           <p className="text-xs text-foreground-muted opacity-0 group-hover:opacity-100 transition-opacity">
                             Port: {dest.port}
