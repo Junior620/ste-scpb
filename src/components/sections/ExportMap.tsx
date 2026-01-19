@@ -196,7 +196,7 @@ interface RegionData {
 }
 
 interface TopDestinationData {
-  country: string;
+  country: string | { fr: string; en: string; ru: string };
   countryCode: string;
   percentage: number;
   port?: string;
@@ -252,7 +252,7 @@ export function ExportMap({
   const topDests: TopDestinationCountry[] = useMemo(() => {
     if (topDestinations && topDestinations.length > 0) {
       return topDestinations.map((d) => ({
-        country: d.country,
+        country: typeof d.country === 'string' ? d.country : d.country[locale] || d.country.fr,
         countryCode: d.countryCode,
         percentage: d.percentage,
         port: d.port,
@@ -260,7 +260,7 @@ export function ExportMap({
       }));
     }
     return TOP_DESTINATIONS;
-  }, [topDestinations]);
+  }, [topDestinations, locale]);
 
   const handleRegionClick = useCallback((dest: ExportDestination) => {
     setSelectedDestination(dest);
