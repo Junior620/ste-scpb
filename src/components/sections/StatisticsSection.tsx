@@ -142,7 +142,7 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <KPICard
               icon={<TrendingUp className="w-6 h-6" />}
-              value={`${data.kpi.tonnesExported.toLocaleString()} t`}
+              value={`${data.kpi.tonnesExported.toLocaleString()} MT`}
               label={t('kpi.tonnes')}
               tooltip={t('kpi.tooltips.tonnes')}
             />
