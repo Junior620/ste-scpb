@@ -4,6 +4,7 @@
  * Certifications Section Component
  * Displays quality certifications, process steps, quality indicators and compliance badges
  * Builds B2B trust and credibility for cocoa export - EU audit level
+ * Updated: Country names are now translated in all languages
  */
 
 import { useTranslations } from 'next-intl';
