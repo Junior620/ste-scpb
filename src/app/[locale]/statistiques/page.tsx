@@ -6,6 +6,9 @@ import { createSanityClient, type ExportStatisticsData } from '@/infrastructure/
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 
+// Revalidate every 1 hour (3600 seconds)
+export const revalidate = 3600;
+
 interface Props {
   params: Promise<{ locale: string }>;
 }
