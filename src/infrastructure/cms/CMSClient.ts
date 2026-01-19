@@ -51,6 +51,12 @@ export interface CMSClient {
    * @param locale - The locale for i18n content
    */
   getTeamMembers(locale: Locale): Promise<TeamMember[]>;
+
+  /**
+   * Clears the internal cache
+   * Useful for debugging and forcing fresh data
+   */
+  clearCache(): void;
 }
 
 /**
