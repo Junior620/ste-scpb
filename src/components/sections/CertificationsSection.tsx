@@ -71,11 +71,18 @@ const QUALITY_INDICATORS = [
   { key: 'analyses', icon: FlaskConical },
 ];
 
-// Export destinations for social proof
-const EXPORT_DESTINATIONS = ['France', 'Allemagne', 'Belgique', 'USA', 'Maroc', 'Turquie'];
-
 export function CertificationsSection({ className = '' }: CertificationsSectionProps) {
   const t = useTranslations('certifications');
+
+  // Export destinations for social proof - translated
+  const EXPORT_DESTINATIONS = [
+    t('destinations.france'),
+    t('destinations.germany'),
+    t('destinations.belgium'),
+    t('destinations.usa'),
+    t('destinations.morocco'),
+    t('destinations.turkey'),
+  ];
 
   return (
     <section className={`py-16 md:py-24 bg-background ${className}`}>

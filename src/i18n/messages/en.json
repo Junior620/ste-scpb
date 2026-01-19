@@ -775,6 +775,14 @@
       "disclaimer": "Cumulative data from partner network – 5-year average",
       "exportTo": "Active clients in"
     },
+    "destinations": {
+      "france": "France",
+      "germany": "Germany",
+      "belgium": "Belgium",
+      "usa": "USA",
+      "morocco": "Morocco",
+      "turkey": "Turkey"
+    },
     "badges": {
       "export": "Export United States, European Union, Africa",
       "incoterms": "Incoterms: FOB, CIF, DAP",

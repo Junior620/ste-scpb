@@ -775,6 +775,14 @@
       "disclaimer": "Сводные данные сети партнёров — среднее за 5 лет",
       "exportTo": "Активные клиенты в"
     },
+    "destinations": {
+      "france": "Франция",
+      "germany": "Германия",
+      "belgium": "Бельгия",
+      "usa": "США",
+      "morocco": "Марокко",
+      "turkey": "Турция"
+    },
     "badges": {
       "export": "Экспорт в США, ЕС, Африку",
       "incoterms": "Инкотермс: FOB, CIF, DAP",
