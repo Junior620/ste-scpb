@@ -419,8 +419,8 @@
         "label": "Pays de destination"
       },
       "volume": {
-        "value": "50+",
-        "label": "Tonnes exportées/an"
+        "value": "40 000 t",
+        "label": "Capacité d'exportation"
       }
     },
     "cta": {
@@ -768,7 +768,7 @@
       "analyses": { "label": "Analyses", "value": "Résidus / mycotoxines" }
     },
     "stats": {
-      "0": "Tonnes exportées/an (toutes commodités)",
+      "0": "Capacité d'exportation",
       "1": "Pays de destination",
       "2": "Producteurs partenaires",
       "3": "Années d'expérience",
@@ -1017,7 +1017,7 @@
       }
     },
     "kpi": {
-      "tonnes": "Tonnes exportées/an",
+      "tonnes": "Capacité d'exportation",
       "countries": "Pays de destination",
       "producers": "Producteurs partenaires",
       "years": "Années d'expérience",
@@ -1025,7 +1025,7 @@
       "traced": "Lots tracés",
       "disclaimer": "Données indicatives et consolidées (non contractuelles). Pour une offre chiffrée : demande de devis.",
       "tooltips": {
-        "tonnes": "Volume total exporté sur les 12 derniers mois (toutes commodités confondues)",
+        "tonnes": "Capacité annuelle d'exportation (toutes commodités confondues) : entre 20 000 et 40 000 tonnes",
         "countries": "Nombre de pays de destination actifs",
         "producers": "Réseau de producteurs partenaires dans les 10 régions du Cameroun",
         "years": "Années d'expérience dans l'export de commodités agricoles",

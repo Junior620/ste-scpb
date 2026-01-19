@@ -51,10 +51,10 @@ const PROCESS_STEPS = [
 ];
 
 const STATS = [
-  { value: '50+', key: '0' },
+  { value: '40 000 t', key: '0' },
   { value: '5+', key: '1' },
   { value: '20+', key: '2' },
-  { value: '5+', key: '3' },
+  { value: '15', key: '3' },
 ];
 
 const BADGES = [

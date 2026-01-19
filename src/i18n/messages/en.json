@@ -419,8 +419,8 @@
         "label": "Destination countries"
       },
       "volume": {
-        "value": "50+",
-        "label": "Tonnes exported/year"
+        "value": "40,000 t",
+        "label": "Export Capacity"
       }
     },
     "cta": {
@@ -768,7 +768,7 @@
       "analyses": { "label": "Analyses", "value": "Residues / mycotoxins" }
     },
     "stats": {
-      "0": "Tonnes exported/year (all commodities)",
+      "0": "Export Capacity",
       "1": "Destination countries",
       "2": "Partner producers",
       "3": "Years of experience",
@@ -1017,7 +1017,7 @@
       }
     },
     "kpi": {
-      "tonnes": "Tonnes exported/year",
+      "tonnes": "Export Capacity",
       "countries": "Destination countries",
       "producers": "Partner producers",
       "years": "Years of experience",
@@ -1025,7 +1025,7 @@
       "traced": "Traced lots",
       "disclaimer": "Indicative and consolidated data (non-contractual). For a quoted offer: request a quote.",
       "tooltips": {
-        "tonnes": "Total volume exported over the last 12 months (all commodities combined)",
+        "tonnes": "Annual export capacity (all commodities combined): between 20,000 and 40,000 tonnes",
         "countries": "Number of active destination countries",
         "producers": "Network of partner producers across Cameroon's 10 regions",
         "years": "Years of experience in agricultural commodity exports",

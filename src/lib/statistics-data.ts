@@ -59,7 +59,7 @@ export interface StatisticsData {
 // Static data - can be updated monthly or connected to CMS
 export const STATISTICS_DATA: StatisticsData = {
   kpi: {
-    tonnesExported: 50,
+    tonnesExported: 30000,
     countriesServed: 5,
     producerPartners: 20,
     yearsExperience: 5,
