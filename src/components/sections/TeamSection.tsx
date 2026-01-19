@@ -5,13 +5,20 @@ import Image from 'next/image';
 import type { TeamMember } from '@/domain/entities/TeamMember';
 import type { Locale } from '@/domain/value-objects/Locale';
 import {
+  getLocalizedName,
   getLocalizedRole,
   getLocalizedBio,
   sortTeamMembers,
   getCEO,
 } from '@/domain/entities/TeamMember';
 import { Card } from '@/components/ui/Card';
-import { Scene3DWrapper, Starfield, Constellation, PostProcessing, StaticHeroFallback } from '@/components/3d';
+import {
+  Scene3DWrapper,
+  Starfield,
+  Constellation,
+  PostProcessing,
+  StaticHeroFallback,
+} from '@/components/3d';
 import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 
 /**
@@ -78,7 +85,8 @@ function getRoleColor(role: string): string {
   const lowerRole = role.toLowerCase();
   if (lowerRole.includes('ceo') || lowerRole.includes('directeur général')) return ROLE_COLORS.ceo;
   if (lowerRole.includes('coo') || lowerRole.includes('opérations')) return ROLE_COLORS.gm;
-  if (lowerRole.includes('supply') || lowerRole.includes('logistique')) return ROLE_COLORS.operations;
+  if (lowerRole.includes('supply') || lowerRole.includes('logistique'))
+    return ROLE_COLORS.operations;
   if (lowerRole.includes('export') || lowerRole.includes('commercial')) return ROLE_COLORS.export;
   return ROLE_COLORS.default;
 }
@@ -87,71 +95,76 @@ function getRoleColor(role: string): string {
  * Individual team member card component
  */
 function TeamMemberCard({ member, locale, translations }: TeamMemberCardProps) {
+  const name = getLocalizedName(member, locale);
   const role = getLocalizedRole(member, locale);
   const bio = getLocalizedBio(member, locale);
-  const initials = getInitials(member.name);
+  const initials = getInitials(name);
   const colorClass = getRoleColor(role);
 
   // Determine contact type based on role
   const getContactLabel = () => {
     const lowerRole = role.toLowerCase();
-    if (lowerRole.includes('supply') || lowerRole.includes('logistique')) return translations.contactLogistics;
-    if (lowerRole.includes('export') || lowerRole.includes('commercial')) return translations.contactExport;
+    if (lowerRole.includes('supply') || lowerRole.includes('logistique'))
+      return translations.contactLogistics;
+    if (lowerRole.includes('export') || lowerRole.includes('commercial'))
+      return translations.contactExport;
     return translations.contactSales;
   };
 
   return (
-    <Card
-      className="flex flex-col items-center text-center p-6"
-    >
+    <Card className="flex flex-col items-center text-center p-6">
       {/* Photo or Styled Initials */}
       <div className="relative rounded-full overflow-hidden mb-4 w-24 h-24 md:w-28 md:h-28">
         {member.photo ? (
           <Image
             src={member.photo.url}
-            alt={member.photo.alt || member.name}
+            alt={member.photo.alt || name}
             fill
             className="object-cover"
             sizes="112px"
             loading="lazy"
           />
         ) : (
-          <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${colorClass}`}>
-            <span className="font-bold text-white text-2xl">
-              {initials}
-            </span>
+          <div
+            className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${colorClass}`}
+          >
+            <span className="font-bold text-white text-2xl">{initials}</span>
           </div>
         )}
       </div>
 
       {/* Name */}
-      <h3 className="font-semibold text-foreground text-lg">
-        {member.name}
-      </h3>
+      <h3 className="font-semibold text-foreground text-lg">{name}</h3>
 
       {/* Role */}
-      <p className="text-primary font-medium mt-1 text-sm">
-        {role}
-      </p>
+      <p className="text-primary font-medium mt-1 text-sm">{role}</p>
 
       {/* Bio */}
       {bio && (
-        <p className="text-muted-foreground mt-3 leading-relaxed text-sm line-clamp-3">
-          {bio}
-        </p>
+        <p className="text-muted-foreground mt-3 leading-relaxed text-sm line-clamp-3">{bio}</p>
       )}
 
       {/* Languages & Response time */}
       <div className="flex flex-wrap justify-center gap-3 mt-3 text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+            />
           </svg>
           FR / EN
         </span>
         <span className="flex items-center gap-1">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           &lt; 24–48h
         </span>
@@ -163,7 +176,7 @@ function TeamMemberCard({ member, locale, translations }: TeamMemberCardProps) {
           <a
             href={`mailto:${member.email}`}
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
-            aria-label={`Email ${member.name}`}
+            aria-label={`Email ${name}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -190,9 +203,18 @@ function TeamMemberCard({ member, locale, translations }: TeamMemberCardProps) {
 /**
  * CEO Message section component
  */
-function CEOMessage({ ceo, locale, translations }: { ceo: TeamMember; locale: Locale; translations: TeamTranslations }) {
+function CEOMessage({
+  ceo,
+  locale,
+  translations,
+}: {
+  ceo: TeamMember;
+  locale: Locale;
+  translations: TeamTranslations;
+}) {
+  const name = getLocalizedName(ceo, locale);
   const role = getLocalizedRole(ceo, locale);
-  const initials = getInitials(ceo.name);
+  const initials = getInitials(name);
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -209,7 +231,7 @@ function CEOMessage({ ceo, locale, translations }: { ceo: TeamMember; locale: Lo
           {showImage && (
             <Image
               src={ceo.photo!.url}
-              alt={ceo.photo!.alt || ceo.name}
+              alt={ceo.photo!.alt || name}
               fill
               className={`object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               sizes="192px"
@@ -221,20 +243,16 @@ function CEOMessage({ ceo, locale, translations }: { ceo: TeamMember; locale: Lo
           {/* Fallback initials - shown when no image or image failed to load */}
           {(!showImage || !imageLoaded) && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-5xl font-bold text-white">
-                {initials}
-              </span>
+              <span className="text-5xl font-bold text-white">{initials}</span>
             </div>
           )}
         </div>
 
         {/* CEO Info & Message */}
         <div className="flex-1 text-center md:text-left">
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground">
-            {ceo.name}
-          </h3>
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground">{name}</h3>
           <p className="text-primary font-medium mt-1">{role}</p>
-          
+
           {/* CEO Quote from translations */}
           <blockquote className="mt-4 text-muted-foreground leading-relaxed italic border-l-4 border-primary/30 pl-4">
             &ldquo;{translations.ceoQuote}&rdquo;
@@ -244,14 +262,29 @@ function CEOMessage({ ceo, locale, translations }: { ceo: TeamMember; locale: Lo
           <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                />
               </svg>
               {translations.languages}: FR / EN
             </span>
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
               </svg>
               {translations.location}: Douala
             </span>
@@ -277,7 +310,13 @@ function TeamHeroScene() {
       { id: 'team-4', position: [-2, 0, 0] as [number, number, number], size: 0.15, label: '' },
       { id: 'team-5', position: [2, 0, 0] as [number, number, number], size: 0.15, label: '' },
     ],
-    connections: [[0, 3], [3, 2], [2, 4], [4, 1], [0, 1]] as [number, number][],
+    connections: [
+      [0, 3],
+      [3, 2],
+      [2, 4],
+      [4, 1],
+      [0, 1],
+    ] as [number, number][],
     color: '#fbbf24',
     glowIntensity: 0.8,
     animationSpeed: 0.6,
@@ -293,10 +332,7 @@ function TeamHeroScene() {
         parallaxIntensity={0.05}
         enableParallax={true}
       />
-      <Constellation
-        config={constellationConfig}
-        isActive={true}
-      />
+      <Constellation config={constellationConfig} isActive={true} />
       <PostProcessing config={config} />
       <ambientLight intensity={0.3} />
     </>
@@ -335,9 +371,7 @@ export function TeamSection({ members, locale, translations }: TeamSectionProps)
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl holographic">
             {translations.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
-            {translations.subtitle}
-          </p>
+          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">{translations.subtitle}</p>
         </div>
       </div>
 
@@ -350,7 +384,12 @@ export function TeamSection({ members, locale, translations }: TeamSectionProps)
         {otherMembers.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherMembers.map((member) => (
-              <TeamMemberCard key={member.id} member={member} locale={locale} translations={translations} />
+              <TeamMemberCard
+                key={member.id}
+                member={member}
+                locale={locale}
+                translations={translations}
+              />
             ))}
           </div>
         )}
@@ -381,7 +420,7 @@ export function renderTeamMemberDisplay(
   photoUrl?: string;
 } {
   return {
-    name: member.name,
+    name: getLocalizedName(member, locale),
     role: getLocalizedRole(member, locale),
     bio: getLocalizedBio(member, locale),
     hasPhoto: !!member.photo,

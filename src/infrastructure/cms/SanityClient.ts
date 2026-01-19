@@ -81,7 +81,7 @@ interface SanityArticle {
         authorType?: string;
         teamMember?: {
           _id: string;
-          name: string;
+          name: string | { fr: string; en: string; ru?: string };
           photo?: SanityImage;
         };
         externalName?: string;
@@ -90,7 +90,7 @@ interface SanityArticle {
     | {
         // Old format (direct reference to team member)
         _id: string;
-        name: string;
+        name: string | { fr: string; en: string; ru?: string };
         photo?: SanityImage;
       };
   relatedProducts?: Array<{ slug: { current: string } }>;
@@ -104,10 +104,10 @@ interface SanityArticle {
  */
 interface SanityTeamMember {
   _id: string;
-  name: string;
-  role: { fr: string; en: string };
+  name: string | { fr: string; en: string; ru?: string }; // Support both old (string) and new (object) formats
+  role: { fr: string; en: string; ru?: string };
   department?: string;
-  bio?: { fr: string; en: string };
+  bio?: { fr: string; en: string; ru?: string };
   photo?: SanityImage;
   email?: string;
   phone?: string;
@@ -391,9 +391,14 @@ export class SanityClient implements CMSClient {
         const authorType = sanityArticle.author.authorType || 'team';
 
         if (authorType === 'team' && sanityArticle.author.teamMember) {
+          const teamMemberName =
+            typeof sanityArticle.author.teamMember.name === 'string'
+              ? sanityArticle.author.teamMember.name
+              : sanityArticle.author.teamMember.name.fr; // Use French name as default
+
           author = {
             id: sanityArticle.author.teamMember._id,
-            name: sanityArticle.author.teamMember.name,
+            name: teamMemberName,
             avatar: sanityArticle.author.teamMember.photo
               ? this.getImageUrl(sanityArticle.author.teamMember.photo, 100)
               : undefined,
@@ -409,9 +414,14 @@ export class SanityClient implements CMSClient {
         }
       } else if ('_id' in sanityArticle.author && '_id' in sanityArticle.author) {
         // Old format - direct reference to team member
+        const teamMemberName =
+          typeof sanityArticle.author.name === 'string'
+            ? sanityArticle.author.name
+            : sanityArticle.author.name.fr; // Use French name as default
+
         author = {
           id: sanityArticle.author._id,
-          name: sanityArticle.author.name,
+          name: teamMemberName,
           avatar: sanityArticle.author.photo
             ? this.getImageUrl(sanityArticle.author.photo, 100)
             : undefined,
@@ -505,15 +515,24 @@ export class SanityClient implements CMSClient {
       ru: obj?.ru || '',
     });
 
+    // Handle both old format (string) and new format (object with localized names)
+    const memberName =
+      typeof sanityMember.name === 'string' ? sanityMember.name : sanityMember.name.fr; // Use French name as default for alt text
+
+    const localizedName =
+      typeof sanityMember.name === 'string'
+        ? { fr: sanityMember.name, en: sanityMember.name, ru: sanityMember.name }
+        : toLocalized(sanityMember.name);
+
     return {
       id: sanityMember._id,
-      name: sanityMember.name,
+      name: localizedName,
       role: toLocalized(sanityMember.role),
       bio: toLocalized(sanityMember.bio),
       photo: sanityMember.photo
         ? {
             url: this.getImageUrl(sanityMember.photo, 400),
-            alt: sanityMember.name,
+            alt: memberName,
             width: 400,
             height: 400,
           }

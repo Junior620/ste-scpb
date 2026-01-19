@@ -142,3 +142,62 @@ Si le problème persiste:
 - Vérifiez les logs du serveur pour voir s'il y a des erreurs
 - Utilisez l'API de debug pour voir les données brutes
 - Assurez-vous que l'article a bien un auteur défini dans Sanity
+
+---
+
+## Revalider la page Statistiques
+
+Si vous avez modifié les données de statistiques dans Sanity (par exemple, le nombre de pays desservis) et que les changements n'apparaissent pas en production, vous devez revalider la page.
+
+### En production (ste-scpb.com)
+
+**PowerShell:**
+
+```powershell
+# Revalider la version française
+$body = @{secret="f7f1ae5631b3e4f955b16dcc6184cfc3b6d2bdd611dd8d18ca438f994776f098"; path="/fr/statistiques"} | ConvertTo-Json
+Invoke-WebRequest -Uri "https://ste-scpb.com/api/revalidate" -Method POST -Body $body -ContentType "application/json" -UseBasicParsing
+
+# Revalider la version anglaise
+$body = @{secret="f7f1ae5631b3e4f955b16dcc6184cfc3b6d2bdd611dd8d18ca438f994776f098"; path="/en/statistiques"} | ConvertTo-Json
+Invoke-WebRequest -Uri "https://ste-scpb.com/api/revalidate" -Method POST -Body $body -ContentType "application/json" -UseBasicParsing
+```
+
+**Bash/cURL:**
+
+```bash
+# Revalider la version française
+curl -X POST https://ste-scpb.com/api/revalidate \
+  -H "Content-Type: application/json" \
+  -d '{"secret":"f7f1ae5631b3e4f955b16dcc6184cfc3b6d2bdd611dd8d18ca438f994776f098","path":"/fr/statistiques"}'
+
+# Revalider la version anglaise
+curl -X POST https://ste-scpb.com/api/revalidate \
+  -H "Content-Type: application/json" \
+  -d '{"secret":"f7f1ae5631b3e4f955b16dcc6184cfc3b6d2bdd611dd8d18ca438f994776f098","path":"/en/statistiques"}'
+```
+
+### En local (localhost:3000)
+
+```powershell
+# Revalider la version française
+$body = @{secret="f7f1ae5631b3e4f955b16dcc6184cfc3b6d2bdd611dd8d18ca438f994776f098"; path="/fr/statistiques"} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/api/revalidate" -Method POST -Body $body -ContentType "application/json" -UseBasicParsing
+```
+
+### Temps de revalidation automatique
+
+La page statistiques se revalide automatiquement toutes les **1 heure** (3600 secondes). Si vous ne voulez pas attendre, utilisez les commandes ci-dessus pour forcer la revalidation immédiatement.
+
+### Vérifier que les changements sont appliqués
+
+1. Après avoir exécuté la commande de revalidation, attendez quelques secondes
+2. Visitez la page: https://ste-scpb.com/fr/statistiques
+3. Faites un "hard refresh" (Ctrl+Shift+R sur Windows/Linux, Cmd+Shift+R sur Mac)
+4. Les nouvelles données devraient maintenant s'afficher
+
+Si les changements n'apparaissent toujours pas:
+
+- Vérifiez que les données sont bien mises à jour dans Sanity Studio
+- Videz le cache du CMS: `POST https://ste-scpb.com/api/clear-cache`
+- Attendez quelques minutes pour que le CDN Vercel se mette à jour

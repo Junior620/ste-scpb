@@ -196,7 +196,8 @@ export function transformArticleListItem(cmsArticle: CMSArticle): ArticleListIte
 export function transformTeamMember(cmsMember: CMSTeamMember): TeamMember {
   return {
     id: cmsMember.id,
-    name: cmsMember.name,
+    // Convert simple name string to LocalizedContent (same name for all languages)
+    name: toLocalizedContent(cmsMember.name, cmsMember.name, cmsMember.name),
     role: toLocalizedContent(cmsMember.role_fr, cmsMember.role_en),
     bio: toLocalizedContent(cmsMember.bio_fr, cmsMember.bio_en),
     photo: cmsMember.photo ? transformTeamMemberPhoto(cmsMember.photo) : undefined,

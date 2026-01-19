@@ -16,7 +16,7 @@ export interface TeamMemberPhoto {
  */
 export interface TeamMember {
   id: string;
-  name: string;
+  name: LocalizedContent;
   role: LocalizedContent;
   bio: LocalizedContent;
   photo?: TeamMemberPhoto;
@@ -24,6 +24,13 @@ export interface TeamMember {
   order: number;
   email?: string;
   linkedIn?: string;
+}
+
+/**
+ * Gets localized team member name
+ */
+export function getLocalizedName(member: TeamMember, locale: Locale): string {
+  return member.name[locale];
 }
 
 /**
