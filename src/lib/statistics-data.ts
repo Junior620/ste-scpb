@@ -20,7 +20,7 @@ export interface RegionData {
 }
 
 export interface TopDestination {
-  country: string;
+  country: string | { fr: string; en: string; ru: string };
   countryCode: string;
   percentage: number;
   port?: string;
