@@ -306,7 +306,11 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                       </span>
                       <div className="flex-1">
                         <p className="font-medium text-foreground">
-                          {getTranslatedCountryName(dest.countryCode, locale)}
+                          {typeof dest.country === 'string'
+                            ? dest.country
+                            : dest.country?.[locale] ||
+                              dest.country?.fr ||
+                              getTranslatedCountryName(dest.countryCode, locale)}
                         </p>
                         {dest.port && (
                           <p className="text-xs text-foreground-muted opacity-0 group-hover:opacity-100 transition-opacity">

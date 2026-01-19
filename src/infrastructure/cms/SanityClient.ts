@@ -171,7 +171,7 @@ export interface ExportStatisticsData {
     countries: string[];
   }>;
   topDestinations: Array<{
-    country: string;
+    country: string | { fr: string; en: string; ru: string };
     countryCode: string;
     percentage: number;
     port?: string;

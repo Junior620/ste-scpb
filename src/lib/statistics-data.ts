@@ -174,7 +174,7 @@ export function getTranslatedCountryName(
     DE: { fr: 'Allemagne', en: 'Germany', ru: 'Германия' },
     FR: { fr: 'France', en: 'France', ru: 'Франция' },
     CN: { fr: 'Chine', en: 'China', ru: 'Китай' },
-    US: { fr: 'États-Unis', en: 'United States', ru: 'США' },
+    US: { fr: 'États-Unis', en: 'United States', ru: 'Соединённые Штаты Америки' },
     CA: { fr: 'Canada', en: 'Canada', ru: 'Канада' },
     IN: { fr: 'Inde', en: 'India', ru: 'Индия' },
     VN: { fr: 'Vietnam', en: 'Vietnam', ru: 'Вьетнам' },
