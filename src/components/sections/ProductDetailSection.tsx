@@ -307,6 +307,7 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string;
     },
     { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
     { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)", ru: "Контейнер 20' (18-20т)" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   cafe: [
     { fr: 'Sacs jute (60kg)', en: 'Jute bags (60kg)', ru: 'Джутовые мешки (60кг)' },

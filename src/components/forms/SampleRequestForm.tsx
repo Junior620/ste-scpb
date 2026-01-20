@@ -9,7 +9,7 @@ import { sampleRequestSchema, type SampleRequestFormData } from '@/lib/validatio
 import { getCountryOptions } from '@/lib/countries';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import { Button } from '@/components/ui/Button';
+import { Button, BackButton } from '@/components/ui';
 import { Confetti } from '@/components/ui/Confetti';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { useLocale } from 'next-intl';
@@ -176,6 +176,11 @@ export function SampleRequestForm({
 
   return (
     <div ref={containerRef} className={className}>
+      {/* Back Button */}
+      <div className="mb-4">
+        <BackButton />
+      </div>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Header */}
         <div className="text-center pb-4 border-b border-border">
