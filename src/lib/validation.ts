@@ -54,6 +54,12 @@ export const ORDER_FREQUENCIES = ['spot', 'monthly', 'quarterly', 'contract'] as
 export type OrderFrequency = (typeof ORDER_FREQUENCIES)[number];
 
 /**
+ * Container size options
+ */
+export const CONTAINER_SIZES = ['20ft', '40ft'] as const;
+export type ContainerSize = (typeof CONTAINER_SIZES)[number];
+
+/**
  * Cocoa specific options
  */
 export const COCOA_TYPES = ['beans', 'butter', 'paste', 'powder'] as const;
@@ -199,6 +205,11 @@ export const rfqFormSchema = z
 
     // Packaging (17.6)
     packaging: packagingSchema,
+
+    // Container size
+    containerSize: z.enum(CONTAINER_SIZES, {
+      message: 'Taille de conteneur invalide',
+    }),
 
     // Delivery period (17.7)
     deliveryStart: z.coerce.date({

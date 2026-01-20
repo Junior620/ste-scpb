@@ -628,6 +628,11 @@
         "cartons": "Cartons (cajou, etc.)",
         "bulk": "Vrac conteneur"
       },
+      "containerSize": "Taille du conteneur",
+      "containerSizes": {
+        "20ft": "Conteneur 20 pieds",
+        "40ft": "Conteneur 40 pieds"
+      },
       "deliveryPeriod": "Période de livraison",
       "deliveryStart": "Date de début",
       "deliveryEnd": "Date de fin",

@@ -628,6 +628,11 @@
         "cartons": "Cartons (cashew, etc.)",
         "bulk": "Bulk container"
       },
+      "containerSize": "Container size",
+      "containerSizes": {
+        "20ft": "20-foot container",
+        "40ft": "40-foot container"
+      },
       "deliveryPeriod": "Delivery period",
       "deliveryStart": "Start date",
       "deliveryEnd": "End date",

@@ -1,7 +1,7 @@
 /**
  * RFQ (Request for Quote) API Route
  * Validates: Requirements 17.9, 17.10
- * 
+ *
  * Security measures:
  * - Zod validation
  * - Rate limiting (10 requests/hour per IP - B2B needs more)
@@ -44,6 +44,7 @@ interface RFQSubmissionBody {
   incoterm: string;
   destinationPort: string;
   packaging: 'bulk' | 'jute-pe' | 'bigbags' | 'cartons';
+  containerSize: '20ft' | '40ft';
   deliveryStart: string;
   deliveryEnd: string;
   specialRequirements?: string;
@@ -63,13 +64,16 @@ function logSubmission(data: {
   errorType?: string;
 }) {
   // In production, this would go to a proper logging service
-  console.log('[RFQ_SUBMISSION]', JSON.stringify({
-    productCount: data.productCount,
-    country: data.country,
-    timestamp: data.timestamp.toISOString(),
-    success: data.success,
-    ...(data.errorType && { errorType: data.errorType }),
-  }));
+  console.log(
+    '[RFQ_SUBMISSION]',
+    JSON.stringify({
+      productCount: data.productCount,
+      country: data.country,
+      timestamp: data.timestamp.toISOString(),
+      success: data.success,
+      ...(data.errorType && { errorType: data.errorType }),
+    })
+  );
 }
 
 /**
@@ -82,7 +86,6 @@ function generateReferenceId(date: Date): string {
   return `RFQ-${dateStr}-${timeStr}-${random}`;
 }
 
-
 export async function POST(request: NextRequest) {
   const submittedAt = new Date();
   const clientIp = getClientIdentifier(request);
@@ -93,10 +96,7 @@ export async function POST(request: NextRequest) {
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: 'Invalid request body' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
     // 2. Check rate limit
@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
 
     if (!validationResult.success) {
       const errors = validationResult.error.flatten();
-      
+
       logSubmission({
         productCount: body.products?.length || 0,
         country: body.country || 'unknown',
@@ -219,6 +219,7 @@ export async function POST(request: NextRequest) {
         incoterm: validatedData.incoterm,
         destinationPort: validatedData.destinationPort,
         packaging: validatedData.packaging,
+        containerSize: validatedData.containerSize,
         deliveryStart: validatedData.deliveryStart,
         deliveryEnd: validatedData.deliveryEnd,
         specialRequirements: validatedData.specialRequirements || undefined,
@@ -270,7 +271,7 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       console.error('[EMAIL_ERROR]', error);
-      
+
       logSubmission({
         productCount: validatedData.products.length,
         country: validatedData.country,
@@ -280,7 +281,7 @@ export async function POST(request: NextRequest) {
       });
 
       return NextResponse.json(
-        { error: 'Erreur lors de l\'envoi de la demande. Veuillez réessayer.' },
+        { error: "Erreur lors de l'envoi de la demande. Veuillez réessayer." },
         { status: 500 }
       );
     }

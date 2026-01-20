@@ -4,6 +4,7 @@ import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { RFQForm } from '@/components/forms/RFQForm';
 import { Clock, FileCheck, Ship } from 'lucide-react';
+import { BackButton } from '@/components/ui';
 
 interface DevisPageProps {
   params: Promise<{ locale: string }>;
@@ -42,6 +43,11 @@ export default async function DevisPage({ params }: DevisPageProps) {
     <main id="main-content" className="min-h-screen bg-background pt-20">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-3xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-6">
+            <BackButton />
+          </div>
+
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h1>

@@ -23,6 +23,7 @@ import {
   ORDER_FREQUENCIES,
   COCOA_TYPES,
   COCOA_CERTIFICATIONS,
+  CONTAINER_SIZES,
 } from '@/lib/validation';
 import { QUANTITY_UNITS } from '@/domain/value-objects/Quantity';
 import { getCountryOptions } from '@/lib/countries';
@@ -49,7 +50,14 @@ declare global {
 }
 
 const PRODUCT_CATEGORIES = [
-  'cacao', 'cafe', 'cajou', 'sesame', 'soja', 'bois', 'mais', 'hevea',
+  'cacao',
+  'cafe',
+  'cajou',
+  'sesame',
+  'soja',
+  'bois',
+  'mais',
+  'hevea',
 ] as const;
 
 // Limited incoterms for clarity
@@ -82,7 +90,6 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split('T')[0];
 
-
   const {
     register,
     handleSubmit,
@@ -108,6 +115,7 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
       incoterm: 'FOB',
       destinationPort: '',
       packaging: 'jute-pe',
+      containerSize: '20ft',
       deliveryStart: undefined,
       deliveryEnd: undefined,
       specialRequirements: '',
@@ -212,6 +220,11 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
     label: t(`form.cocoaCertifications.${cert}`),
   }));
 
+  const containerSizeOptions = CONTAINER_SIZES.map((size) => ({
+    value: size,
+    label: t(`form.containerSizes.${size}`),
+  }));
+
   const productOptions = PRODUCT_CATEGORIES.map((category) => ({
     value: category,
     label: tProducts(`categories.${category}`),
@@ -219,7 +232,7 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
 
   if (status === 'success') {
     return (
-      <div 
+      <div
         ref={containerRef}
         className={`bg-success/10 border border-success rounded-lg p-8 text-center ${className}`}
       >
@@ -228,15 +241,20 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
         <h3 className="text-2xl font-semibold text-foreground mb-2">{t('success.title')}</h3>
         <p className="text-foreground-muted mb-4">{t('success.description')}</p>
         <div className="flex flex-wrap justify-center gap-2 text-xs text-foreground-muted mb-6">
-          <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {t('success.response')}</span>
+          <span className="flex items-center gap-1">
+            <Clock className="w-3 h-3" /> {t('success.response')}
+          </span>
           <span>•</span>
-          <span className="flex items-center gap-1"><FileCheck className="w-3 h-3" /> {t('success.proforma')}</span>
+          <span className="flex items-center gap-1">
+            <FileCheck className="w-3 h-3" /> {t('success.proforma')}
+          </span>
         </div>
-        <Button variant="outline" onClick={() => setStatus('idle')}>{tCommon('back')}</Button>
+        <Button variant="outline" onClick={() => setStatus('idle')}>
+          {tCommon('back')}
+        </Button>
       </div>
     );
   }
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={`space-y-6 ${className}`} noValidate>
@@ -244,10 +262,7 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
       <div className="mb-8">
         <div className="flex justify-between text-xs text-foreground-muted mb-2">
           {STEPS.map((step, idx) => (
-            <span
-              key={step}
-              className={`${idx <= stepIndex ? 'text-primary font-medium' : ''}`}
-            >
+            <span key={step} className={`${idx <= stepIndex ? 'text-primary font-medium' : ''}`}>
               {t(`form.steps.${step}`)}
             </span>
           ))}
@@ -351,9 +366,10 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
                   <label
                     key={option.value}
                     className={`flex items-center justify-center p-3 rounded-lg border cursor-pointer transition-colors
-                      ${field.value.includes(option.value)
-                        ? 'bg-accent/20 border-accent text-foreground font-medium'
-                        : 'bg-background-secondary border-border text-foreground-muted hover:border-accent/50'
+                      ${
+                        field.value.includes(option.value)
+                          ? 'bg-accent/20 border-accent text-foreground font-medium'
+                          : 'bg-background-secondary border-border text-foreground-muted hover:border-accent/50'
                       }`}
                   >
                     <input
@@ -429,13 +445,10 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
             fullWidth
           />
           <div className="flex items-end">
-            <p className="text-xs text-foreground-muted pb-3">
-              {t('form.moqNote')}
-            </p>
+            <p className="text-xs text-foreground-muted pb-3">{t('form.moqNote')}</p>
           </div>
         </div>
       </fieldset>
-
 
       {/* Section 3: Logistics */}
       <fieldset className="space-y-4" onFocus={() => setCurrentStep('logistics')}>
@@ -481,6 +494,14 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
           required
           fullWidth
         />
+
+        <Select
+          {...register('containerSize')}
+          label={t('form.containerSize')}
+          options={containerSizeOptions}
+          required
+          fullWidth
+        />
       </fieldset>
 
       {/* Section 4: Delivery */}
@@ -520,7 +541,10 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
         </legend>
 
         <div>
-          <label htmlFor="specialRequirements" className="block text-sm font-medium text-foreground mb-1.5">
+          <label
+            htmlFor="specialRequirements"
+            className="block text-sm font-medium text-foreground mb-1.5"
+          >
             {t('form.specialRequirements')}
             <span className="text-foreground-muted ml-1">({tCommon('optional')})</span>
           </label>
@@ -583,11 +607,21 @@ export function RFQForm({ onSuccess, className = '' }: RFQFormProps) {
       {/* reCAPTCHA Notice */}
       <p className="text-xs text-foreground-muted text-center">
         This site is protected by reCAPTCHA and the Google{' '}
-        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent hover:underline"
+        >
           Privacy Policy
         </a>{' '}
         and{' '}
-        <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+        <a
+          href="https://policies.google.com/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent hover:underline"
+        >
           Terms of Service
         </a>{' '}
         apply.

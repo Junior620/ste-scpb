@@ -17,6 +17,7 @@ export interface RFQNotificationData {
   incoterm: string;
   destinationPort: string;
   packaging: 'bulk' | 'jute-pe' | 'bigbags' | 'cartons';
+  containerSize: '20ft' | '40ft';
   deliveryStart: Date;
   deliveryEnd: Date;
   specialRequirements?: string;
@@ -41,6 +42,11 @@ const PACKAGING_LABELS: Record<RFQNotificationData['packaging'], string> = {
   'jute-pe': 'Jute+PE',
   bigbags: 'Big bags',
   cartons: 'Cartons',
+};
+
+const CONTAINER_SIZE_LABELS: Record<RFQNotificationData['containerSize'], string> = {
+  '20ft': "20'",
+  '40ft': "40'",
 };
 
 function generateLeadId(date: Date): string {
@@ -71,7 +77,7 @@ export function generateRFQNotificationHtml(data: RFQNotificationData): string {
   const leadId = generateLeadId(data.submittedAt);
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
   const locale = (data.locale || 'fr').toUpperCase();
-  
+
   const formattedDate = data.submittedAt.toLocaleString('fr-FR', {
     weekday: 'short',
     day: 'numeric',
@@ -81,8 +87,15 @@ export function generateRFQNotificationHtml(data: RFQNotificationData): string {
     minute: '2-digit',
   });
 
-  const deliveryStart = data.deliveryStart.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-  const deliveryEnd = data.deliveryEnd.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  const deliveryStart = data.deliveryStart.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+  });
+  const deliveryEnd = data.deliveryEnd.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 
   const whatsappNumber = data.phone.replace(/[^0-9]/g, '');
   const company = normalizeCompany(data.companyName);
@@ -187,17 +200,22 @@ export function generateRFQNotificationHtml(data: RFQNotificationData): string {
                     <p style="margin: 4px 0 0; color: #6b7280; font-size: 13px;">${UNIT_LABELS_FULL[data.unit]}</p>
                   </td>
                   <!-- Packaging -->
-                  <td style="padding: 18px; text-align: center; border-right: 1px solid #e5e7eb; width: 25%;">
+                  <td style="padding: 18px; text-align: center; border-right: 1px solid #e5e7eb; width: 20%;">
                     <p style="margin: 0 0 4px; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Packaging</p>
                     <p style="margin: 8px 0 0; color: #1a1a2e; font-size: 16px; font-weight: 600;">${PACKAGING_LABELS[data.packaging]}</p>
                   </td>
+                  <!-- Container Size -->
+                  <td style="padding: 18px; text-align: center; border-right: 1px solid #e5e7eb; width: 20%;">
+                    <p style="margin: 0 0 4px; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Conteneur</p>
+                    <p style="margin: 8px 0 0; color: #1a1a2e; font-size: 16px; font-weight: 600;">${CONTAINER_SIZE_LABELS[data.containerSize]}</p>
+                  </td>
                   <!-- Incoterm -->
-                  <td style="padding: 18px; text-align: center; border-right: 1px solid #e5e7eb; width: 25%;">
+                  <td style="padding: 18px; text-align: center; border-right: 1px solid #e5e7eb; width: 20%;">
                     <p style="margin: 0 0 4px; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Incoterm</p>
                     <p style="margin: 6px 0 0; color: #1a1a2e; font-size: 20px; font-weight: 700;">${escapeHtml(data.incoterm)}</p>
                   </td>
                   <!-- Delivery -->
-                  <td style="padding: 18px; text-align: center; width: 25%;">
+                  <td style="padding: 18px; text-align: center; width: 20%;">
                     <p style="margin: 0 0 4px; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Livraison</p>
                     <p style="margin: 6px 0 0; color: #1a1a2e; font-size: 14px; font-weight: 600;">${deliveryStart}</p>
                     <p style="margin: 2px 0 0; color: #6b7280; font-size: 12px;">→ ${deliveryEnd}</p>
@@ -234,7 +252,9 @@ export function generateRFQNotificationHtml(data: RFQNotificationData): string {
             </td>
           </tr>
           
-          ${data.specialRequirements ? `
+          ${
+            data.specialRequirements
+              ? `
           <!-- Special Requirements -->
           <tr>
             <td style="padding: 0 28px 24px;">
@@ -248,7 +268,9 @@ export function generateRFQNotificationHtml(data: RFQNotificationData): string {
               </table>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
           
           <!-- CTA -->
           <tr>
@@ -314,7 +336,7 @@ export function generateRFQNotificationText(data: RFQNotificationData): string {
   const leadId = generateLeadId(data.submittedAt);
   const locale = (data.locale || 'fr').toUpperCase();
   const company = normalizeCompany(data.companyName);
-  
+
   const formattedDate = data.submittedAt.toLocaleString('fr-FR', {
     weekday: 'short',
     day: 'numeric',
@@ -324,8 +346,15 @@ export function generateRFQNotificationText(data: RFQNotificationData): string {
     minute: '2-digit',
   });
 
-  const deliveryStart = data.deliveryStart.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-  const deliveryEnd = data.deliveryEnd.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  const deliveryStart = data.deliveryStart.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+  });
+  const deliveryEnd = data.deliveryEnd.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 
   return `
 RFQ STE-SCPB - ${company.toUpperCase()}
@@ -349,13 +378,18 @@ Produits: ${data.products.join(' • ')}
 Quantité: ${data.quantity.toLocaleString('fr-FR')} ${UNIT_LABELS_FULL[data.unit]}
 Incoterm: ${data.incoterm}
 Packaging: ${PACKAGING_LABELS[data.packaging]}
+Conteneur: ${CONTAINER_SIZE_LABELS[data.containerSize]}
 Destination: ${data.destinationPort}
 Livraison: ${deliveryStart} → ${deliveryEnd}
 
-${data.specialRequirements ? `EXIGENCES PARTICULIÈRES
+${
+  data.specialRequirements
+    ? `EXIGENCES PARTICULIÈRES
 -----------------------
 ${data.specialRequirements}
-` : ''}
+`
+    : ''
+}
 ---
 Pour répondre: ${data.email}
 Formulaire RFQ • ste-scpb.com
