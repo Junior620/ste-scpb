@@ -5,6 +5,7 @@
  * Premium cocoa showcase with technical specs, process visualization, and B2B trust elements
  */
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import {
@@ -20,6 +21,8 @@ import {
   MapPin,
 } from 'lucide-react';
 import { Button, ScrollReveal } from '@/components/ui';
+import { Modal } from '@/components/ui/Modal';
+import { SampleRequestForm } from '@/components/forms/SampleRequestForm';
 
 // Custom Cocoa icon
 const CocoaIcon = ({ className }: { className?: string }) => (
@@ -63,6 +66,8 @@ const TECH_SPECS = ['humidity', 'fat', 'aroma'] as const;
 
 export function ProductsPreview() {
   const t = useTranslations('productsPreview');
+  const tSample = useTranslations('sampleRequest');
+  const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
 
   return (
     <section className="py-16 md:py-24 bg-background">
@@ -211,12 +216,10 @@ export function ProductsPreview() {
                     {t('featured.cta.datasheet')}
                   </Button>
                 </Link>
-                <Link href="/produits/cacao">
-                  <Button variant="outline" size="lg">
-                    <ShoppingBag className="w-4 h-4 mr-2" />
-                    {t('featured.cta.sample')}
-                  </Button>
-                </Link>
+                <Button variant="outline" size="lg" onClick={() => setIsSampleModalOpen(true)}>
+                  <ShoppingBag className="w-4 h-4 mr-2" />
+                  {t('featured.cta.sample')}
+                </Button>
               </div>
 
               {/* Certifications note with tooltip */}
@@ -243,6 +246,23 @@ export function ProductsPreview() {
           </div>
         </ScrollReveal>
       </div>
+
+      {/* Sample Request Modal */}
+      <Modal
+        isOpen={isSampleModalOpen}
+        onClose={() => setIsSampleModalOpen(false)}
+        title={tSample('title')}
+        size="full"
+      >
+        <SampleRequestForm
+          productName="Cacao"
+          productSlug="cacao"
+          onSuccess={() => {
+            setIsSampleModalOpen(false);
+          }}
+          onCancel={() => setIsSampleModalOpen(false)}
+        />
+      </Modal>
     </section>
   );
 }
