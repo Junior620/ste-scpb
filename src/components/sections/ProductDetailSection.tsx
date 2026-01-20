@@ -29,7 +29,7 @@ import {
 import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 import { PRODUCT_CONSTELLATIONS, PRODUCT_COLORS } from '@/lib/scene-presets';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button, BackButton } from '@/components/ui';
 import { Modal } from '@/components/ui/Modal';
 import { SampleRequestForm } from '@/components/forms/SampleRequestForm';
 
@@ -711,7 +711,7 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
 
       {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 pt-4">
-        <Link href="/devis" className="flex-1 sm:flex-none">
+        <Link href="/devis" className="w-full sm:flex-1 sm:min-w-0">
           <Button variant="primary" size="lg" className="w-full glow-gold">
             {t('details.requestQuote')}
           </Button>
@@ -719,14 +719,14 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
         <Button
           variant="secondary"
           size="lg"
-          className="flex-1 sm:flex-none"
+          className="w-full sm:flex-1 sm:min-w-0"
           onClick={() => setIsSampleModalOpen(true)}
         >
           {tSample('title')}
         </Button>
         <a
           href={`mailto:scpb@ste-scpb.com?subject=${encodeURIComponent(`Demande d'information - ${product.name[locale]}`)}`}
-          className="flex-1 sm:flex-none"
+          className="w-full sm:flex-1 sm:min-w-0"
         >
           <Button variant="outline" size="lg" className="w-full">
             {tDetail('contactByEmail')}
@@ -872,8 +872,6 @@ export function ProductDetailSection({
   similarProducts,
   locale,
 }: ProductDetailSectionProps) {
-  const t = useTranslations('common');
-
   return (
     <article className="pt-16">
       {/* 3D Header - pt-16 compensates for fixed navbar */}
@@ -891,23 +889,7 @@ export function ProductDetailSection({
 
         {/* Back button */}
         <div className="relative z-10 container mx-auto px-4 pt-6">
-          <Link href="/produits">
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background hover:border-primary"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              {t('back')}
-            </Button>
-          </Link>
+          <BackButton />
         </div>
       </div>
 
