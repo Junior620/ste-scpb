@@ -31,6 +31,7 @@ declare global {
 export interface SampleRequestFormProps {
   productName: string;
   productSlug: string;
+  isWood?: boolean;
   onSuccess?: () => void;
   onCancel?: () => void;
   className?: string;
@@ -41,6 +42,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 export function SampleRequestForm({
   productName,
   productSlug,
+  isWood = false,
   onSuccess,
   onCancel,
   className = '',
@@ -187,7 +189,7 @@ export function SampleRequestForm({
           <p className="text-foreground-muted">
             {t('subtitle')} <span className="font-semibold">{productName}</span>
           </p>
-          <p className="text-sm text-primary mt-2">{t('freeUpTo2kg')}</p>
+          {!isWood && <p className="text-sm text-primary mt-2">{t('freeUpTo2kg')}</p>}
         </div>
 
         {/* Contact Information */}
@@ -238,17 +240,19 @@ export function SampleRequestForm({
             {t('sections.sample')}
           </h3>
 
-          <Input
-            label={t('fields.sampleWeight')}
-            type="number"
-            step="0.1"
-            min="0.1"
-            max="2"
-            {...register('sampleWeight', { valueAsNumber: true })}
-            error={errors.sampleWeight?.message}
-            helperText={t('fields.sampleWeightHelper')}
-            required
-          />
+          {!isWood && (
+            <Input
+              label={t('fields.sampleWeight')}
+              type="number"
+              step="0.1"
+              min="0.1"
+              max="2"
+              {...register('sampleWeight', { valueAsNumber: true })}
+              error={errors.sampleWeight?.message}
+              helperText={t('fields.sampleWeightHelper')}
+              required
+            />
+          )}
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">

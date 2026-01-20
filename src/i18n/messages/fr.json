@@ -680,6 +680,7 @@
   },
   "sampleRequest": {
     "title": "Demande d'échantillon gratuit",
+    "titleWood": "Échantillon de bois disponible",
     "subtitle": "Recevez un échantillon gratuit pour tester la qualité de nos produits",
     "freeUpTo2kg": "✓ Échantillon gratuit jusqu'à 2 kg",
     "sections": {

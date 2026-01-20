@@ -735,7 +735,7 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
           className="w-full sm:flex-1 sm:min-w-0"
           onClick={() => setIsSampleModalOpen(true)}
         >
-          {tSample('title')}
+          {product.category === 'bois' ? tSample('titleWood') : tSample('title')}
         </Button>
         <a
           href={`mailto:scpb@ste-scpb.com?subject=${encodeURIComponent(`Demande d'information - ${product.name[locale]}`)}`}
@@ -756,13 +756,14 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
       <Modal
         isOpen={isSampleModalOpen}
         onClose={() => setIsSampleModalOpen(false)}
-        title={tSample('title')}
+        title={product.category === 'bois' ? tSample('titleWood') : tSample('title')}
         size="full"
         closeOnBackdropClick={false}
       >
         <SampleRequestForm
           productName={product.name[locale]}
           productSlug={product.slug}
+          isWood={product.category === 'bois'}
           onSuccess={() => {
             setIsSampleModalOpen(false);
           }}

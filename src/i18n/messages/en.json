@@ -680,6 +680,7 @@
   },
   "sampleRequest": {
     "title": "Free Sample Request",
+    "titleWood": "Free Wood Sample Available",
     "subtitle": "Receive a free sample to test the quality of our products",
     "freeUpTo2kg": "✓ Free sample up to 2 kg",
     "sections": {
