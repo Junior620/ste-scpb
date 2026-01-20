@@ -584,7 +584,7 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
     <div className="space-y-8">
       {/* Category badge */}
       <span
-        className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-white"
+        className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-white whitespace-nowrap"
         style={{ backgroundColor: categoryColor }}
       >
         {t(`categories.${product.category}`)}
@@ -811,7 +811,7 @@ function RelatedProducts({ products, locale }: { products: Product[]; locale: Lo
               </CardHeader>
               <CardFooter>
                 <span
-                  className="px-3 py-1 rounded-full text-xs font-medium text-white"
+                  className="px-3 py-1 rounded-full text-xs font-medium text-white whitespace-nowrap"
                   style={{ backgroundColor: PRODUCT_COLORS[product.category] }}
                 >
                   {t(`categories.${product.category}`)}
@@ -863,7 +863,7 @@ function SimilarProducts({ products, locale }: { products: Product[]; locale: Lo
               </CardHeader>
               <CardFooter>
                 <span
-                  className="px-3 py-1 rounded-full text-xs font-medium text-white"
+                  className="px-3 py-1 rounded-full text-xs font-medium text-white whitespace-nowrap"
                   style={{ backgroundColor: PRODUCT_COLORS[product.category] }}
                 >
                   {t(`categories.${product.category}`)}

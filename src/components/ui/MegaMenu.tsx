@@ -5,15 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/routing';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Button } from './Button';
-import { 
-  Bean, 
-  Coffee, 
-  TreeDeciduous, 
-  Wheat, 
-  Leaf, 
-  CircleDot,
-  Star
-} from 'lucide-react';
+import { Bean, Coffee, TreeDeciduous, Wheat, Leaf, CircleDot, Star } from 'lucide-react';
 
 export interface ProductCategory {
   id: string;
@@ -124,19 +116,21 @@ export function MegaMenu({
     setIsMobileProductsOpen(false);
   }, [pathname]);
 
-  const handleProductsKeyDown = useCallback((event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      setIsProductsMenuOpen((prev) => !prev);
-    }
-    if (event.key === 'ArrowDown' && isProductsMenuOpen) {
-      event.preventDefault();
-      const firstLink = menuRef.current?.querySelector<HTMLAnchorElement>(
-        '[data-mega-menu-item]'
-      );
-      firstLink?.focus();
-    }
-  }, [isProductsMenuOpen]);
+  const handleProductsKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setIsProductsMenuOpen((prev) => !prev);
+      }
+      if (event.key === 'ArrowDown' && isProductsMenuOpen) {
+        event.preventDefault();
+        const firstLink =
+          menuRef.current?.querySelector<HTMLAnchorElement>('[data-mega-menu-item]');
+        firstLink?.focus();
+      }
+    },
+    [isProductsMenuOpen]
+  );
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -144,7 +138,9 @@ export function MegaMenu({
   };
 
   return (
-    <header className={`sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border ${className}`}>
+    <header
+      className={`sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border ${className}`}
+    >
       <nav className="container mx-auto px-4" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
@@ -186,7 +182,12 @@ export function MegaMenu({
                         stroke="currentColor"
                         aria-hidden="true"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
                       </svg>
                     </button>
 
@@ -201,9 +202,7 @@ export function MegaMenu({
                           <h3 className="text-lg font-semibold text-foreground mb-2">
                             {t('products.title')}
                           </h3>
-                          <p className="text-sm text-foreground-muted">
-                            {t('products.subtitle')}
-                          </p>
+                          <p className="text-sm text-foreground-muted">{t('products.subtitle')}</p>
                         </div>
                         {/* Featured: Cacao */}
                         <div className="col-span-3 mb-4 p-4 bg-primary/10 rounded-lg border border-primary/30">
@@ -225,36 +224,50 @@ export function MegaMenu({
                                 {t('nav.featuredProduct')}
                               </span>
                             </div>
-                            <svg className="h-5 w-5 ml-auto text-primary opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <svg
+                              className="h-5 w-5 ml-auto text-primary opacity-0 group-hover:opacity-100 transition-opacity"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
                             </svg>
                           </Link>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
-                          {productCategories.filter(c => c.id !== 'cacao').map((category) => {
-                            const IconComponent = category.icon;
-                            return (
-                              <Link
-                                key={category.id}
-                                href={`/produits/${category.slug}`}
-                                data-mega-menu-item
-                                role="menuitem"
-                                onClick={() => setIsProductsMenuOpen(false)}
-                                className="
+                          {productCategories
+                            .filter((c) => c.id !== 'cacao')
+                            .map((category) => {
+                              const IconComponent = category.icon;
+                              return (
+                                <Link
+                                  key={category.id}
+                                  href={`/produits/${category.slug}`}
+                                  data-mega-menu-item
+                                  role="menuitem"
+                                  onClick={() => setIsProductsMenuOpen(false)}
+                                  className="
                                   flex items-center gap-3 p-3 rounded-lg
                                   text-foreground-muted hover:text-foreground
                                   hover:bg-background-tertiary
                                   focus:outline-none focus:ring-2 focus:ring-accent focus:ring-inset
                                   transition-colors
                                 "
-                              >
-                                {IconComponent && <IconComponent className="w-4 h-4" />}
-                                <span className="text-sm font-medium">
-                                  {t(`products.categories.${category.labelKey}`)}
-                                </span>
-                              </Link>
-                            );
-                          })}
+                                >
+                                  {IconComponent && (
+                                    <IconComponent className="w-4 h-4 flex-shrink-0" />
+                                  )}
+                                  <span className="text-sm font-medium break-words hyphens-auto">
+                                    {t(`products.categories.${category.labelKey}`)}
+                                  </span>
+                                </Link>
+                              );
+                            })}
                         </div>
                         <div className="mt-4 pt-4 border-t border-border">
                           <Link
@@ -266,8 +279,18 @@ export function MegaMenu({
                             "
                           >
                             {t('common.seeAll')}
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
                             </svg>
                           </Link>
                         </div>
@@ -311,7 +334,9 @@ export function MegaMenu({
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
-            aria-label={isMobileMenuOpen ? t('accessibility.closeMenu') : t('accessibility.openMenu')}
+            aria-label={
+              isMobileMenuOpen ? t('accessibility.closeMenu') : t('accessibility.openMenu')
+            }
             className="
               lg:hidden p-2 rounded-lg text-foreground-muted
               hover:text-foreground hover:bg-background-tertiary
@@ -320,12 +345,34 @@ export function MegaMenu({
             "
           >
             {isMobileMenuOpen ? (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
@@ -365,7 +412,12 @@ export function MegaMenu({
                             stroke="currentColor"
                             aria-hidden="true"
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
                           </svg>
                         </button>
 
@@ -379,7 +431,7 @@ export function MegaMenu({
                                   px-4 py-2 rounded-lg text-sm
                                   text-foreground-muted hover:text-foreground
                                   hover:bg-background-tertiary
-                                  transition-colors
+                                  transition-colors break-words hyphens-auto
                                 "
                               >
                                 {t(`products.categories.${category.labelKey}`)}
@@ -423,7 +475,12 @@ export function MegaMenu({
 
               {/* Mobile Actions */}
               <div className="mt-6 pt-6 border-t border-border flex flex-col gap-4">
-                <LanguageSwitcher variant="toggle" showFlags showLabels className="justify-center" />
+                <LanguageSwitcher
+                  variant="toggle"
+                  showFlags
+                  showLabels
+                  className="justify-center"
+                />
                 <Button variant="primary" fullWidth asChild>
                   <Link href="/devis">{t('nav.quote')}</Link>
                 </Button>
