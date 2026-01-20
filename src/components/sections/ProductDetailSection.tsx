@@ -313,6 +313,7 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string;
     { fr: 'Sacs jute (60kg)', en: 'Jute bags (60kg)', ru: 'Джутовые мешки (60кг)' },
     { fr: 'Sacs GrainPro', en: 'GrainPro bags', ru: 'Мешки GrainPro' },
     { fr: "Conteneur 20' (18-20T)", en: "20' container (18-20T)", ru: "Контейнер 20' (18-20т)" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   bois: [
     { fr: 'Grumes', en: 'Logs', ru: 'Брёвна' },
@@ -327,34 +328,45 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string;
     { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
     { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
     { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   hevea: [
     { fr: 'Balles (33.33kg)', en: 'Bales (33.33kg)', ru: 'Тюки (33.33кг)' },
     { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   sesame: [
     { fr: 'Sacs PP (25/50kg)', en: 'PP bags (25/50kg)', ru: 'Мешки PP (25/50кг)' },
     { fr: 'Cartons', en: 'Cartons', ru: 'Коробки' },
     { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   cajou: [
     { fr: 'Cartons (22.68kg)', en: 'Cartons (22.68kg)', ru: 'Коробки (22.68кг)' },
     { fr: 'Sous vide', en: 'Vacuum packed', ru: 'Вакуумная упаковка' },
     { fr: "Conteneur 20' (18T)", en: "20' container (18T)", ru: "Контейнер 20' (18т)" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   soja: [
     { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
     { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
     { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   amandes: [
     { fr: 'Cartons (10/25kg)', en: 'Cartons (10/25kg)', ru: 'Коробки (10/25кг)' },
     { fr: 'Sous vide', en: 'Vacuum packed', ru: 'Вакуумная упаковка' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
   sorgho: [
     { fr: 'Sacs PP (50kg)', en: 'PP bags (50kg)', ru: 'Мешки PP (50кг)' },
     { fr: 'Big bags (1T)', en: 'Big bags (1T)', ru: 'Биг-бэги (1т)' },
     { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
+    { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
   ],
 };
 
