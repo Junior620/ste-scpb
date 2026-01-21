@@ -35,6 +35,22 @@
       "description": "Politique de confidentialité STE-SCPB: découvrez comment nous protégeons vos données personnelles conformément au RGPD."
     }
   },
+  "documentsInProgress": {
+    "metadata": {
+      "title": "Documents en cours d'intégration | STE-SCPB",
+      "description": "Les documents demandés sont actuellement en cours d'intégration. Contactez-nous pour plus d'informations."
+    },
+    "title": "Document en cours d'intégration",
+    "description": "Le document que vous recherchez est actuellement en cours de préparation.",
+    "message": "Nous travaillons activement à la mise en ligne de nos documents techniques et certificats. En attendant, n'hésitez pas à nous contacter directement pour obtenir les informations dont vous avez besoin.",
+    "backButton": "Retour à l'accueil",
+    "contactButton": "Nous contacter",
+    "contactInfo": {
+      "title": "Besoin d'informations ?",
+      "phone": "+237 676 905 938",
+      "email": "scpb@ste-scpb.com"
+    }
+  },
   "common": {
     "loading": "Chargement...",
     "error": "Une erreur est survenue",

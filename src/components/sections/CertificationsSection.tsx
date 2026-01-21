@@ -238,7 +238,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
               </Link>
               {/* Tertiary CTA - COA download */}
               <div className="flex flex-col items-center">
-                <Link href="/devis">
+                <Link href="/documents-en-cours">
                   <Button
                     variant="ghost"
                     size="lg"

@@ -35,6 +35,22 @@
       "description": "STE-SCPB Privacy Policy: learn how we protect your personal data in compliance with GDPR."
     }
   },
+  "documentsInProgress": {
+    "metadata": {
+      "title": "Documents in Progress | STE-SCPB",
+      "description": "The requested documents are currently being integrated. Contact us for more information."
+    },
+    "title": "Document in Progress",
+    "description": "The document you are looking for is currently being prepared.",
+    "message": "We are actively working on uploading our technical documents and certificates. In the meantime, please feel free to contact us directly to get the information you need.",
+    "backButton": "Back to home",
+    "contactButton": "Contact us",
+    "contactInfo": {
+      "title": "Need information?",
+      "phone": "+237 676 905 938",
+      "email": "scpb@ste-scpb.com"
+    }
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
