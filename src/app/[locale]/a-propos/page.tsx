@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
-import { Target, Eye, Heart, FileText } from 'lucide-react';
+import { Target, Eye, Heart, FileText, Building2, MapPin } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/Button';
 import { AboutHero } from '@/components/sections/AboutHero';
@@ -167,6 +167,71 @@ export default async function AboutPage({ params }: AboutPageProps) {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AboutStatsSection stats={statsData} />
+          </div>
+        </div>
+      </section>
+
+      {/* USA Partnership Section */}
+      <section className="py-10 md:py-14">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-4">
+              <Building2 className="w-8 h-8 text-accent" />
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                {t('usaPartnership.title')}
+              </h2>
+            </div>
+            <p className="text-lg font-semibold text-accent mb-4">{t('usaPartnership.subtitle')}</p>
+            <p className="text-lg text-foreground-muted leading-relaxed mb-6">
+              {t('usaPartnership.description')}
+            </p>
+
+            {/* Benefits */}
+            <div className="bg-background-secondary rounded-lg p-6 mb-6">
+              <h3 className="text-xl font-semibold text-foreground mb-4">
+                {t('usaPartnership.benefits.title')}
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <span className="text-accent mt-1">✓</span>
+                  <span className="text-foreground-muted">
+                    {t('usaPartnership.benefits.local')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-accent mt-1">✓</span>
+                  <span className="text-foreground-muted">
+                    {t('usaPartnership.benefits.logistics')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-accent mt-1">✓</span>
+                  <span className="text-foreground-muted">
+                    {t('usaPartnership.benefits.support')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-accent mt-1">✓</span>
+                  <span className="text-foreground-muted">
+                    {t('usaPartnership.benefits.documentation')}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div className="bg-accent/10 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-foreground mb-3">
+                {t('usaPartnership.contact.title')}
+              </h3>
+              <div className="flex items-center gap-2 text-foreground-muted mb-2">
+                <MapPin className="w-5 h-5 text-accent flex-shrink-0" />
+                <span>{t('usaPartnership.contact.location')}</span>
+              </div>
+              <p className="text-sm text-foreground-muted italic">
+                {t('usaPartnership.contact.note')}
+              </p>
+            </div>
           </div>
         </div>
       </section>

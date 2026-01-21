@@ -407,7 +407,7 @@
     },
     "stats": {
       "experience": {
-        "value": "5+",
+        "value": "15",
         "label": "Years of experience"
       },
       "partners": {
@@ -427,6 +427,23 @@
       "title": "Ready to source your agricultural products?",
       "datasheet": "Get cocoa data sheet",
       "quote": "Request export quote (24–48h)"
+    },
+    "usaPartnership": {
+      "title": "Our Partner in the United States",
+      "subtitle": "Kamer Agro LLC — Your Contact Point in North America",
+      "description": "To facilitate our business operations in the United States, we partner with Kamer Agro LLC, our trusted partner based in New York. This collaboration allows us to offer local customer service, optimized logistics, and personalized support for all our North American clients.",
+      "benefits": {
+        "title": "Benefits for our American clients",
+        "local": "Local contact point in the United States",
+        "logistics": "Simplified logistics coordination (DAP/DDP)",
+        "support": "Real-time customer support (EST timezone)",
+        "documentation": "Assistance with US customs documentation"
+      },
+      "contact": {
+        "title": "Contact Kamer Agro LLC",
+        "location": "New York, United States",
+        "note": "For all inquiries regarding the North American market"
+      }
     }
   },
   "team": {
