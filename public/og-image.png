@@ -1,0 +1,11 @@
+This is a placeholder. You need to create a 1200x630px image with your logo and company information.
+
+For now, the system will use /logo.png as the Open Graph image.
+
+To create a proper Open Graph image:
+1. Use a design tool (Canva, Figma, Photoshop)
+2. Create an image 1200x630px
+3. Add your logo
+4. Add text: "STE-SCPB | Export Cacao & Café Cameroun"
+5. Use your brand colors
+6. Save as og-image.png in the public folder
