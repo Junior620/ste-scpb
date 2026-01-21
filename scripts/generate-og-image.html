@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate OG Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 50%, #1a4d2e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Decorative elements */
+        .og-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+        
+        .og-container::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .logo {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        h1 {
+            color: #ffffff;
+            font-size: 64px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            color: #f0f0f0;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 0 30px 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .description {
+            color: #e0e0e0;
+            font-size: 24px;
+            font-weight: 400;
+            max-width: 900px;
+            line-height: 1.4;
+            margin: 0 auto;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .badges {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .instructions {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            font-family: monospace;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #1a4d2e;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+        }
+        
+        .instructions button {
+            background: #1a4d2e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .instructions button:hover {
+            background: #2d5f3f;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h3>📸 Générer l'image OG</h3>
+        <ol>
+            <li>Ouvrez cette page dans votre navigateur</li>
+            <li>Faites un clic droit sur l'image ci-dessous</li>
+            <li>Sélectionnez "Enregistrer l'image sous..."</li>
+            <li>Nommez-la <strong>og-image.png</strong></li>
+            <li>Sauvegardez dans <strong>public/</strong></li>
+        </ol>
+        <p style="font-size: 12px; color: #666; margin-top: 15px;">
+            Ou utilisez un outil de capture d'écran pour capturer exactement 1200x630px
+        </p>
+        <button onclick="window.print()">🖨️ Imprimer/Sauvegarder en PDF</button>
+    </div>
+
+    <div class="og-container">
+        <div class="content">
+            <div class="logo">
+                <img src="../public/logo.png" alt="STE-SCPB Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🌱%3C/text%3E%3C/svg%3E'">
+            </div>
+            
+            <h1>STE-SCPB</h1>
+            
+            <div class="subtitle">
+                Export Cacao & Café Cameroun
+            </div>
+            
+            <div class="description">
+                Exportateur camerounais de cacao premium, café vert et produits agricoles certifiés. Fournisseur direct B2B pour Europe, USA, Asie.
+            </div>
+            
+            <div class="badges">
+                <div class="badge">🌍 Export Mondial</div>
+                <div class="badge">✓ Certifié UTZ</div>
+                <div class="badge">📦 Devis 24h</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Log dimensions for verification
+        console.log('OG Image dimensions: 1200x630px');
+        console.log('Ready to capture!');
+    </script>
+</body>
+</html>
