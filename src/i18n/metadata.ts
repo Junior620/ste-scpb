@@ -13,9 +13,9 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.co
 
 /**
  * Default Open Graph image
- * Using the company logo for social media previews
+ * Using dynamic OG image generation for better social media previews
  */
-export const DEFAULT_OG_IMAGE = `${BASE_URL}/logo.png`;
+export const DEFAULT_OG_IMAGE = `${BASE_URL}/api/og`;
 
 /**
  * Site name for Open Graph
