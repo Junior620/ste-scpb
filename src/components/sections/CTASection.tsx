@@ -6,65 +6,80 @@
  * Optimized for export lead generation
  */
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { FileText, Package, Clock, Ship, FileCheck } from 'lucide-react';
-import { Button, ScrollReveal } from '@/components/ui';
+import { Button, ScrollReveal, Modal } from '@/components/ui';
+import { SampleRequestForm } from '@/components/forms/SampleRequestForm';
 
 export function CTASection() {
   const t = useTranslations('home');
+  const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
 
   return (
     <section className="py-16 md:py-20 bg-primary/10">
       <div className="container mx-auto px-4">
         <ScrollReveal direction="up" delay={0} duration={500}>
           <div className="max-w-3xl mx-auto text-center">
-          {/* B2B-focused headline */}
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {t('cta.contactTitle')}
-          </h2>
-          <p className="text-foreground-muted text-lg mb-6">
-            {t('cta.contactDescription')}
-          </p>
+            {/* B2B-focused headline */}
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              {t('cta.contactTitle')}
+            </h2>
+            <p className="text-foreground-muted text-lg mb-6">{t('cta.contactDescription')}</p>
 
-          {/* CTAs - Clear hierarchy */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            {/* Primary CTA - Quote (highest value) */}
-            <Link href="/devis">
-              <Button variant="primary" size="lg" className="min-w-[220px]">
-                <FileText className="w-4 h-4 mr-2" />
-                {t('cta.quote')}
-              </Button>
-            </Link>
-            {/* Secondary CTA - Sample */}
-            <Link href="/devis">
-              <Button variant="outline" size="lg">
+            {/* CTAs - Clear hierarchy */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              {/* Primary CTA - Quote (highest value) */}
+              <Link href="/devis">
+                <Button variant="primary" size="lg" className="min-w-[220px]">
+                  <FileText className="w-4 h-4 mr-2" />
+                  {t('cta.quote')}
+                </Button>
+              </Link>
+              {/* Secondary CTA - Sample */}
+              <Button variant="outline" size="lg" onClick={() => setIsSampleModalOpen(true)}>
                 <Package className="w-4 h-4 mr-2" />
                 {t('cta.sample')}
               </Button>
-            </Link>
-          </div>
+            </div>
 
-          {/* Reassurance line */}
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-foreground-muted">
-            <span className="flex items-center gap-1">
-              <Clock className="w-4 h-4 text-primary" />
-              {t('cta.reassurance.response')}
-            </span>
-            <span className="hidden sm:inline text-border">•</span>
-            <span className="flex items-center gap-1">
-              <Ship className="w-4 h-4 text-primary" />
-              {t('cta.reassurance.incoterms')}
-            </span>
-            <span className="hidden sm:inline text-border">•</span>
-            <span className="flex items-center gap-1">
-              <FileCheck className="w-4 h-4 text-primary" />
-              {t('cta.reassurance.docs')}
-            </span>
+            {/* Reassurance line */}
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-foreground-muted">
+              <span className="flex items-center gap-1">
+                <Clock className="w-4 h-4 text-primary" />
+                {t('cta.reassurance.response')}
+              </span>
+              <span className="hidden sm:inline text-border">•</span>
+              <span className="flex items-center gap-1">
+                <Ship className="w-4 h-4 text-primary" />
+                {t('cta.reassurance.incoterms')}
+              </span>
+              <span className="hidden sm:inline text-border">•</span>
+              <span className="flex items-center gap-1">
+                <FileCheck className="w-4 h-4 text-primary" />
+                {t('cta.reassurance.docs')}
+              </span>
+            </div>
           </div>
-        </div>
         </ScrollReveal>
       </div>
+
+      {/* Sample Request Modal */}
+      <Modal
+        isOpen={isSampleModalOpen}
+        onClose={() => setIsSampleModalOpen(false)}
+        title={t('cta.sample')}
+        size="full"
+        closeOnBackdropClick={false}
+      >
+        <SampleRequestForm
+          onSuccess={() => setIsSampleModalOpen(false)}
+          productName="Cacao Premium"
+          productSlug="cacao"
+          onCancel={() => setIsSampleModalOpen(false)}
+        />
+      </Modal>
     </section>
   );
 }
