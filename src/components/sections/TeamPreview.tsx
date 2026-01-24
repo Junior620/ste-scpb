@@ -27,12 +27,8 @@ export function TeamPreview() {
       <div className="container mx-auto px-4">
         {/* Header - B2B focused */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {t('title')}
-          </h2>
-          <p className="text-foreground-muted text-lg max-w-2xl mx-auto">
-            {t('subtitle')}
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
+          <p className="text-foreground-muted text-lg max-w-2xl mx-auto">{t('subtitle')}</p>
         </div>
 
         {/* Team Grid */}
@@ -48,9 +44,7 @@ export function TeamPreview() {
               </div>
 
               {/* Name */}
-              <h3 className="font-semibold text-foreground mb-1">
-                {member.name}
-              </h3>
+              <h3 className="font-semibold text-foreground mb-1">{member.name}</h3>
 
               {/* Role - explicit title */}
               <p className="text-primary font-medium text-sm mb-2">
@@ -68,7 +62,7 @@ export function TeamPreview() {
         {/* CTAs - Commercial focus */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {/* Primary CTA - Contact export team */}
-          <Link href="/contact">
+          <Link href="/equipe">
             <Button variant="primary" size="lg">
               <Phone className="w-4 h-4 mr-2" />
               {t('cta.contact')}

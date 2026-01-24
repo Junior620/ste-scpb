@@ -8,13 +8,20 @@ import { Button } from './Button';
 /**
  * BackButton Component
  * Navigates to the previous page using browser history
+ * If no history exists, redirects to home page
  */
 export function BackButton() {
   const router = useRouter();
   const t = useTranslations('common');
 
   const handleBack = () => {
-    router.back();
+    // Check if there's history to go back to
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back();
+    } else {
+      // If no history, redirect to home page
+      router.push('/');
+    }
   };
 
   return (

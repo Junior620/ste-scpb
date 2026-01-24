@@ -7,11 +7,9 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
 import {
   Award,
   CheckCircle,
-  Download,
   ShoppingBag,
   Info,
   ArrowRight,
@@ -210,13 +208,12 @@ export function ProductsPreview() {
 
               {/* CTAs */}
               <div className="flex flex-wrap gap-4 justify-center mb-6">
-                <Link href="/">
-                  <Button variant="primary" size="lg" className="glow-gold">
-                    <Download className="w-4 h-4 mr-2" />
-                    {t('featured.cta.datasheet')}
-                  </Button>
-                </Link>
-                <Button variant="outline" size="lg" onClick={() => setIsSampleModalOpen(true)}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => setIsSampleModalOpen(true)}
+                  className="glow-gold"
+                >
                   <ShoppingBag className="w-4 h-4 mr-2" />
                   {t('featured.cta.sample')}
                 </Button>

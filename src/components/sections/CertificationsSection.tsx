@@ -24,7 +24,6 @@ import {
   Package,
   Download,
   Phone,
-  FileSpreadsheet,
   Droplets,
   Clock,
   BarChart3,
@@ -223,17 +222,10 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
             <h3 className="text-xl font-bold text-foreground mb-6">{t('cta.title')}</h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {/* Primary CTA - Contact (highest value) */}
-              <Link href="/contact">
+              <Link href="/equipe">
                 <Button variant="primary" size="lg" className="min-w-[220px]">
                   <Phone className="w-4 h-4 mr-2" />
                   {t('cta.contact')}
-                </Button>
-              </Link>
-              {/* Secondary CTA - Datasheet */}
-              <Link href="/devis">
-                <Button variant="outline" size="lg">
-                  <FileSpreadsheet className="w-4 h-4 mr-2" />
-                  {t('cta.datasheet')}
                 </Button>
               </Link>
               {/* Tertiary CTA - COA download */}

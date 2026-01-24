@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Home, Package, Mail, FileText } from 'lucide-react';
 import { Button } from '@/components/ui';
 import type { Metadata } from 'next';

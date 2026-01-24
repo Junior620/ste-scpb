@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { contactFormSchema, type ContactFormData, CONTACT_SUBJECTS } from '@/lib/validation';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';

@@ -17,7 +17,7 @@ import { Link } from '@/i18n/routing';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui';
-import { FileText, Phone, ArrowRight } from 'lucide-react';
+import { Phone, ArrowRight } from 'lucide-react';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -154,7 +154,7 @@ export function ValueChain({ className = '' }: ValueChainProps) {
         if (!stage) return;
 
         const stageConfig = stages[index];
-        
+
         stage.addEventListener('mouseenter', () => {
           gsap.to(stage, {
             scale: 1.05,
@@ -194,9 +194,7 @@ export function ValueChain({ className = '' }: ValueChainProps) {
           <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-gradient-gold">
             {t('title')}
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-foreground-muted">
-            {t('subtitle')}
-          </p>
+          <p className="mx-auto max-w-2xl text-lg text-foreground-muted">{t('subtitle')}</p>
         </div>
 
         {/* Value chain stages */}
@@ -207,7 +205,9 @@ export function ValueChain({ className = '' }: ValueChainProps) {
               <div key={stage.id} className="flex items-center">
                 {/* Stage card */}
                 <div
-                  ref={(el) => { stagesRef.current[index] = el; }}
+                  ref={(el) => {
+                    stagesRef.current[index] = el;
+                  }}
                   className="value-chain-stage relative flex flex-col items-center p-6 rounded-xl border border-border bg-background-secondary/80 backdrop-blur-sm transition-all duration-300"
                   style={{
                     boxShadow: `0 0 20px ${stage.glowColor}`,
@@ -259,7 +259,9 @@ export function ValueChain({ className = '' }: ValueChainProps) {
                 {/* Connector line (except for last stage) */}
                 {index < stages.length - 1 && (
                   <div
-                    ref={(el) => { connectorsRef.current[index] = el; }}
+                    ref={(el) => {
+                      connectorsRef.current[index] = el;
+                    }}
                     className="value-chain-connector mx-4 h-0.5 w-16 xl:w-24 origin-left"
                     style={{
                       background: `linear-gradient(90deg, ${stage.color}, ${stages[index + 1].color})`,
@@ -277,7 +279,7 @@ export function ValueChain({ className = '' }: ValueChainProps) {
               <div key={stage.id} className="relative">
                 {/* Stage card */}
                 <div
-                  ref={(el) => { 
+                  ref={(el) => {
                     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
                       stagesRef.current[index] = el;
                     }
@@ -355,13 +357,7 @@ export function ValueChain({ className = '' }: ValueChainProps) {
                 {t('cta.process')}
               </Button>
             </Link>
-            <Link href="/devis">
-              <Button variant="outline" size="lg">
-                <FileText className="w-4 h-4 mr-2" />
-                {t('cta.docs')}
-              </Button>
-            </Link>
-            <Link href="/contact">
+            <Link href="/equipe">
               <Button variant="primary" size="lg">
                 <Phone className="w-4 h-4 mr-2" />
                 {t('cta.contact')}
@@ -421,12 +417,7 @@ function CollectionIcon() {
         strokeWidth={1.5}
         d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
       />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        d="M12 11v4m-2-2h4"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 11v4m-2-2h4" />
     </svg>
   );
 }
