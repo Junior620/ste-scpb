@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
@@ -43,9 +44,11 @@ export default async function DevisPage({ params }: DevisPageProps) {
     <main id="main-content" className="min-h-screen bg-background pt-20">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-3xl mx-auto">
-          {/* Back Button */}
+          {/* Back Button - Wrapped in Suspense for useSearchParams */}
           <div className="mb-6">
-            <BackButton />
+            <Suspense fallback={<div className="h-10" />}>
+              <BackButton />
+            </Suspense>
           </div>
 
           {/* Header */}

@@ -13,7 +13,7 @@
  * - Related products
  */
 
-import { useState, type JSX } from 'react';
+import { useState, Suspense, type JSX } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
@@ -901,9 +901,11 @@ export function ProductDetailSection({
         </div>
         <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-background/30 to-background" />
 
-        {/* Back button */}
+        {/* Back button - Wrapped in Suspense for useSearchParams */}
         <div className="relative z-10 container mx-auto px-4 pt-6">
-          <BackButton />
+          <Suspense fallback={<div className="h-10" />}>
+            <BackButton />
+          </Suspense>
         </div>
       </div>
 
