@@ -526,7 +526,7 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                 {t('quality.downloadOrigin')}
               </Button>
             </Link>
-            <Link href="/a-propos#qualite">
+            <Link href="/produits">
               <Button variant="ghost" size="sm">
                 {t('quality.seeProcess')} <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
