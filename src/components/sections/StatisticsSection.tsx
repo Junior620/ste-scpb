@@ -631,12 +631,6 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                 {t('cta.quote')}
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/devis?type=sample">
-                <Package className="w-5 h-5 mr-2" />
-                {t('cta.sample')}
-              </Link>
-            </Button>
             <Button asChild variant="ghost" size="lg">
               <Link href="/contact">
                 <MessageSquare className="w-5 h-5 mr-2" />
