@@ -1,7 +1,7 @@
 /**
  * Contact Form API Route
  * Validates: Requirements 5.5, 5.7, 5.8
- * 
+ *
  * Security measures:
  * - Zod validation
  * - Rate limiting (5 requests/hour per IP)
@@ -36,6 +36,7 @@ interface ContactSubmissionBody {
   name: string;
   email: string;
   company?: string;
+  assistanceCountry: 'cameroon' | 'usa';
   subject: ContactSubject;
   message: string;
   privacyConsent: boolean;
@@ -43,9 +44,18 @@ interface ContactSubmissionBody {
 }
 
 /**
- * Email recipients - all go to main contact for simplified form
+ * Email recipients - route based on assistance country
  */
-const DEFAULT_RECIPIENT = process.env.EMAIL_CONTACT_TO || process.env.EMAIL_CONTACT || process.env.EMAIL_SALES || '';
+const CAMEROON_EMAIL =
+  process.env.EMAIL_CONTACT_CAMEROON || process.env.EMAIL_CONTACT || 'scpb@ste-scpb.com';
+const USA_EMAIL = process.env.EMAIL_CONTACT_USA || 'kameragro@yahoo.com';
+
+/**
+ * Get recipient email based on assistance country
+ */
+function getRecipientEmail(assistanceCountry: 'cameroon' | 'usa'): string {
+  return assistanceCountry === 'usa' ? USA_EMAIL : CAMEROON_EMAIL;
+}
 
 /**
  * Generate a unique reference ID for tracking
@@ -68,12 +78,15 @@ function logSubmission(data: {
   errorType?: string;
 }) {
   // In production, this would go to a proper logging service
-  console.log('[CONTACT_SUBMISSION]', JSON.stringify({
-    subject: data.subject,
-    timestamp: data.timestamp.toISOString(),
-    success: data.success,
-    ...(data.errorType && { errorType: data.errorType }),
-  }));
+  console.log(
+    '[CONTACT_SUBMISSION]',
+    JSON.stringify({
+      subject: data.subject,
+      timestamp: data.timestamp.toISOString(),
+      success: data.success,
+      ...(data.errorType && { errorType: data.errorType }),
+    })
+  );
 }
 
 export async function POST(request: NextRequest) {
@@ -86,12 +99,8 @@ export async function POST(request: NextRequest) {
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: 'Invalid request body' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
-
 
     // 2. Check rate limit
     try {
@@ -161,7 +170,7 @@ export async function POST(request: NextRequest) {
 
     if (!validationResult.success) {
       const errors = validationResult.error.flatten();
-      
+
       logSubmission({
         subject: body.subject || 'unknown',
         timestamp: submittedAt,
@@ -197,9 +206,10 @@ export async function POST(request: NextRequest) {
     const acceptLanguage = request.headers.get('accept-language') || '';
     const locale = acceptLanguage.includes('en') ? 'en' : 'fr';
 
-    try {
-      const recipientEmail = DEFAULT_RECIPIENT;
+    // Get recipient email based on assistance country
+    const recipientEmail = getRecipientEmail(validatedData.assistanceCountry);
 
+    try {
       // In development without proper config, just log and continue
       if (isDev && (!recipientEmail || !process.env.RESEND_API_KEY)) {
         console.log('[DEV] Email would be sent to:', recipientEmail || 'NO_RECIPIENT');
@@ -209,7 +219,7 @@ export async function POST(request: NextRequest) {
         throw new Error('No recipient email configured');
       } else {
         const emailService = createResendEmailService();
-        
+
         // Send notification to team
         const teamResult = await emailService.send({
           to: { email: recipientEmail },
@@ -255,7 +265,7 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       console.error('[EMAIL_ERROR]', error);
-      
+
       // In development, log but don't fail the request
       if (isDev) {
         console.warn('[DEV] Email error occurred but form submission will succeed');
@@ -269,7 +279,7 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json(
-          { error: 'Erreur lors de l\'envoi du message. Veuillez réessayer.' },
+          { error: "Erreur lors de l'envoi du message. Veuillez réessayer." },
           { status: 500 }
         );
       }

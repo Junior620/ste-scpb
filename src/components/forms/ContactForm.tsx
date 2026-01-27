@@ -56,6 +56,7 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
       name: '',
       email: '',
       company: '',
+      assistanceCountry: 'cameroon' as 'cameroon' | 'usa',
       subject: 'products',
       message: '',
       privacyConsent: false as unknown as true,
@@ -140,6 +141,11 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
     value: subject,
     label: t(`form.subjects.${subject}`),
   }));
+
+  const assistanceCountryOptions = [
+    { value: 'cameroon', label: t('form.assistanceCountries.cameroon') },
+    { value: 'usa', label: t('form.assistanceCountries.usa') },
+  ];
 
   const toggleFaq = (key: string) => {
     setExpandedFaq(expandedFaq === key ? null : key);
@@ -243,6 +249,16 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
           error={errors.company?.message}
           fullWidth
           autoComplete="organization"
+        />
+
+        {/* Assistance Country */}
+        <Select
+          {...register('assistanceCountry')}
+          label={t('form.assistanceCountry')}
+          options={assistanceCountryOptions}
+          error={errors.assistanceCountry?.message}
+          required
+          fullWidth
         />
 
         {/* Subject */}

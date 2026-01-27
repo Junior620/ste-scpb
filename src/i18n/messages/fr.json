@@ -525,6 +525,12 @@
       "emailPlaceholder": "votre@email.com",
       "company": "Société",
       "companyPlaceholder": "Nom de votre société (optionnel)",
+      "assistanceCountry": "Assistance pays",
+      "assistanceCountryPlaceholder": "Sélectionnez un pays",
+      "assistanceCountries": {
+        "cameroon": "Cameroun",
+        "usa": "États-Unis"
+      },
       "subject": "Sujet",
       "subjectPlaceholder": "Sélectionnez un sujet",
       "subjects": {

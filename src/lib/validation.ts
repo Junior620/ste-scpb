@@ -145,6 +145,9 @@ export const contactFormSchema = z.object({
     .max(100, 'Nom trop long (max 100 caractères)'),
   email: emailSchema,
   company: z.string().max(200, 'Nom de société trop long').optional().or(z.literal('')),
+  assistanceCountry: z.enum(['cameroon', 'usa'], {
+    errorMap: () => ({ message: 'Veuillez sélectionner un pays' }),
+  }),
   subject: contactSubjectSchema,
   message: z
     .string()

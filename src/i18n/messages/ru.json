@@ -525,6 +525,12 @@
       "emailPlaceholder": "ваш@email.com",
       "company": "Компания",
       "companyPlaceholder": "Название компании (необязательно)",
+      "assistanceCountry": "Страна поддержки",
+      "assistanceCountryPlaceholder": "Выберите страну",
+      "assistanceCountries": {
+        "cameroon": "Камерун",
+        "usa": "США"
+      },
       "subject": "Тема",
       "subjectPlaceholder": "Выберите тему",
       "subjects": {
