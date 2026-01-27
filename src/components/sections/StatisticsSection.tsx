@@ -20,7 +20,6 @@ import {
   ChevronLeft,
   ChevronDown,
   ChevronUp,
-  Download,
   MessageSquare,
   Filter,
   RefreshCw,
@@ -514,18 +513,6 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
             />
           </div>
           <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t border-border">
-            <Link href="/documents-en-cours">
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                {t('quality.downloadCOA')}
-              </Button>
-            </Link>
-            <Link href="/documents-en-cours">
-              <Button variant="outline" size="sm">
-                <FileCheck className="w-4 h-4 mr-2" />
-                {t('quality.downloadOrigin')}
-              </Button>
-            </Link>
             <Link href="/produits">
               <Button variant="ghost" size="sm">
                 {t('quality.seeProcess')} <ChevronRight className="w-4 h-4 ml-1" />
