@@ -37,3 +37,4 @@ export { Breadcrumb } from './Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb';
 export { WhatsAppWidget } from './WhatsAppWidget';
 export type { WhatsAppWidgetProps } from './WhatsAppWidget';
+export { VideoPlayer } from './VideoPlayer';

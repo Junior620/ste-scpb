@@ -74,6 +74,11 @@ interface SanityArticle {
   excerpt?: { fr: string; en: string };
   content?: { fr: unknown[]; en: unknown[]; ru?: unknown[] };
   image?: SanityImage;
+  video?: {
+    url: string;
+    platform: 'youtube' | 'vimeo' | 'direct';
+    thumbnail?: SanityImage;
+  };
   publishedAt: string;
   author?:
     | {
@@ -448,6 +453,20 @@ export class SanityClient implements CMSClient {
             height: 630,
           }
         : undefined,
+      video: sanityArticle.video
+        ? {
+            url: sanityArticle.video.url,
+            platform: sanityArticle.video.platform,
+            thumbnail: sanityArticle.video.thumbnail
+              ? {
+                  url: this.getImageUrl(sanityArticle.video.thumbnail),
+                  alt: toLocalized(sanityArticle.title),
+                  width: 1200,
+                  height: 630,
+                }
+              : undefined,
+          }
+        : undefined,
       category: sanityArticle.category
         ? {
             id: sanityArticle.category,
@@ -665,6 +684,7 @@ export class SanityClient implements CMSClient {
           excerpt,
           content,
           image,
+          video,
           publishedAt,
           author {
             authorType,

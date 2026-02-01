@@ -21,6 +21,7 @@ import { formatArticleDate, getLocalizedArticleContent } from '@/domain/entities
 import type { Locale } from '@/domain/value-objects/Locale';
 import { Button } from '@/components/ui/Button';
 import { PortableTextRenderer } from '@/components/ui/PortableTextRenderer';
+import { VideoPlayer } from '@/components/ui/VideoPlayer';
 
 /**
  * Product keywords mapping for contextual linking
@@ -463,7 +464,7 @@ export function ArticleDetailSection({ article, locale }: ArticleDetailSectionPr
         </header>
 
         {/* Featured Image */}
-        {article.featuredImage && (
+        {article.featuredImage && !article.video && (
           <div className="max-w-4xl mx-auto mb-12">
             <div className="relative aspect-video overflow-hidden rounded-xl">
               <Image
@@ -475,6 +476,13 @@ export function ArticleDetailSection({ article, locale }: ArticleDetailSectionPr
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
               />
             </div>
+          </div>
+        )}
+
+        {/* Video (if present, replaces featured image) */}
+        {article.video && (
+          <div className="max-w-4xl mx-auto mb-12">
+            <VideoPlayer video={article.video} title={article.title[locale]} />
           </div>
         )}
 

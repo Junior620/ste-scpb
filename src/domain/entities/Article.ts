@@ -41,6 +41,15 @@ export interface ArticleImage {
 }
 
 /**
+ * Article video
+ */
+export interface ArticleVideo {
+  url: string;
+  platform: 'youtube' | 'vimeo' | 'direct';
+  thumbnail?: ArticleImage;
+}
+
+/**
  * Article entity for blog/news section
  * Validates: Requirements 7.1, 7.2
  */
@@ -51,6 +60,7 @@ export interface Article {
   excerpt: LocalizedContent;
   content: LocalizedContent;
   featuredImage?: ArticleImage;
+  video?: ArticleVideo;
   category?: ArticleCategory;
   tags: ArticleTag[];
   author?: ArticleAuthor;
