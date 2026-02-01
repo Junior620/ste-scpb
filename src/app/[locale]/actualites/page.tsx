@@ -13,7 +13,7 @@ export const revalidate = 1800;
 
 interface BlogPageProps {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; page?: string }>;
 }
 
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
@@ -36,9 +36,11 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 async function ArticlesContent({
   locale,
   category,
+  initialPage,
 }: {
   locale: Locale;
   category?: string;
+  initialPage?: number;
 }) {
   // Fetch articles from CMS
   let articles: ArticleListItem[] = [];
@@ -54,6 +56,7 @@ async function ArticlesContent({
     <BlogSection
       articles={articles}
       initialCategory={category}
+      initialPage={initialPage}
       locale={locale}
     />
   );
@@ -87,7 +90,8 @@ function ArticlesLoadingFallback() {
 
 export default async function BlogPage({ params, searchParams }: BlogPageProps) {
   const { locale } = await params;
-  const { category } = await searchParams;
+  const { category, page } = await searchParams;
+  const initialPage = page ? parseInt(page, 10) : 1;
 
   // Enable static rendering
   if (isValidLocale(locale)) {
@@ -97,7 +101,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
       <Suspense fallback={<ArticlesLoadingFallback />}>
-        <ArticlesContent locale={locale as Locale} category={category} />
+        <ArticlesContent locale={locale as Locale} category={category} initialPage={initialPage} />
       </Suspense>
     </main>
   );
