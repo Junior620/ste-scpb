@@ -196,7 +196,7 @@ export interface PaginationInfoProps {
   itemsPerPage: number;
   totalItems: number;
   className?: string;
-  locale?: 'fr' | 'en';
+  locale?: 'fr' | 'en' | 'ru';
 }
 
 export function PaginationInfo({
@@ -212,7 +212,9 @@ export function PaginationInfo({
   const text =
     locale === 'fr'
       ? `Affichage de ${startItem} à ${endItem} sur ${totalItems} résultats`
-      : `Showing ${startItem} to ${endItem} of ${totalItems} results`;
+      : locale === 'ru'
+        ? `Показано ${startItem}–${endItem} из ${totalItems} результатов`
+        : `Showing ${startItem} to ${endItem} of ${totalItems} results`;
 
   return (
     <p className={`text-sm text-foreground-muted ${className}`} role="status" aria-live="polite">

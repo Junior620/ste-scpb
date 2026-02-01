@@ -22,7 +22,6 @@ import {
   Sun,
   Hand,
   Package,
-  Download,
   Phone,
   Droplets,
   Clock,
@@ -220,7 +219,7 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
         <div className="mb-12">
           <div className="bg-background rounded-2xl p-8 border-2 border-primary/30 text-center">
             <h3 className="text-xl font-bold text-foreground mb-6">{t('cta.title')}</h3>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex justify-center">
               {/* Primary CTA - Contact (highest value) */}
               <Link href="/equipe">
                 <Button variant="primary" size="lg" className="min-w-[220px]">
@@ -228,20 +227,6 @@ export function CertificationsSection({ className = '' }: CertificationsSectionP
                   {t('cta.contact')}
                 </Button>
               </Link>
-              {/* Tertiary CTA - COA download */}
-              <div className="flex flex-col items-center">
-                <Link href="/documents-en-cours">
-                  <Button
-                    variant="ghost"
-                    size="lg"
-                    className="text-foreground-muted hover:text-foreground"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    {t('cta.coa')}
-                  </Button>
-                </Link>
-                <span className="text-xs text-foreground-muted/70 mt-1">{t('cta.coaContent')}</span>
-              </div>
             </div>
           </div>
         </div>
