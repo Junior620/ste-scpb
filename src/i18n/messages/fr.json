@@ -445,20 +445,20 @@
       "quote": "Demander un devis export (24–48h)"
     },
     "usaPartnership": {
-      "title": "Notre Partenaire aux États-Unis",
-      "subtitle": "Kamer Agro LLC — Votre point de contact en Amérique du Nord",
-      "description": "Pour faciliter nos opérations commerciales aux États-Unis, nous collaborons avec Kamer Agro LLC, notre partenaire de confiance basé à New York. Cette collaboration nous permet d'offrir un service client local, une logistique optimisée et un accompagnement personnalisé pour tous nos clients nord-américains.",
+      "title": "SCPB aux États-Unis et à l'International",
+      "subtitle": "Kamer Agro LLC — SCPB pour le marché nord-américain et international",
+      "description": "Kamer Agro LLC est l'entité de STE-SCPB dédiée aux opérations commerciales aux États-Unis et sur les marchés internationaux. Basée à New York, Kamer Agro LLC offre un service client local, une logistique optimisée et un accompagnement personnalisé pour tous nos clients nord-américains et internationaux.",
       "benefits": {
-        "title": "Avantages pour nos clients américains",
-        "local": "Point de contact local aux États-Unis",
+        "title": "Avantages pour nos clients américains et internationaux",
+        "local": "Présence locale aux États-Unis",
         "logistics": "Coordination logistique simplifiée (DAP/DDP)",
         "support": "Support client en temps réel (fuseau horaire EST)",
         "documentation": "Assistance avec la documentation douanière US"
       },
       "contact": {
-        "title": "Contacter Kamer Agro LLC",
+        "title": "Contacter SCPB USA/International",
         "location": "New York, États-Unis",
-        "note": "Pour toute demande concernant le marché nord-américain"
+        "note": "Pour toute demande concernant les marchés nord-américain et international"
       }
     }
   },
@@ -856,7 +856,7 @@
     "copyright": "© {year} STE-SCPB. Tous droits réservés.",
     "newsletterDesc": "Disponibilités, grades et infos marché (1 email/mois)",
     "usaOffice": "Bureau USA (New York)",
-    "partner": "Représentant Bureau USA",
+    "partner": "SCPB USA/International",
     "links": {
       "quality": "Qualité & conformité",
       "contact": "Nous contacter"

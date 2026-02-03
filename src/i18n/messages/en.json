@@ -445,20 +445,20 @@
       "quote": "Request export quote (24–48h)"
     },
     "usaPartnership": {
-      "title": "Our Partner in the United States",
-      "subtitle": "Kamer Agro LLC — Your Contact Point in North America",
-      "description": "To facilitate our business operations in the United States, we partner with Kamer Agro LLC, our trusted partner based in New York. This collaboration allows us to offer local customer service, optimized logistics, and personalized support for all our North American clients.",
+      "title": "SCPB in the United States and Internationally",
+      "subtitle": "Kamer Agro LLC — SCPB for the North American and International Markets",
+      "description": "Kamer Agro LLC is STE-SCPB's entity dedicated to business operations in the United States and international markets. Based in New York, Kamer Agro LLC offers local customer service, optimized logistics, and personalized support for all our North American and international clients.",
       "benefits": {
-        "title": "Benefits for our American clients",
-        "local": "Local contact point in the United States",
+        "title": "Benefits for our American and international clients",
+        "local": "Local presence in the United States",
         "logistics": "Simplified logistics coordination (DAP/DDP)",
         "support": "Real-time customer support (EST timezone)",
         "documentation": "Assistance with US customs documentation"
       },
       "contact": {
-        "title": "Contact Kamer Agro LLC",
+        "title": "Contact SCPB USA/International",
         "location": "New York, United States",
-        "note": "For all inquiries regarding the North American market"
+        "note": "For all inquiries regarding North American and international markets"
       }
     }
   },
@@ -856,7 +856,7 @@
     "copyright": "© {year} STE-SCPB. All rights reserved.",
     "newsletterDesc": "Availability, grades and market info (1 email/month)",
     "usaOffice": "USA Office (New York)",
-    "partner": "USA Office Representative",
+    "partner": "SCPB USA/International",
     "links": {
       "quality": "Quality & compliance",
       "contact": "Contact us"
