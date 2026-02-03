@@ -245,18 +245,30 @@ export function BlogSection({
     setCurrentPage(1);
   }, [selectedCategory]);
 
-  // Handle category change
-  const handleCategoryChange = useCallback((categorySlug: string | null) => {
-    setSelectedCategory(categorySlug);
-    // Update URL without navigation
+  // Update URL when category or page changes
+  useEffect(() => {
     const url = new URL(window.location.href);
-    if (categorySlug) {
-      url.searchParams.set('category', categorySlug);
+
+    // Update category parameter
+    if (selectedCategory) {
+      url.searchParams.set('category', selectedCategory);
     } else {
       url.searchParams.delete('category');
     }
-    url.searchParams.delete('page'); // Reset page when changing category
+
+    // Update page parameter
+    if (currentPage > 1) {
+      url.searchParams.set('page', currentPage.toString());
+    } else {
+      url.searchParams.delete('page');
+    }
+
     window.history.replaceState({}, '', url.toString());
+  }, [selectedCategory, currentPage]);
+
+  // Handle category change
+  const handleCategoryChange = useCallback((categorySlug: string | null) => {
+    setSelectedCategory(categorySlug);
   }, []);
 
   // Handle page change
@@ -267,14 +279,6 @@ export function BlogSection({
     if (articlesSection) {
       articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    // Update URL without navigation
-    const url = new URL(window.location.href);
-    if (page > 1) {
-      url.searchParams.set('page', page.toString());
-    } else {
-      url.searchParams.delete('page');
-    }
-    window.history.replaceState({}, '', url.toString());
   }, []);
 
   return (
