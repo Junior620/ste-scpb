@@ -78,7 +78,7 @@ export function OrganizationJsonLd() {
     image: `${BASE_URL}/logo.png`, // Google recommends image in addition to logo
     description:
       'Société camerounaise spécialisée dans le commerce de produits agricoles et matières premières: cacao, café, bois, maïs.',
-    email: 'direction@ste-scpb.com',
+    email: 'direction@scpb-kameragro.com',
     telephone: '+237676905938',
     address: {
       '@type': 'PostalAddress',
@@ -110,7 +110,7 @@ export function OrganizationJsonLd() {
         '@type': 'ContactPoint',
         contactType: 'sales',
         telephone: '+237676905938',
-        email: 'direction@ste-scpb.com',
+        email: 'direction@scpb-kameragro.com',
         availableLanguage: ['fr', 'en'],
       },
       {

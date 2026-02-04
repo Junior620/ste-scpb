@@ -54,7 +54,7 @@ export const DEFAULT_LOCATIONS: MapLocation[] = [
     contact: {
       address: 'Douala-Akwa, Cameroun',
       phone: '+237 676 905 938',
-      email: 'direction@ste-scpb.com',
+      email: 'direction@scpb-kameragro.com',
     },
   },
   // Regional offices in Cameroon

@@ -738,7 +738,7 @@ function ProductInfo({ product, locale }: { product: Product; locale: Locale }) 
           {product.category === 'bois' ? tSample('titleWood') : tSample('title')}
         </Button>
         <a
-          href={`mailto:direction@ste-scpb.com?subject=${encodeURIComponent(`Demande d'information - ${product.name[locale]}`)}`}
+          href={`mailto:direction@scpb-kameragro.com?subject=${encodeURIComponent(`Demande d'information - ${product.name[locale]}`)}`}
           className="w-full sm:flex-1 sm:min-w-0"
         >
           <Button variant="outline" size="lg" className="w-full">
