@@ -54,7 +54,7 @@ export const DEFAULT_LOCATIONS: MapLocation[] = [
     contact: {
       address: 'Douala-Akwa, Cameroun',
       phone: '+237 676 905 938',
-      email: 'scpb@ste-scpb.com',
+      email: 'direction@ste-scpb.com',
     },
   },
   // Regional offices in Cameroon
@@ -214,17 +214,10 @@ function LocationMarker({
   );
 }
 
-
 /**
  * Location popup component
  */
-function LocationPopup({
-  location,
-  onClose,
-}: {
-  location: MapLocation;
-  onClose: () => void;
-}) {
+function LocationPopup({ location, onClose }: { location: MapLocation; onClose: () => void }) {
   const t = useTranslations('map');
   const color = getMarkerColor(location.type);
 
@@ -259,9 +252,7 @@ function LocationPopup({
             style={{ backgroundColor: color }}
             aria-hidden="true"
           />
-          <span className="text-xs text-gray-400 uppercase tracking-wide">
-            {typeLabel}
-          </span>
+          <span className="text-xs text-gray-400 uppercase tracking-wide">{typeLabel}</span>
         </div>
 
         {/* Location name */}
@@ -347,7 +338,6 @@ function LocationPopup({
   );
 }
 
-
 /**
  * Legend component for the map
  */
@@ -426,9 +416,7 @@ export function MapSection({
             </p>
           </header>
           <div className="h-[400px] md:h-[500px] bg-gray-800 rounded-xl flex items-center justify-center">
-            <p className="text-muted-foreground">
-              Map unavailable - Mapbox token not configured
-            </p>
+            <p className="text-muted-foreground">Map unavailable - Mapbox token not configured</p>
           </div>
         </div>
       </section>
@@ -463,11 +451,7 @@ export function MapSection({
 
             {/* Markers */}
             {DEFAULT_LOCATIONS.map((location) => (
-              <LocationMarker
-                key={location.id}
-                location={location}
-                onClick={handleMarkerClick}
-              />
+              <LocationMarker key={location.id} location={location} onClick={handleMarkerClick} />
             ))}
 
             {/* Popup for selected location */}

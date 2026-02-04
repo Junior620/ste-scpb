@@ -48,7 +48,7 @@
     "contactInfo": {
       "title": "Нужна информация?",
       "phone": "+237 676 905 938",
-      "email": "scpb@ste-scpb.com"
+      "email": "direction@ste-scpb.com"
     }
   },
   "common": {
@@ -110,7 +110,7 @@
       "response": "Ответ в течение 24–48 ч",
       "location": "Дуала, Камерун",
       "phone": "+237 676 905 938",
-      "email": "scpb@ste-scpb.com",
+      "email": "direction@ste-scpb.com",
       "destinations": "Мировой экспорт"
     },
     "welcome": {
@@ -922,7 +922,7 @@
           "title": "1. Оператор обработки данных",
           "content": "STE-SCPB, камерунская компания по торговле сельхозпродукцией, является оператором обработки ваших персональных данных.",
           "address": "Адрес: Дуала-Аква, Камерун",
-          "email": "Email: scpb@ste-scpb.com",
+          "email": "Email: direction@ste-scpb.com",
           "phone": "Телефон: +237 676 905 938"
         },
         "dataCollected": {
@@ -1015,7 +1015,7 @@
           "registration": "Регистрационный номер: [Заполнить]",
           "address": "Юридический адрес: Дуала-Аква, Камерун",
           "phone": "Телефон: +237 676 905 938",
-          "email": "Email: scpb@ste-scpb.com",
+          "email": "Email: direction@ste-scpb.com",
           "director": "Ответственный за публикацию: [Имя гендиректора]"
         },
         "hosting": {

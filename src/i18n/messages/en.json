@@ -48,7 +48,7 @@
     "contactInfo": {
       "title": "Need information?",
       "phone": "+237 676 905 938",
-      "email": "scpb@ste-scpb.com"
+      "email": "direction@ste-scpb.com"
     }
   },
   "common": {
@@ -110,7 +110,7 @@
       "response": "Response within 24–48h",
       "location": "Douala, Cameroon",
       "phone": "+237 676 905 938",
-      "email": "scpb@ste-scpb.com",
+      "email": "direction@ste-scpb.com",
       "destinations": "Worldwide export"
     },
     "welcome": {
@@ -922,7 +922,7 @@
           "title": "1. Data Controller",
           "content": "STE-SCPB, a Cameroonian agricultural commodities trading company, is responsible for processing your personal data.",
           "address": "Address: Douala-Akwa, Cameroon",
-          "email": "Email: scpb@ste-scpb.com",
+          "email": "Email: direction@ste-scpb.com",
           "phone": "Phone: +237 676 905 938"
         },
         "dataCollected": {
@@ -1015,7 +1015,7 @@
           "registration": "Registration number: [To be completed]",
           "address": "Registered office: Douala-Akwa, Cameroon",
           "phone": "Phone: +237 676 905 938",
-          "email": "Email: scpb@ste-scpb.com",
+          "email": "Email: direction@ste-scpb.com",
           "director": "Publication director: [CEO Name]"
         },
         "hosting": {

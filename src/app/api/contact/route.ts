@@ -47,7 +47,7 @@ interface ContactSubmissionBody {
  * Email recipients - route based on assistance country
  */
 const CAMEROON_EMAIL =
-  process.env.EMAIL_CONTACT_CAMEROON || process.env.EMAIL_CONTACT || 'scpb@ste-scpb.com';
+  process.env.EMAIL_CONTACT_CAMEROON || process.env.EMAIL_CONTACT || 'direction@ste-scpb.com';
 const USA_EMAIL = process.env.EMAIL_CONTACT_USA || 'direction@scpb-kameragro.com';
 
 /**

@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     // Send notification email to company
     await emailService.send({
-      to: { email: process.env.COMPANY_EMAIL || 'scpb@ste-scpb.com' },
+      to: { email: process.env.COMPANY_EMAIL || 'direction@ste-scpb.com' },
       subject: `Nouvelle demande d'échantillon - ${validatedData.product}`,
       html: generateCompanyNotificationEmail(validatedData),
     });
@@ -179,7 +179,7 @@ function generateCustomerConfirmationEmail(
         </div>
         <div class="footer">
           <p>STE-SCPB | Douala, Cameroun<br>
-          +237 676 905 938 | scpb@ste-scpb.com</p>
+          +237 676 905 938 | direction@ste-scpb.com</p>
         </div>
       </div>
     </body>

@@ -254,7 +254,7 @@ export function generateRFQConfirmationHtml(data: RFQConfirmationData): string {
                       &nbsp;|&nbsp;
                       <a href="https://wa.me/237676905938" style="color: #16a34a; text-decoration: none; font-weight: 500;">${t.whatsappUs}</a>
                       &nbsp;|&nbsp;
-                      <a href="mailto:scpb@ste-scpb.com" style="color: #2563eb; text-decoration: none;">scpb@ste-scpb.com</a>
+                      <a href="mailto:direction@ste-scpb.com" style="color: #2563eb; text-decoration: none;">direction@ste-scpb.com</a>
                     </p>
                   </td>
                 </tr>
@@ -336,7 +336,7 @@ ${t.prepareTitle}: ${t.prepareText}
 ${t.needHelp}
 ${t.callUs}: +237 676 905 938
 ${t.whatsappUs}: https://wa.me/237676905938
-Email: scpb@ste-scpb.com
+Email: direction@ste-scpb.com
 
 ${t.regards}
 ${t.team}

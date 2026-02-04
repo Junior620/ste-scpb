@@ -23,7 +23,7 @@ const organizationSchema = {
   image: `${BASE_URL}/logo.png`,
   description:
     'Société camerounaise spécialisée dans le commerce de produits agricoles et matières premières: cacao, café, bois, maïs.',
-  email: 'scpb@ste-scpb.com',
+  email: 'direction@ste-scpb.com',
   telephone: '+237676905938',
   address: {
     '@type': 'PostalAddress',
@@ -50,7 +50,7 @@ const organizationSchema = {
       '@type': 'ContactPoint',
       contactType: 'sales',
       telephone: '+237676905938',
-      email: 'scpb@ste-scpb.com',
+      email: 'direction@ste-scpb.com',
       availableLanguage: ['fr', 'en'],
     },
     {
