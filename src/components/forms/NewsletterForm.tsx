@@ -36,7 +36,11 @@ export interface NewsletterFormProps {
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error' | 'already_subscribed';
 
-export function NewsletterForm({ onSuccess, compact = false, className = '' }: NewsletterFormProps) {
+export function NewsletterForm({
+  onSuccess,
+  compact = false,
+  className = '',
+}: NewsletterFormProps) {
   const t = useTranslations('newsletter');
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -56,7 +60,6 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
       consent: false as unknown as true,
     },
   });
-
 
   // Load reCAPTCHA script
   useEffect(() => {
@@ -140,7 +143,9 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
   // Success state
   if (status === 'success') {
     return (
-      <div className={`bg-success/10 border border-success rounded-lg p-4 text-center ${className}`}>
+      <div
+        className={`bg-success/10 border border-success rounded-lg p-4 text-center ${className}`}
+      >
         <div className="text-success text-2xl mb-2">✓</div>
         <h3 className="text-lg font-semibold text-foreground mb-1">{t('success.title')}</h3>
         <p className="text-sm text-foreground-muted">{t('success.description')}</p>
@@ -151,29 +156,21 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
   // Already subscribed state
   if (status === 'already_subscribed') {
     return (
-      <div className={`bg-warning/10 border border-warning rounded-lg p-4 text-center ${className}`}>
+      <div
+        className={`bg-warning/10 border border-warning rounded-lg p-4 text-center ${className}`}
+      >
         <p className="text-sm text-foreground">{t('error.alreadySubscribed')}</p>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="mt-2"
-          onClick={() => setStatus('idle')}
-        >
+        <Button variant="ghost" size="sm" className="mt-2" onClick={() => setStatus('idle')}>
           {t('form.submit')}
         </Button>
       </div>
     );
   }
 
-
   // Compact layout for footer/sidebar
   if (compact) {
     return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`space-y-3 ${className}`}
-        noValidate
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={`space-y-3 ${className}`} noValidate>
         {/* Error Banner */}
         {status === 'error' && (
           <div className="bg-error/10 border border-error rounded-lg p-2 text-sm" role="alert">
@@ -184,6 +181,7 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
         <div className="flex gap-2">
           <Input
             {...register('email')}
+            id="newsletter-email-compact"
             type="email"
             placeholder={t('form.emailPlaceholder')}
             error={errors.email?.message}
@@ -211,7 +209,10 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
             className="mt-0.5 h-3 w-3 rounded border-border bg-background-secondary text-accent focus:ring-accent focus:ring-offset-background"
             aria-invalid={!!errors.consent}
           />
-          <label htmlFor="newsletterConsentCompact" className="text-xs text-foreground-muted cursor-pointer">
+          <label
+            htmlFor="newsletterConsentCompact"
+            className="text-xs text-foreground-muted cursor-pointer"
+          >
             {t('form.consent')}
           </label>
         </div>
@@ -226,11 +227,7 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
 
   // Full layout
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={`space-y-4 ${className}`}
-      noValidate
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={`space-y-4 ${className}`} noValidate>
       {/* Error Banner */}
       {status === 'error' && (
         <div className="bg-error/10 border border-error rounded-lg p-4" role="alert">
@@ -242,6 +239,7 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
       {/* Email Field */}
       <Input
         {...register('email')}
+        id="newsletter-email-full"
         type="email"
         label={t('form.email')}
         placeholder={t('form.emailPlaceholder')}
@@ -264,7 +262,9 @@ export function NewsletterForm({ onSuccess, compact = false, className = '' }: N
         <div>
           <label htmlFor="newsletterConsent" className="text-sm text-foreground cursor-pointer">
             {t('form.consent')}{' '}
-            <span className="text-error" aria-hidden="true">*</span>
+            <span className="text-error" aria-hidden="true">
+              *
+            </span>
           </label>
           {errors.consent && (
             <p id="newsletter-consent-error" className="mt-1 text-sm text-error" role="alert">
