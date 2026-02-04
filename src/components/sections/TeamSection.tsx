@@ -52,7 +52,6 @@ export interface TeamSectionProps {
 interface TeamMemberCardProps {
   member: TeamMember;
   locale: Locale;
-  translations: TeamTranslations;
 }
 
 /**
@@ -94,22 +93,12 @@ function getRoleColor(role: string): string {
 /**
  * Individual team member card component
  */
-function TeamMemberCard({ member, locale, translations }: TeamMemberCardProps) {
+function TeamMemberCard({ member, locale }: TeamMemberCardProps) {
   const name = getLocalizedName(member, locale);
   const role = getLocalizedRole(member, locale);
   const bio = getLocalizedBio(member, locale);
   const initials = getInitials(name);
   const colorClass = getRoleColor(role);
-
-  // Determine contact type based on role
-  const getContactLabel = () => {
-    const lowerRole = role.toLowerCase();
-    if (lowerRole.includes('supply') || lowerRole.includes('logistique'))
-      return translations.contactLogistics;
-    if (lowerRole.includes('export') || lowerRole.includes('commercial'))
-      return translations.contactExport;
-    return translations.contactSales;
-  };
 
   return (
     <Card className="flex flex-col items-center text-center p-6">
@@ -192,7 +181,7 @@ function TeamMemberCard({ member, locale, translations }: TeamMemberCardProps) {
                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
             </svg>
-            {getContactLabel()}
+            {member.email}
           </a>
         )}
       </div>
@@ -411,12 +400,7 @@ export function TeamSection({ members, locale, translations }: TeamSectionProps)
         {otherMembers.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherMembers.map((member) => (
-              <TeamMemberCard
-                key={member.id}
-                member={member}
-                locale={locale}
-                translations={translations}
-              />
+              <TeamMemberCard key={member.id} member={member} locale={locale} />
             ))}
           </div>
         )}
