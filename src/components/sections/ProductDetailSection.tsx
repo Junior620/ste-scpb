@@ -94,6 +94,11 @@ const DEFAULT_DESCRIPTIONS: Record<ProductCategory, { fr: string; en: string; ru
     en: 'Food-grade sorghum, dried and calibrated. Suitable for human and animal consumption. Controlled moisture content, export packaging.',
     ru: 'Пищевое сорго, высушенное и откалиброванное. Подходит для питания людей и животных. Контролируемое содержание влаги, экспортная упаковка.',
   },
+  poivre: {
+    fr: "Poivre noir et blanc du Cameroun, séché et trié. Arôme intense et piquant, qualité premium. Adapté à l'industrie alimentaire et à l'export. Conditionnement en sacs ou vrac.",
+    en: 'Black and white pepper from Cameroon, dried and sorted. Intense and spicy aroma, premium quality. Suitable for food industry and export. Packaging in bags or bulk.',
+    ru: 'Черный и белый перец из Камеруна, высушенный и отсортированный. Интенсивный и острый аромат, премиальное качество. Подходит для пищевой промышленности и экспорта. Упаковка в мешках или насыпью.',
+  },
 };
 
 /**
@@ -293,6 +298,29 @@ const TECHNICAL_SPECS: Record<
       icon: 'users',
     },
   ],
+  poivre: [
+    {
+      key: 'type',
+      value: { fr: 'Noir / Blanc', en: 'Black / White', ru: 'Черный / Белый' },
+      icon: 'layers',
+    },
+    { key: 'humidity', value: { fr: '≤12%', en: '≤12%', ru: '≤12%' }, icon: 'droplet' },
+    {
+      key: 'grade',
+      value: { fr: 'Grade export', en: 'Export grade', ru: 'Экспортный сорт' },
+      icon: 'award',
+    },
+    {
+      key: 'packaging',
+      value: { fr: 'Sacs 25kg / Vrac', en: 'Bags 25kg / Bulk', ru: 'Мешки 25кг / Насыпью' },
+      icon: 'box',
+    },
+    {
+      key: 'aroma',
+      value: { fr: 'Intense et piquant', en: 'Intense and spicy', ru: 'Интенсивный и острый' },
+      icon: 'flame',
+    },
+  ],
 };
 
 /**
@@ -367,6 +395,12 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string;
     { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
     { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
     { fr: "Conteneur 40'", en: "40' container", ru: "Контейнер 40'" },
+  ],
+  poivre: [
+    { fr: 'Sacs PP (25kg)', en: 'PP bags (25kg)', ru: 'Мешки PP (25кг)' },
+    { fr: 'Cartons (10kg)', en: 'Cartons (10kg)', ru: 'Коробки (10кг)' },
+    { fr: 'Vrac conteneur', en: 'Bulk container', ru: 'Насыпью в контейнере' },
+    { fr: "Conteneur 20'", en: "20' container", ru: "Контейнер 20'" },
   ],
 };
 
