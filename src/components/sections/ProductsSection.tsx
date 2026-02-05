@@ -159,6 +159,7 @@ function getProductBadge(category: ProductCategory, t: ReturnType<typeof useTran
     soja: t('badges.nonOgm'),
     amandes: t('badges.gradeExport'),
     sorgho: t('badges.gradeExport'),
+    poivre: t('badges.gradeExport'),
   };
   return badges[category] || t('badges.gradeExport');
 }
@@ -217,6 +218,11 @@ function getProductTagline(category: ProductCategory, locale: Locale): string {
       fr: 'Grade alimentaire – Trié & calibré',
       en: 'Food grade – Sorted & calibrated',
       ru: 'Пищевой сорт – Отсортированное и калиброванное',
+    },
+    poivre: {
+      fr: 'Qualité premium – Arôme intense',
+      en: 'Premium quality – Intense aroma',
+      ru: 'Премиум качество – Интенсивный аромат',
     },
   };
   return taglines[category]?.[locale] || taglines[category]?.fr || '';
