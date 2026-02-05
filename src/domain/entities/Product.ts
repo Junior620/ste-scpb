@@ -15,6 +15,7 @@ export const PRODUCT_CATEGORIES = [
   'amandes',
   'sorgho',
   'soja',
+  'poivre',
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];

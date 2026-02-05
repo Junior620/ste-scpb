@@ -23,6 +23,7 @@ export const PRODUCT_COLORS: Record<ProductCategory, string> = {
   amandes: '#D2691E', // Chocolate
   sorgho: '#DAA520', // Goldenrod
   soja: '#9ACD32', // Yellow green
+  poivre: '#2F4F4F', // Dark slate gray
 };
 
 /**
@@ -88,11 +89,7 @@ function generateNodes(
         const x = (i / (count - 1)) * 4 - 2;
         nodes.push({
           id: `node-${i}`,
-          position: [
-            x,
-            Math.sin(i * 0.5) * 0.5,
-            (Math.random() - 0.5) * 0.3,
-          ],
+          position: [x, Math.sin(i * 0.5) * 0.5, (Math.random() - 0.5) * 0.3],
           size: i === Math.floor(count / 2) ? 0.4 : 0.2,
         });
       }
@@ -142,11 +139,7 @@ function generateNodes(
         const height = 1 + (i % 2) * 0.5;
         nodes.push({
           id: `branch-${i}`,
-          position: [
-            Math.cos(angle) * 1.5,
-            height,
-            Math.sin(angle) * 0.5,
-          ],
+          position: [Math.cos(angle) * 1.5, height, Math.sin(angle) * 0.5],
           size: 0.2,
         });
       }
@@ -230,6 +223,7 @@ export const PRODUCT_CONSTELLATIONS: Record<ProductCategory, ConstellationConfig
   amandes: createConstellationConfig('amandes', 5, 'cluster'),
   sorgho: createConstellationConfig('sorgho', 6, 'linear'),
   soja: createConstellationConfig('soja', 5, 'radial'),
+  poivre: createConstellationConfig('poivre', 6, 'cluster'),
 };
 
 /**
@@ -268,9 +262,7 @@ export const DEFAULT_HERO_CONSTELLATION: ConstellationConfig = {
 /**
  * Gets constellation config for a product category
  */
-export function getProductConstellation(
-  category: ProductCategory
-): ConstellationConfig {
+export function getProductConstellation(category: ProductCategory): ConstellationConfig {
   return PRODUCT_CONSTELLATIONS[category];
 }
 
@@ -325,9 +317,7 @@ export function interpolateConstellations(
     nodes,
     connections,
     color,
-    glowIntensity:
-      from.glowIntensity + (to.glowIntensity - from.glowIntensity) * progress,
-    animationSpeed:
-      from.animationSpeed + (to.animationSpeed - from.animationSpeed) * progress,
+    glowIntensity: from.glowIntensity + (to.glowIntensity - from.glowIntensity) * progress,
+    animationSpeed: from.animationSpeed + (to.animationSpeed - from.animationSpeed) * progress,
   };
 }

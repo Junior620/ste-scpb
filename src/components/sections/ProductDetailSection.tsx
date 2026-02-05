@@ -376,16 +376,16 @@ const PACKAGING_OPTIONS: Record<ProductCategory, Array<{ fr: string; en: string;
 function ProductScene({ product }: { product: Product }) {
   const { config } = usePerformanceMode();
   const constellationConfig =
-    product.constellation.nodes.length > 0
+    product.constellation?.nodes?.length > 0
       ? product.constellation
-      : PRODUCT_CONSTELLATIONS[product.category];
+      : PRODUCT_CONSTELLATIONS[product.category] || PRODUCT_CONSTELLATIONS['cacao'];
 
   return (
     <>
       <Starfield
         config={config}
         color="#ffffff"
-        secondaryColor={PRODUCT_COLORS[product.category]}
+        secondaryColor={PRODUCT_COLORS[product.category] || '#FFD700'}
         depth={30}
         parallaxIntensity={0.05}
         enableParallax={true}
