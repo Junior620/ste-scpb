@@ -476,6 +476,8 @@
     "languages": "Languages",
     "responseTime": "Response",
     "location": "Based in",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied!",
     "members": {
       "ceo": {
         "role": "Chief Executive Officer (CEO)",

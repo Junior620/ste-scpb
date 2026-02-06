@@ -476,6 +476,8 @@
     "languages": "Языки",
     "responseTime": "Ответ",
     "location": "Базируется в",
+    "copyEmail": "Скопировать email",
+    "emailCopied": "Email скопирован!",
     "members": {
       "ceo": {
         "role": "Генеральный директор (CEO)",

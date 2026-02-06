@@ -476,6 +476,8 @@
     "languages": "Langues",
     "responseTime": "Réponse",
     "location": "Basé à",
+    "copyEmail": "Copier l'email",
+    "emailCopied": "Email copié !",
     "members": {
       "ceo": {
         "role": "Directeur Général (CEO)",

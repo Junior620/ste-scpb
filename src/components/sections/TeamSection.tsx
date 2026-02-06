@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { TeamMember } from '@/domain/entities/TeamMember';
 import type { Locale } from '@/domain/value-objects/Locale';
 import {
@@ -94,11 +95,23 @@ function getRoleColor(role: string): string {
  * Individual team member card component
  */
 function TeamMemberCard({ member, locale }: TeamMemberCardProps) {
+  const t = useTranslations('team');
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const name = getLocalizedName(member, locale);
   const role = getLocalizedRole(member, locale);
   const bio = getLocalizedBio(member, locale);
   const initials = getInitials(name);
   const colorClass = getRoleColor(role);
+
+  const copyEmailToClipboard = async (email: string) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
 
   return (
     <Card className="flex flex-col items-center text-center p-6">
@@ -159,30 +172,70 @@ function TeamMemberCard({ member, locale }: TeamMemberCardProps) {
         </span>
       </div>
 
-      {/* Contact button */}
-      <div className="mt-4">
+      {/* Contact button with copy functionality */}
+      <div className="mt-4 flex gap-2">
         {member.email && (
-          <a
-            href={`mailto:${member.email}`}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
-            aria-label={`Email ${name}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <>
+            <a
+              href={`mailto:${member.email}`}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
+              aria-label={`Email ${name}`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            {member.email}
-          </a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              {member.email}
+            </a>
+            <button
+              onClick={() => copyEmailToClipboard(member.email!)}
+              className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
+              aria-label={t('copyEmail')}
+              title={t('copyEmail')}
+            >
+              {copiedEmail ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-green-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+              )}
+            </button>
+          </>
         )}
       </div>
     </Card>
@@ -201,6 +254,8 @@ function CEOMessage({
   locale: Locale;
   translations: TeamTranslations;
 }) {
+  const t = useTranslations('team');
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const name = getLocalizedName(ceo, locale);
   const role = getLocalizedRole(ceo, locale);
   const initials = getInitials(name);
@@ -208,6 +263,16 @@ function CEOMessage({
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const showImage = ceo.photo?.url && !imageError;
+
+  const copyEmailToClipboard = async (email: string) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
 
   return (
     <section className="mb-16 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl p-8 md:p-12">
@@ -279,9 +344,9 @@ function CEOMessage({
             </span>
           </div>
 
-          {/* CEO Email */}
+          {/* CEO Email with copy button */}
           {ceo.email && (
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
               <a
                 href={`mailto:${ceo.email}`}
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
@@ -303,6 +368,44 @@ function CEOMessage({
                 </svg>
                 {ceo.email}
               </a>
+              <button
+                onClick={() => copyEmailToClipboard(ceo.email!)}
+                className="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
+                aria-label={t('copyEmail')}
+                title={t('copyEmail')}
+              >
+                {copiedEmail ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
           )}
         </div>
