@@ -2,33 +2,32 @@
 
 /**
  * Hero Section Component
- * Clean, minimal B2B cacao export hero
+ * Clean, minimal B2B cacao export hero with video carousel
  */
 
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { StaticHeroFallback } from '@/components/3d';
 import { Button } from '@/components/ui';
 import { ClickSparkles } from '@/components/ui/ClickSparkles';
-
-// Lazy load 3D components for better initial load
-const Scene3DWrapper = lazy(() =>
-  import('@/components/3d').then((m) => ({ default: m.Scene3DWrapper }))
-);
-const Lazy3DScene = lazy(() => import('./Hero3DScene'));
 
 export interface HeroProps {
   className?: string;
 }
 
+const VIDEOS = ['/hero/1.mp4', '/hero/2.mp4', '/hero/3.mp4'];
+const VIDEO_DURATION = 9000; // 9 seconds
+
 export function Hero({ className = '' }: HeroProps) {
   const t = useTranslations('home');
-  const [show3D, setShow3D] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShow3D(true), 100);
-    return () => clearTimeout(timer);
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prev) => (prev + 1) % VIDEOS.length);
+    }, VIDEO_DURATION);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -38,25 +37,25 @@ export function Hero({ className = '' }: HeroProps) {
     >
       <ClickSparkles />
 
-      {/* 3D Background */}
+      {/* Video Background Carousel */}
       <div className="absolute inset-0 z-0">
-        {show3D ? (
-          <Suspense fallback={<StaticHeroFallback starCount={150} />}>
-            <Scene3DWrapper
-              className="h-full w-full"
-              fallback={<StaticHeroFallback starCount={150} />}
-              camera={{ position: [0, 0, 10], fov: 60 }}
-            >
-              <Lazy3DScene />
-            </Scene3DWrapper>
-          </Suspense>
-        ) : (
-          <StaticHeroFallback starCount={150} />
-        )}
+        {VIDEOS.map((video, index) => (
+          <video
+            key={video}
+            src={video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+              index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        ))}
       </div>
 
-      {/* Gradient overlay for text readability - lighter to not affect external elements */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/40 via-background/50 to-background/60 pointer-events-none" />
+      {/* Gradient overlay for text readability */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/60 via-background/70 to-background/80 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
