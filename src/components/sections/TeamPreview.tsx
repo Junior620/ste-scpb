@@ -13,10 +13,10 @@ import { Button } from '@/components/ui';
 
 // Team members with explicit roles and expertise keys for i18n
 const TEAM_MEMBERS = [
-  { key: 'ceo', name: 'M. MBATCHOU NOKAM ELVIS' },
-  { key: 'gm', name: 'M. TCHOUMEGNE TAGNE SIMONO' },
-  { key: 'operations', name: 'M. TATCHUM SEDRIQUE' },
-  { key: 'export', name: 'M. TEYOMNOU WILLIAM' },
+  { key: 'ceo', name: 'Mr. MBATCHOU NOKAM ELVIS' },
+  { key: 'gm', name: 'Mr. TCHOUMEGNE TAGNE SIMONO' },
+  { key: 'operations', name: 'Mr. TATCHUM SEDRIQUE' },
+  { key: 'export', name: 'Mr. TEYOMNOU WILLIAM' },
 ] as const;
 
 export function TeamPreview() {
