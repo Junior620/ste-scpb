@@ -94,8 +94,25 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
   }
 
   return (
-    <section className="py-16 md:py-24 bg-background-secondary">
-      <div className="container mx-auto px-4">
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      {/* Cinematic Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/section-produit.png"
+          alt=""
+          fill
+          className="object-cover"
+          style={{
+            filter: 'brightness(0.5) blur(2px)',
+          }}
+          priority
+          quality={100}
+        />
+        {/* Dark overlay for premium cinematic effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/70" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t('title')}</h2>
