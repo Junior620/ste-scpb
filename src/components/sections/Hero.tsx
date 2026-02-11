@@ -15,8 +15,15 @@ export interface HeroProps {
   className?: string;
 }
 
-const VIDEOS = ['/hero/1.mp4', '/hero/2.mp4', '/hero/3.mp4', '/hero/4.mp4', '/hero/5.mp4'];
-const VIDEO_DURATION = 18000; // 9 seconds
+const VIDEOS = [
+  '/hero/1.mp4',
+  '/hero/2.mp4',
+  '/hero/3.mp4',
+  '/hero/4.mp4',
+  '/hero/5.mp4',
+  '/hero/6.mp4',
+];
+const VIDEO_DURATION = 9000; // 9 seconds
 
 export function Hero({ className = '' }: HeroProps) {
   const t = useTranslations('home');
