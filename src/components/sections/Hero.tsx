@@ -108,11 +108,8 @@ export function Hero({ className = '' }: HeroProps) {
                 +237 676 905 938
               </a>
               <span>•</span>
-              <a
-                href="mailto:direction@scpb-kameragro.com"
-                className="hover:text-primary transition-colors"
-              >
-                direction@scpb-kameragro.com
+              <a href="mailto:scpb@ste-scpb.com" className="hover:text-primary transition-colors">
+                scpb@ste-scpb.com
               </a>
             </span>
           </div>
