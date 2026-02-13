@@ -135,10 +135,10 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     <div>
                       <p className="font-medium text-foreground">{t('infoUsa.email')}</p>
                       <a
-                        href="mailto:scpb@ste-scpb.com"
+                        href="mailto:direction@scpb-kameragro.com"
                         className="text-foreground-muted hover:text-primary transition-colors"
                       >
-                        scpb@ste-scpb.com
+                        direction@spcb-kameragro.com
                       </a>
                     </div>
                   </div>
