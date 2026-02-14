@@ -4,6 +4,8 @@
  */
 
 export { Hero, type HeroProps } from './Hero';
+export { Hero3D, type Hero3DProps } from './Hero3D';
+export { LazyContactHero } from './LazyContactHero';
 export { ProductsSection, type ProductsSectionProps } from './ProductsSection';
 export { ProductDetailSection, type ProductDetailSectionProps } from './ProductDetailSection';
 export { ValueChain, type ValueChainProps, getValueChainStages, type ValueChainStage } from './ValueChain';
@@ -21,6 +23,7 @@ export {
   getMarkerColor,
   getMarkerSize,
 } from './MapSection';
+export { LazyMapSection } from './LazyMapSection';
 export { ProductsPreview } from './ProductsPreview';
 export { WorkforceSection } from './WorkforceSection';
 export { TeamPreview } from './TeamPreview';

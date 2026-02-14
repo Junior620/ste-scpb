@@ -15,6 +15,13 @@
 /playwright-report/
 /test-results/
 /blob-report/
+/.lighthouseci/
+/lighthouse-reports/
+staging-metrics.json
+production-metrics.json
+.staging-url.txt
+.production-deployment.json
+.rollback-report.json
 
 # next.js
 /.next/

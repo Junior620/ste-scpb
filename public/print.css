@@ -1,0 +1,77 @@
+/* ============================================
+   Print Styles
+   Optimized for printing - loaded separately with media="print"
+   ============================================ */
+
+@media print {
+  /* Hide non-essential elements when printing */
+  header,
+  footer,
+  nav,
+  .no-print,
+  [role="navigation"],
+  [role="banner"],
+  [role="contentinfo"] {
+    display: none !important;
+  }
+
+  /* Hide interactive elements */
+  button,
+  .cookie-banner,
+  .sticky-quote-cta {
+    display: none !important;
+  }
+
+  /* Optimize page breaks */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p,
+  blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Ensure links are visible */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Don't show link URLs for internal navigation */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  /* Optimize colors for print */
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure images fit on page */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Remove animations */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

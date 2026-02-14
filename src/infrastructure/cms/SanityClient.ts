@@ -15,7 +15,7 @@ export interface SanityClientConfig {
   dataset: string;
   apiToken?: string;
   useCdn?: boolean;
-  /** Cache TTL in seconds (default: 3600 = 1 hour) */
+  /** Cache TTL in seconds (default: 300 = 5 minutes) */
   cacheTTL?: number;
 }
 
@@ -231,9 +231,10 @@ export class SanityClient implements CMSClient {
       apiVersion: '2024-01-01',
     });
     this.imageBuilder = imageUrlBuilder(this.client);
-    // Use shorter cache in development for faster iteration
+    // Use 5 minutes cache TTL as per performance optimization requirements
+    // Shorter cache in development for faster iteration
     const isDev = process.env.NODE_ENV === 'development';
-    this.cacheTTL = isDev ? 60 : (config.cacheTTL ?? 3600); // 1 min in dev, 1 hour in prod
+    this.cacheTTL = isDev ? 60 : (config.cacheTTL ?? 300); // 1 min in dev, 5 min in prod
   }
 
   /**
@@ -256,6 +257,20 @@ export class SanityClient implements CMSClient {
     } catch {
       return '/images/placeholder-product.svg';
     }
+  }
+
+  /**
+   * Generates a cache key from query and parameters
+   */
+  private generateCacheKey(query: string, params?: Record<string, string>): string {
+    if (!params || Object.keys(params).length === 0) {
+      return query;
+    }
+    const sortedParams = Object.keys(params)
+      .sort()
+      .map((key) => `${key}:${params[key]}`)
+      .join('|');
+    return `${query}::${sortedParams}`;
   }
 
   /**
@@ -303,19 +318,23 @@ export class SanityClient implements CMSClient {
     const now = Date.now();
 
     if (cached && cached.expiresAt > now) {
+      console.log(`[SanityClient] Cache HIT: ${cacheKey}`);
       return cached.data;
     }
 
+    console.log(`[SanityClient] Cache MISS: ${cacheKey}`);
+    
     try {
       const data = await fetcher();
       this.cache.set(cacheKey, {
         data,
         expiresAt: now + this.cacheTTL * 1000,
       });
+      console.log(`[SanityClient] Cached data for ${cacheKey} (TTL: ${this.cacheTTL}s)`);
       return data;
     } catch (error) {
       if (cached) {
-        console.warn(`Using stale cache for ${cacheKey} due to fetch error`);
+        console.warn(`[SanityClient] Using stale cache for ${cacheKey} due to fetch error`);
         return cached.data;
       }
       throw error;
@@ -847,6 +866,6 @@ export function createSanityClient(): SanityClient {
     dataset,
     apiToken,
     useCdn: process.env.NODE_ENV === 'production',
-    cacheTTL: parseInt(process.env.CMS_CACHE_TTL ?? '3600', 10),
+    cacheTTL: parseInt(process.env.CMS_CACHE_TTL ?? '300', 10),
   });
 }

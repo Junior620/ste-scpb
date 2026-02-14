@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Locale } from '@/domain/value-objects/Locale';
+import { Locale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { Target, Eye, Heart, FileText, Building2, MapPin } from 'lucide-react';
 import { Link } from '@/i18n/routing';
@@ -8,8 +8,15 @@ import { Button } from '@/components/ui/Button';
 import { AboutHero } from '@/components/sections/AboutHero';
 import { AboutValuesSection, AboutStatsSection } from '@/components/sections/AboutSections';
 
+// Force static generation for this page
+export const dynamic = 'force-static';
+
 interface AboutPageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {

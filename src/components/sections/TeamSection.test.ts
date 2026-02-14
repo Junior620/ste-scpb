@@ -31,6 +31,7 @@ const localizedContentArbitrary = (
   fc.record({
     fr: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
     en: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
+    ru: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
   });
 
 /**
@@ -48,7 +49,7 @@ const teamMemberPhotoArbitrary: fc.Arbitrary<TeamMemberPhoto> = fc.record({
  */
 const teamMemberArbitrary: fc.Arbitrary<TeamMember> = fc.record({
   id: fc.uuid(),
-  name: fc.string({ minLength: 2, maxLength: 100 }).filter((s) => s.trim().length > 0),
+  name: localizedContentArbitrary(2, 100),
   role: localizedContentArbitrary(2, 100),
   bio: localizedContentArbitrary(10, 500),
   photo: fc.option(teamMemberPhotoArbitrary, { nil: undefined }),

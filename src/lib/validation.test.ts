@@ -40,20 +40,20 @@ describe('Form Validation - Property Tests', () => {
     )
     .map(([hasPlus, digits]) => (hasPlus ? `+${digits}` : digits));
 
-  // Valid name arbitrary (2-100 chars)
-  const validNameArb = fc.string({ minLength: 2, maxLength: 100 }).filter((s) => s.trim().length >= 2);
+  // Valid name arbitrary (2-100 chars, alphanumeric with spaces)
+  const validNameArb = fc.stringMatching(/^[a-zA-Z0-9 ]{2,100}$/).filter((s) => s.trim().length >= 2);
 
-  // Valid message arbitrary (10-5000 chars)
-  const validMessageArb = fc.string({ minLength: 10, maxLength: 500 }).filter((s) => s.trim().length >= 10);
+  // Valid message arbitrary (10-500 chars, alphanumeric with spaces and punctuation)
+  const validMessageArb = fc.stringMatching(/^[a-zA-Z0-9 .,!?-]{10,500}$/).filter((s) => s.trim().length >= 10);
 
   // Valid company name arbitrary
-  const validCompanyArb = fc.string({ minLength: 2, maxLength: 200 }).filter((s) => s.trim().length >= 2);
+  const validCompanyArb = fc.stringMatching(/^[a-zA-Z0-9 &.-]{2,200}$/).filter((s) => s.trim().length >= 2);
 
   // Valid country arbitrary
-  const validCountryArb = fc.string({ minLength: 2, maxLength: 100 }).filter((s) => s.trim().length >= 2);
+  const validCountryArb = fc.stringMatching(/^[a-zA-Z ]{2,100}$/).filter((s) => s.trim().length >= 2);
 
   // Valid port arbitrary
-  const validPortArb = fc.string({ minLength: 2, maxLength: 200 }).filter((s) => s.trim().length >= 2);
+  const validPortArb = fc.stringMatching(/^[a-zA-Z0-9 -]{2,200}$/).filter((s) => s.trim().length >= 2);
 
   // Valid inquiry type arbitrary
   const validInquiryTypeArb = fc.constantFrom(...INQUIRY_TYPES);

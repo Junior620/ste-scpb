@@ -127,10 +127,11 @@ describe('Google Rich Results Test Validation', () => {
     const cacaoProduct: Product = {
       id: '1',
       slug: 'cacao-grade-1',
-      name: { fr: 'Cacao Grade I', en: 'Cocoa Grade I' },
+      name: { fr: 'Cacao Grade I', en: 'Cocoa Grade I', ru: 'Какао Сорт I' },
       description: {
         fr: 'Fèves de cacao premium de qualité supérieure, cultivées au Cameroun avec des méthodes durables.',
         en: 'Premium quality cocoa beans grown in Cameroon using sustainable farming methods.',
+        ru: 'Премиальные какао-бобы высшего качества, выращенные в Камеруне с использованием устойчивых методов.',
       },
       category: 'cacao',
       origin: ['Cameroun'],
@@ -140,7 +141,7 @@ describe('Google Rich Results Test Validation', () => {
       images: [
         {
           url: 'https://ste-scpb.com/images/cacao-grade-1.jpg',
-          alt: { fr: 'Fèves de cacao', en: 'Cocoa beans' },
+          alt: { fr: 'Fèves de cacao', en: 'Cocoa beans', ru: 'Какао-бобы' },
           width: 800,
           height: 600,
         },
@@ -160,10 +161,11 @@ describe('Google Rich Results Test Validation', () => {
     const cafeProduct: Product = {
       id: '2',
       slug: 'cafe-arabica',
-      name: { fr: 'Café Arabica', en: 'Arabica Coffee' },
+      name: { fr: 'Café Arabica', en: 'Arabica Coffee', ru: 'Кофе Арабика' },
       description: {
         fr: 'Café Arabica de haute altitude, cultivé dans les montagnes du Cameroun avec un arôme riche.',
         en: 'High altitude Arabica coffee grown in the mountains of Cameroon with rich aroma.',
+        ru: 'Высокогорный кофе Арабика, выращенный в горах Камеруна с богатым ароматом.',
       },
       category: 'cafe',
       origin: ['Cameroun', 'Ouest'],
@@ -173,7 +175,7 @@ describe('Google Rich Results Test Validation', () => {
       images: [
         {
           url: 'https://ste-scpb.com/images/cafe-arabica.jpg',
-          alt: { fr: 'Grains de café', en: 'Coffee beans' },
+          alt: { fr: 'Grains de café', en: 'Coffee beans', ru: 'Кофейные зерна' },
           width: 800,
           height: 600,
         },
@@ -193,10 +195,11 @@ describe('Google Rich Results Test Validation', () => {
     const boisProduct: Product = {
       id: '3',
       slug: 'bois-iroko',
-      name: { fr: 'Bois Iroko', en: 'Iroko Wood' },
+      name: { fr: 'Bois Iroko', en: 'Iroko Wood', ru: 'Древесина Ироко' },
       description: {
         fr: 'Bois tropical Iroko de qualité export, idéal pour la construction et l\'ameublement haut de gamme.',
         en: 'Export quality Iroko tropical wood, ideal for construction and high-end furniture.',
+        ru: 'Экспортная тропическая древесина Ироко, идеальна для строительства и элитной мебели.',
       },
       category: 'bois',
       origin: ['Cameroun', 'Centre'],
@@ -206,7 +209,7 @@ describe('Google Rich Results Test Validation', () => {
       images: [
         {
           url: 'https://ste-scpb.com/images/bois-iroko.jpg',
-          alt: { fr: 'Bois Iroko', en: 'Iroko Wood' },
+          alt: { fr: 'Bois Iroko', en: 'Iroko Wood', ru: 'Древесина Ироко' },
           width: 800,
           height: 600,
         },

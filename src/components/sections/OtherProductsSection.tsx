@@ -107,6 +107,7 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
           }}
           priority
           quality={100}
+          sizes="100vw"
         />
         {/* Dark overlay for premium cinematic effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/70" />

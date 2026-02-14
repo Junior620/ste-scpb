@@ -3,9 +3,10 @@
 /**
  * Hero Section Component
  * Clean, minimal B2B cacao export hero with video carousel
+ * Optimized for LCP: loads first video immediately, lazy loads others
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui';
@@ -28,6 +29,31 @@ const VIDEO_DURATION = 9000; // 9 seconds
 export function Hero({ className = '' }: HeroProps) {
   const t = useTranslations('home');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set([0])); // Load first video immediately
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Preload next video when current one is playing
+  useEffect(() => {
+    const nextIndex = (currentVideoIndex + 1) % VIDEOS.length;
+    if (!loadedVideos.has(nextIndex)) {
+      setLoadedVideos((prev) => new Set(prev).add(nextIndex));
+    }
+  }, [currentVideoIndex, loadedVideos]);
+
+  // Control video playback - only play current video
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      
+      if (index === currentVideoIndex && loadedVideos.has(index)) {
+        video.play().catch(() => {
+          // Ignore autoplay errors
+        });
+      } else {
+        video.pause();
+      }
+    });
+  }, [currentVideoIndex, loadedVideos]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,21 +70,33 @@ export function Hero({ className = '' }: HeroProps) {
     >
       <ClickSparkles />
 
-      {/* Video Background Carousel */}
-      <div className="absolute inset-0 z-0">
-        {VIDEOS.map((video, index) => (
-          <video
-            key={video}
-            src={video}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-              index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        ))}
+      {/* Video Background Carousel - Lazy loaded */}
+      <div className="absolute inset-0 z-0 bg-background">
+        {VIDEOS.map((video, index) => {
+          // Only render video if it should be loaded
+          const shouldLoad = loadedVideos.has(index);
+          const isCurrentVideo = index === currentVideoIndex;
+          
+          return (
+            <video
+              key={video}
+              ref={(el) => {
+                videoRefs.current[index] = el;
+              }}
+              src={shouldLoad ? video : undefined}
+              poster={index === 0 ? '/og-image.png' : undefined} // Poster for first video only
+              autoPlay={isCurrentVideo && shouldLoad} // Only autoplay the current video
+              loop
+              muted
+              playsInline
+              preload={index === 0 ? 'metadata' : 'none'} // Load metadata for first video
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                isCurrentVideo ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{ display: shouldLoad ? 'block' : 'none' }}
+            />
+          );
+        })}
       </div>
 
       {/* Gradient overlay for text readability */}

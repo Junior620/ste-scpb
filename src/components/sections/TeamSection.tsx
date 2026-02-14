@@ -289,7 +289,7 @@ function CEOMessage({
               fill
               className={`object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               sizes="192px"
-              priority
+              priority={true}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
             />

@@ -1,8 +1,16 @@
 import type { NextConfig } from 'next';
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+
+// Bundle analyzer configuration (Requirements 11.5)
+// Enable with: ANALYZE=true npm run build
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: true,
+});
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -35,6 +43,42 @@ const nextConfig: NextConfig = {
   experimental: {
     // Optimize package imports
     optimizePackageImports: ['@sentry/nextjs'],
+  },
+
+  // Webpack configuration for bundle optimization
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Configure bundle splitting for client-side bundles
+      config.optimization = config.optimization || {};
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          // Three.js bundle - separate chunk for 3D library
+          three: {
+            test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
+            name: 'three',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          // Mapbox bundle - separate chunk for map library
+          mapbox: {
+            test: /[\\/]node_modules[\\/](mapbox-gl|react-map-gl)[\\/]/,
+            name: 'mapbox',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          // Common vendor bundle - shared dependencies
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            priority: 5,
+            reuseExistingChunk: true,
+            minChunks: 2, // Only create vendor chunk if used in 2+ places
+          },
+        },
+      };
+    }
+    return config;
   },
 };
 
@@ -80,8 +124,10 @@ const sentryWebpackPluginOptions = {
 };
 
 // Export with Sentry wrapper (only in production or when SENTRY_DSN is set)
+// Apply plugins in order: next-intl -> bundle-analyzer -> sentry
 const configWithIntl = withNextIntl(nextConfig);
+const configWithAnalyzer = withBundleAnalyzer(configWithIntl);
 
 export default process.env.SENTRY_DSN
-  ? withSentryConfig(configWithIntl, sentryWebpackPluginOptions)
-  : configWithIntl;
+  ? withSentryConfig(configWithAnalyzer, sentryWebpackPluginOptions)
+  : configWithAnalyzer;

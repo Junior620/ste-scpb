@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Suspense } from 'react';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
-import { MapSection } from '@/components/sections';
-import { ContactHero } from '@/components/sections/ContactHero';
+import { LazyMapSection, LazyContactHero } from '@/components/sections';
+import { StaticHeroFallback } from '@/components/3d';
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -34,13 +35,21 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   return (
     <main id="main-content" className="min-h-screen bg-background">
-      {/* 3D Hero */}
-      <ContactHero
-        title={t('title')}
-        subtitle={t('subtitle')}
-        quoteLink="/devis"
-        quoteLinkText={t('quoteLink')}
-      />
+      {/* 3D Hero with lazy loading and Suspense */}
+      <Suspense
+        fallback={
+          <div className="relative h-[40vh] min-h-[300px] overflow-hidden">
+            <StaticHeroFallback starCount={100} />
+          </div>
+        }
+      >
+        <LazyContactHero
+          title={t('title')}
+          subtitle={t('subtitle')}
+          quoteLink="/devis"
+          quoteLinkText={t('quoteLink')}
+        />
+      </Suspense>
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
@@ -164,8 +173,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
         </div>
       </div>
 
-      {/* Map Section */}
-      <MapSection />
+      {/* Map Section - Lazy loaded with viewport intersection */}
+      <LazyMapSection />
     </main>
   );
 }

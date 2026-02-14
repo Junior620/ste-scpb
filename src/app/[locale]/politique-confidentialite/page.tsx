@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { Locale, isValidLocale } from '@/domain/value-objects/Locale';
+import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateLocalizedMetadata } from '@/i18n/metadata';
 import { PrivacyPolicyContent } from './PrivacyPolicyContent';
 
-// Static page - no revalidation needed
-export const revalidate = false;
+// Force static generation for this page
+export const dynamic = 'force-static';
 
 interface PrivacyPolicyPageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PrivacyPolicyPageProps): Promise<Metadata> {

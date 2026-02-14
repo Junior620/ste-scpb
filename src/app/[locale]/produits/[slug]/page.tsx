@@ -85,12 +85,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   try {
     const cmsClient = await createCMSClient();
-    product = await cmsClient.getProductBySlug(slug, locale as Locale);
+    
+    // Parallel data fetching: fetch product and all products simultaneously
+    const [fetchedProduct, allProducts] = await Promise.all([
+      cmsClient.getProductBySlug(slug, locale as Locale),
+      cmsClient.getProducts(locale as Locale),
+    ]);
+
+    product = fetchedProduct;
 
     if (product) {
-      // Fetch all products for related/similar products
-      const allProducts = await cmsClient.getProducts(locale as Locale);
-
       // Get explicitly related products
       if (product.relatedProducts.length > 0) {
         relatedProducts = allProducts.filter((p: Product) =>

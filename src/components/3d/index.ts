@@ -24,3 +24,4 @@ export {
   StaticHeroFallback,
   type StaticHeroFallbackProps,
 } from './StaticHeroFallback';
+export { LazyHero3DScene } from './LazyHero3DScene';

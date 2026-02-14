@@ -25,6 +25,7 @@ const localizedContentArbitrary = (minLength: number, maxLength: number): fc.Arb
   fc.record({
     fr: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
     en: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
+    ru: fc.string({ minLength, maxLength }).filter((s) => s.trim().length > 0),
   });
 
 /**

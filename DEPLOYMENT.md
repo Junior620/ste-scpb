@@ -1,313 +1,425 @@
-# Guide de Déploiement - STE-SCPB Website
+# Production Deployment Guide
 
-Ce guide détaille les étapes pour déployer le site STE-SCPB sur Vercel.
+This guide covers the production deployment process for the STE-SCPB website after performance optimizations.
 
-## Table des Matières
+**Requirements:** 11.1, 11.2, 11.3  
+**Task:** 23. Production deployment and monitoring
 
-- [Prérequis](#prérequis)
-- [Configuration Vercel](#configuration-vercel)
-- [Variables d'Environnement](#variables-denvironnement)
-- [Webhooks CMS](#webhooks-cms)
-- [Domaine Personnalisé](#domaine-personnalisé)
-- [Monitoring](#monitoring)
-- [Rollback](#rollback)
-- [Troubleshooting](#troubleshooting)
+## Table of Contents
 
-## Prérequis
+1. [Pre-Deployment Checklist](#pre-deployment-checklist)
+2. [Deployment Process](#deployment-process)
+3. [Monitoring](#monitoring)
+4. [Performance Targets](#performance-targets)
+5. [Alerts and Notifications](#alerts-and-notifications)
+6. [Rollback Procedure](#rollback-procedure)
+7. [Troubleshooting](#troubleshooting)
 
-### Comptes Requis
+## Pre-Deployment Checklist
 
-1. **Vercel** - [vercel.com](https://vercel.com)
-2. **GitHub/GitLab/Bitbucket** - Pour le repository
-3. **Strapi ou Sanity** - CMS headless
-4. **Resend** - Service email
-5. **Upstash** - Redis serverless
-6. **Google reCAPTCHA** - Protection spam
-7. **Mapbox** - Cartes interactives
-8. **Sentry** - Error tracking
+Before deploying to production, ensure all of the following are complete:
 
-### Secrets GitHub Actions (Optionnel)
+### Staging Validation
 
-Si vous utilisez les workflows GitHub Actions :
+- [ ] Staging deployment successful
+- [ ] Lighthouse CI tests passing on staging
+- [ ] 24-hour monitoring completed on staging
+- [ ] Real Experience Score >90 on staging
+- [ ] All E2E tests passing on staging
+- [ ] No functionality regressions detected
 
-| Secret | Description |
-|--------|-------------|
-| `VERCEL_TOKEN` | Token API Vercel |
-| `VERCEL_ORG_ID` | ID de l'organisation Vercel |
-| `VERCEL_PROJECT_ID` | ID du projet Vercel |
-| `CODECOV_TOKEN` | Token Codecov (optionnel) |
-| `LHCI_GITHUB_APP_TOKEN` | Token Lighthouse CI (optionnel) |
-| `SLACK_WEBHOOK_URL` | Webhook Slack pour notifications (optionnel) |
+### Code Quality
 
-## Configuration Vercel
+- [ ] All unit tests passing (`npm run test`)
+- [ ] All E2E tests passing (`npm run test:e2e`)
+- [ ] Type checking passing (`npm run typecheck`)
+- [ ] Linting passing (`npm run lint`)
+- [ ] Code reviewed and approved
 
-### 1. Création du Projet
+### Performance Validation
 
-```bash
-# Via CLI
-npm i -g vercel
-vercel login
-vercel link
-```
+- [ ] FCP <2.5s
+- [ ] LCP <2.5s
+- [ ] TTFB <0.8s
+- [ ] Initial bundle <200KB gzipped
+- [ ] All Lighthouse CI checks passing
 
-Ou via l'interface web :
-1. Connectez-vous à [vercel.com](https://vercel.com)
-2. Cliquez sur "Add New Project"
-3. Importez votre repository
-4. Configurez le projet :
-   - **Framework Preset** : Next.js
-   - **Root Directory** : `ste-scpb-website` (si monorepo)
-   - **Build Command** : `npm run build`
-   - **Output Directory** : `.next`
+### Documentation
 
-### 2. Configuration du Build
+- [ ] CHANGELOG updated
+- [ ] Performance improvements documented
+- [ ] Breaking changes documented (if any)
+- [ ] Deployment notes prepared
 
-Le fichier `vercel.json` configure automatiquement :
-- Headers de sécurité
-- Redirections HTTP → HTTPS
-- Redirections de locale par défaut
-- Durée maximale des fonctions API
-- Cache des assets statiques
+## Deployment Process
 
-## Variables d'Environnement
+### Step 1: Deploy to Production
 
-### Configuration dans Vercel
-
-1. Allez dans **Settings** → **Environment Variables**
-2. Ajoutez chaque variable pour les environnements appropriés :
-   - **Production** : Variables de production
-   - **Preview** : Variables de staging/test
-   - **Development** : Variables de développement local
-
-### Variables Requises
+Run the production deployment script:
 
 ```bash
-# Application
-NEXT_PUBLIC_SITE_URL=https://ste-scpb.com
-NEXT_PUBLIC_SITE_NAME=STE-SCPB
-
-# CMS
-CMS_PROVIDER=strapi
-STRAPI_URL=https://cms.ste-scpb.com
-STRAPI_API_TOKEN=your_strapi_token
-
-# Email
-RESEND_API_KEY=re_xxxxx
-EMAIL_FROM=noreply@ste-scpb.com
-EMAIL_CONTACT_TO=contact@ste-scpb.com
-EMAIL_RFQ_TO=commercial@ste-scpb.com
-
-# Security
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=6Lcxxxxx
-RECAPTCHA_SECRET_KEY=6Lcxxxxx
-UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
-UPSTASH_REDIS_REST_TOKEN=AXxxxxx
-
-# Maps
-NEXT_PUBLIC_MAPBOX_TOKEN=pk.eyJxxxxx
-
-# Monitoring
-NEXT_PUBLIC_SENTRY_DSN=https://xxx@sentry.io/xxx
-SENTRY_DSN=https://xxx@sentry.io/xxx
-SENTRY_AUTH_TOKEN=sntrys_xxxxx
-SENTRY_ORG=ste-scpb
-SENTRY_PROJECT=ste-scpb-website
-
-# Analytics (optionnel)
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-
-# ISR
-REVALIDATE_SECRET=your_random_secret
+npm run deploy:production
 ```
 
-### Génération du REVALIDATE_SECRET
+Or manually:
 
 ```bash
-# Générer un secret aléatoire
-openssl rand -base64 32
+bash scripts/deploy-production.sh
 ```
 
-## Webhooks CMS
+This script will:
+1. Run pre-deployment validation
+2. Build the production bundle
+3. Run final checks (tests, linting, type checking)
+4. Deploy to Vercel production
+5. Perform initial health check
+6. Start monitoring
 
-### Configuration Strapi
+### Step 2: Gradual Rollout
 
-1. Dans Strapi Admin, allez dans **Settings** → **Webhooks**
-2. Créez un nouveau webhook :
-   - **Name** : `Vercel Revalidation`
-   - **URL** : `https://ste-scpb.com/api/revalidate`
-   - **Events** : `entry.create`, `entry.update`, `entry.delete`, `entry.publish`, `entry.unpublish`
+The deployment follows a gradual rollout strategy:
 
-3. Headers personnalisés :
-```json
-{
-  "Content-Type": "application/json"
-}
-```
+- **Initial:** 10% traffic to new version
+- **After 1 hour:** 50% traffic (if no issues detected)
+- **After 2 hours:** 100% traffic (if no issues detected)
 
-4. Body template :
-```json
-{
-  "secret": "VOTRE_REVALIDATE_SECRET",
-  "type": "{{ model }}",
-  "slug": "{{ entry.slug }}",
-  "locale": "{{ entry.locale }}"
-}
-```
+Monitor the deployment closely during this period.
 
-### Configuration Sanity
+### Step 3: Verify Deployment
 
-1. Dans Sanity Studio, allez dans **API** → **Webhooks**
-2. Créez un webhook :
-   - **URL** : `https://ste-scpb.com/api/revalidate`
-   - **Dataset** : `production`
-   - **Trigger on** : Create, Update, Delete
-
-3. Projection GROQ :
-```groq
-{
-  "secret": "VOTRE_REVALIDATE_SECRET",
-  "type": _type,
-  "slug": slug.current
-}
-```
-
-### Test du Webhook
+After deployment, verify:
 
 ```bash
-# Test manuel
-curl -X POST https://ste-scpb.com/api/revalidate \
-  -H "Content-Type: application/json" \
-  -d '{"secret": "VOTRE_SECRET", "type": "product"}'
+# Check deployment is accessible
+curl -I https://your-production-url.com
+
+# Verify performance targets
+npm run verify:performance
+
+# Check monitoring status
+tail -f production-monitor.log
 ```
-
-Réponse attendue :
-```json
-{
-  "revalidated": true,
-  "paths": ["/fr/produits", "/en/produits", "/fr", "/en"],
-  "tags": [],
-  "timestamp": "2024-01-15T10:30:00.000Z"
-}
-```
-
-## Domaine Personnalisé
-
-### 1. Ajout du Domaine
-
-1. Dans Vercel, allez dans **Settings** → **Domains**
-2. Ajoutez votre domaine : `ste-scpb.com`
-3. Ajoutez également `www.ste-scpb.com`
-
-### 2. Configuration DNS
-
-Configurez les enregistrements DNS chez votre registrar :
-
-| Type | Nom | Valeur |
-|------|-----|--------|
-| A | @ | 76.76.21.21 |
-| CNAME | www | cname.vercel-dns.com |
-
-### 3. SSL/TLS
-
-Le certificat SSL est automatiquement provisionné par Vercel via Let's Encrypt.
-
-### 4. Redirection www
-
-Vercel redirige automatiquement `www.ste-scpb.com` vers `ste-scpb.com`.
 
 ## Monitoring
 
-### Sentry
+### Continuous Monitoring
 
-1. Les erreurs sont automatiquement capturées côté client et serveur
-2. Les sourcemaps sont uploadées lors du build
-3. Dashboard : [sentry.io](https://sentry.io)
+Production monitoring runs automatically after deployment and tracks:
+
+- **Health Checks:** Every 5 minutes
+- **Response Time:** TTFB for each request
+- **Error Rate:** Failed requests and component errors
+- **Uptime:** Availability percentage
+
+### Monitoring Dashboard
+
+View real-time monitoring:
+
+```bash
+# View monitoring logs
+tail -f production-monitor.log
+
+# View metrics file
+cat production-metrics.json | jq
+```
 
 ### Vercel Analytics
 
-1. Activez dans **Settings** → **Analytics**
-2. Métriques disponibles :
-   - Core Web Vitals (LCP, FID, CLS)
-   - Temps de réponse des fonctions
-   - Trafic et géolocalisation
+Access detailed analytics:
 
-### Upstash
+- **Analytics Dashboard:** https://vercel.com/analytics
+- **Speed Insights:** https://vercel.com/speed-insights
 
-1. Dashboard : [console.upstash.com](https://console.upstash.com)
-2. Métriques de rate limiting disponibles
+Monitor:
+- Real Experience Score
+- Core Web Vitals (FCP, LCP, TTFB, INP, CLS)
+- Geographic distribution
+- Device types
+- Browser types
 
-## Rollback
+### Stop Monitoring
 
-### Via Vercel Dashboard
-
-1. Allez dans **Deployments**
-2. Trouvez le déploiement précédent stable
-3. Cliquez sur **...** → **Promote to Production**
-
-### Via CLI
+To stop monitoring:
 
 ```bash
-# Lister les déploiements
+# Find monitoring process
+ps aux | grep monitor-production
+
+# Stop monitoring (Ctrl+C or kill PID)
+kill <PID>
+```
+
+## Performance Targets
+
+All deployments must meet these targets:
+
+| Metric | Target | Baseline | Improvement |
+|--------|--------|----------|-------------|
+| Real Experience Score | >90 | 85 | +5 points |
+| First Contentful Paint (FCP) | <2.5s | 3.16s | -0.66s |
+| Largest Contentful Paint (LCP) | <2.5s | 3.16s | -0.66s |
+| Time to First Byte (TTFB) | <0.8s | 1.24s | -0.44s |
+| Interaction to Next Paint (INP) | <200ms | 144ms | Maintain |
+| Cumulative Layout Shift (CLS) | ≤0.1 | 0 | Maintain |
+| Initial Bundle Size | <200KB | N/A | New target |
+
+### Verify Targets
+
+Run the verification script:
+
+```bash
+npm run verify:performance
+```
+
+This will check all metrics and report which targets are met.
+
+## Alerts and Notifications
+
+### Alert Thresholds
+
+Alerts are triggered when:
+
+- Real Experience Score drops below 85
+- FCP exceeds 3s
+- LCP exceeds 3s
+- TTFB exceeds 1s
+- Error rate exceeds 1%
+- Uptime drops below 99.5%
+- Lazy-loaded component errors detected
+
+### Alert Configuration
+
+Configure alerts in Vercel Dashboard:
+
+1. Go to: https://vercel.com/[your-team]/[your-project]/settings/alerts
+2. Set up alerts for:
+   - Performance degradation
+   - Error rate spikes
+   - Deployment failures
+   - Build failures
+
+### Alert Channels
+
+Configure notification channels:
+- Email
+- Slack
+- Discord
+- Webhook
+
+## Rollback Procedure
+
+If issues are detected, rollback immediately:
+
+### Automatic Rollback
+
+If monitoring detects critical issues:
+
+```bash
+npm run rollback:production
+```
+
+Or manually:
+
+```bash
+bash scripts/rollback-production.sh
+```
+
+### Manual Rollback via Vercel
+
+```bash
+# List recent deployments
 vercel ls
 
-# Promouvoir un déploiement spécifique
-vercel promote <deployment-url>
+# Rollback to previous deployment
+vercel rollback
 ```
+
+### Post-Rollback
+
+After rollback:
+
+1. **Investigate:** Review logs and metrics to identify the issue
+2. **Fix:** Address the problem in the codebase
+3. **Test:** Thoroughly test in staging
+4. **Document:** Update rollback report with findings
+5. **Re-deploy:** When ready, follow deployment process again
+
+### Rollback Report
+
+A rollback report is automatically created at `.rollback-report.json` containing:
+- Timestamp
+- Reason for rollback
+- Previous deployment info
+- Metrics at time of rollback
 
 ## Troubleshooting
 
-### Build Failures
+### Deployment Fails
 
-**Erreur : Missing environment variables**
-```
-Solution : Vérifiez que toutes les variables sont configurées dans Vercel
-```
+**Issue:** Deployment fails during build
 
-**Erreur : TypeScript errors**
+**Solution:**
+1. Check build logs: `vercel logs`
+2. Verify all dependencies are installed
+3. Run local build: `npm run build`
+4. Fix any build errors
+5. Re-deploy
+
+### Performance Targets Not Met
+
+**Issue:** Performance targets not met after deployment
+
+**Solution:**
+1. Run Lighthouse tests: `npm run lighthouse:ci`
+2. Check bundle size: `npm run analyze`
+3. Review lazy loading implementation
+4. Check cache headers
+5. Verify CDN configuration
+
+### High Error Rate
+
+**Issue:** Error rate exceeds threshold
+
+**Solution:**
+1. Check error logs in Vercel Dashboard
+2. Review Sentry error reports (if configured)
+3. Check for lazy-loaded component errors
+4. Verify API endpoints are accessible
+5. Check third-party service status
+
+### Monitoring Not Working
+
+**Issue:** Monitoring script not running
+
+**Solution:**
+1. Check if process is running: `ps aux | grep monitor-production`
+2. Check logs: `cat production-monitor.log`
+3. Verify production URL is accessible
+4. Restart monitoring: `node scripts/monitor-production.js`
+
+### TTFB Too High
+
+**Issue:** TTFB exceeds target
+
+**Solution:**
+1. Check server response time in Vercel Analytics
+2. Verify ISR configuration
+3. Check CMS response time
+4. Review cache headers
+5. Check CDN cache hit rate
+
+### Lazy-Loaded Components Failing
+
+**Issue:** Lazy-loaded components not loading
+
+**Solution:**
+1. Check browser console for chunk load errors
+2. Verify chunk files are deployed
+3. Check CDN cache
+4. Review dynamic import configuration
+5. Test with different browsers/devices
+
+## Scripts Reference
+
+### Deployment Scripts
+
 ```bash
-# Vérifier localement
-npm run typecheck
+# Deploy to staging
+npm run deploy:staging
+
+# Deploy to production
+npm run deploy:production
+
+# Rollback production
+npm run rollback:production
 ```
 
-### Runtime Errors
+### Validation Scripts
 
-**Erreur 500 sur les API routes**
-1. Vérifiez les logs dans Vercel Dashboard → **Functions**
-2. Vérifiez les variables d'environnement
-3. Testez localement avec `vercel dev`
-
-**Erreur de rate limiting**
-1. Vérifiez la connexion Upstash
-2. Vérifiez les tokens dans les variables d'environnement
-
-### ISR Issues
-
-**Pages non mises à jour**
-1. Vérifiez que le webhook CMS est configuré
-2. Testez manuellement l'endpoint `/api/revalidate`
-3. Vérifiez les logs de la fonction
-
-**Erreur de revalidation**
 ```bash
-# Forcer la revalidation
-curl -X POST https://ste-scpb.com/api/revalidate \
-  -H "Content-Type: application/json" \
-  -d '{"secret": "xxx", "type": "all"}'
+# Validate staging
+npm run validate:staging
+
+# Verify performance targets
+npm run verify:performance
+
+# Generate performance report
+npm run report:performance
 ```
 
-### Performance Issues
+### Monitoring Scripts
 
-**LCP élevé**
-1. Vérifiez les images (format WebP, taille optimisée)
-2. Vérifiez le chargement des fonts
-3. Optimisez le CSS critique
+```bash
+# Monitor staging (24 hours)
+npm run monitor:staging
 
-**CLS élevé**
-1. Ajoutez des dimensions aux images
-2. Réservez l'espace pour les éléments dynamiques
+# Monitor production (continuous)
+node scripts/monitor-production.js
 
-### Support
+# Stop monitoring
+# Press Ctrl+C or kill process
+```
 
-- **Vercel** : [vercel.com/support](https://vercel.com/support)
-- **Documentation Next.js** : [nextjs.org/docs](https://nextjs.org/docs)
-- **Sentry** : [docs.sentry.io](https://docs.sentry.io)
+### Testing Scripts
+
+```bash
+# Run Lighthouse CI
+npm run lighthouse:ci
+
+# Run Lighthouse on staging
+npm run lighthouse:staging
+
+# Run E2E tests on staging
+npm run test:e2e:staging
+```
+
+## Best Practices
+
+### Before Deployment
+
+1. Always deploy to staging first
+2. Run full test suite
+3. Monitor staging for at least 24 hours
+4. Verify all performance targets are met
+5. Get stakeholder approval
+
+### During Deployment
+
+1. Deploy during low-traffic hours
+2. Monitor closely for first 2 hours
+3. Watch for error spikes
+4. Check performance metrics
+5. Be ready to rollback if needed
+
+### After Deployment
+
+1. Monitor for 24 hours
+2. Review Real Experience Score daily
+3. Check error rates
+4. Verify lazy-loaded components work
+5. Collect user feedback
+
+### Continuous Monitoring
+
+1. Set up alerts for performance degradation
+2. Review analytics weekly
+3. Track performance trends
+4. Monitor bundle size changes
+5. Keep performance budgets updated
+
+## Support
+
+For issues or questions:
+
+- **Documentation:** See README.md and other docs in `/docs`
+- **Performance Issues:** Review Lighthouse reports and Vercel Analytics
+- **Deployment Issues:** Check Vercel Dashboard and logs
+- **Code Issues:** Review GitHub issues and pull requests
+
+## Related Documentation
+
+- [Performance Optimization Requirements](../.kiro/specs/performance-optimization/requirements.md)
+- [Performance Optimization Design](../.kiro/specs/performance-optimization/design.md)
+- [Performance Optimization Tasks](../.kiro/specs/performance-optimization/tasks.md)
+- [Lighthouse CI Configuration](./lighthouserc.js)
+- [Vercel Configuration](./vercel.json)

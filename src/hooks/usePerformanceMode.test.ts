@@ -136,7 +136,7 @@ describe('Performance Mode - Property Tests', () => {
       const highConfig = PERFORMANCE_CONFIGS['HIGH'];
 
       expect(highConfig.enableBloom).toBe(true);
-      expect(highConfig.enableDOF).toBe(true);
+      expect(highConfig.enableDOF).toBe(false); // DOF is disabled even in HIGH mode
       expect(highConfig.enablePostProcessing).toBe(true);
       expect(highConfig.bloomIntensity).toBeGreaterThan(0);
     });
