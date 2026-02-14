@@ -44,7 +44,7 @@ export function Hero({ className = '' }: HeroProps) {
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
-      
+
       if (index === currentVideoIndex && loadedVideos.has(index)) {
         video.play().catch(() => {
           // Ignore autoplay errors
@@ -76,7 +76,7 @@ export function Hero({ className = '' }: HeroProps) {
           // Only render video if it should be loaded
           const shouldLoad = loadedVideos.has(index);
           const isCurrentVideo = index === currentVideoIndex;
-          
+
           return (
             <video
               key={video}
@@ -107,22 +107,22 @@ export function Hero({ className = '' }: HeroProps) {
         {/* Text container */}
         <div className="mx-auto max-w-3xl text-center px-8 py-12">
           {/* Main Title */}
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl drop-shadow-lg">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl drop-shadow-lg animate-fade-in-up">
             {t('title')}
           </h1>
 
           {/* Subtitle highlight */}
-          <p className="holographic mb-8 text-2xl font-semibold tracking-tight sm:text-3xl">
+          <p className="holographic mb-8 text-2xl font-semibold tracking-tight sm:text-3xl animate-fade-in-up animation-delay-200">
             {t('titleHighlight')}
           </p>
 
           {/* Description - simple and clear */}
-          <p className="mx-auto mb-10 max-w-xl text-lg text-foreground/90 leading-relaxed">
+          <p className="mx-auto mb-10 max-w-xl text-lg text-foreground/90 leading-relaxed animate-fade-in-up animation-delay-400">
             {t('description')}
           </p>
 
           {/* CTA Buttons - just 2, clear */}
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row animate-fade-in-up animation-delay-600">
             <Link href="/devis">
               <Button variant="primary" size="lg" className="min-w-[220px] glow-gold">
                 {t('cta.quote')}
