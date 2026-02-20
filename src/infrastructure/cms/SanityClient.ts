@@ -39,6 +39,13 @@ interface SanityProduct {
   isFlagship?: boolean;
   image?: SanityImage;
   gallery?: SanityImage[];
+  videos?: Array<{
+    file: { asset: { _ref: string; url: string }; _type: 'file' };
+    thumbnail?: SanityImage;
+    title?: { fr?: string; en?: string; ru?: string };
+    description?: { fr?: string; en?: string; ru?: string };
+    duration?: number;
+  }>;
   origin?: { region?: string; country?: string };
   technicalSpecs?: {
     humidity?: number;
@@ -318,19 +325,15 @@ export class SanityClient implements CMSClient {
     const now = Date.now();
 
     if (cached && cached.expiresAt > now) {
-      console.log(`[SanityClient] Cache HIT: ${cacheKey}`);
       return cached.data;
     }
 
-    console.log(`[SanityClient] Cache MISS: ${cacheKey}`);
-    
     try {
       const data = await fetcher();
       this.cache.set(cacheKey, {
         data,
         expiresAt: now + this.cacheTTL * 1000,
       });
-      console.log(`[SanityClient] Cached data for ${cacheKey} (TTL: ${this.cacheTTL}s)`);
       return data;
     } catch (error) {
       if (cached) {
@@ -390,6 +393,20 @@ export class SanityClient implements CMSClient {
           height: 600,
         })),
       ],
+      gallery: (sanityProduct.gallery || []).map((img) => ({
+        url: this.getImageUrl(img),
+        alt: toLocalized(sanityProduct.name),
+        width: 800,
+        height: 600,
+      })),
+      videos: (sanityProduct.videos || []).map((video) => ({
+        url: video.file?.asset?.url || '',
+        thumbnail: video.thumbnail ? this.getImageUrl(video.thumbnail) : undefined,
+        title: video.title ? toLocalized(video.title) : undefined,
+        description: video.description ? toLocalized(video.description) : undefined,
+        duration: video.duration,
+        mimeType: 'video/mp4',
+      })),
       constellation: defaultConstellation,
       relatedProducts: [],
       createdAt: new Date(sanityProduct._createdAt),
@@ -600,6 +617,18 @@ export class SanityClient implements CMSClient {
           isFlagship,
           image,
           gallery,
+          videos[]{
+            file{
+              asset->{
+                _id,
+                url
+              }
+            },
+            thumbnail,
+            title,
+            description,
+            duration
+          },
           origin,
           technicalSpecs,
           packaging,
@@ -630,6 +659,18 @@ export class SanityClient implements CMSClient {
           isFlagship,
           image,
           gallery,
+          videos[]{
+            file{
+              asset->{
+                _id,
+                url
+              }
+            },
+            thumbnail,
+            title,
+            description,
+            duration
+          },
           origin,
           technicalSpecs,
           packaging,

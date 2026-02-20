@@ -912,6 +912,69 @@ function SimilarProducts({ products, locale }: { products: Product[]; locale: Lo
 }
 
 /**
+ * Video gallery component
+ */
+function VideoGallery({
+  videos,
+  locale,
+}: {
+  videos: Product['videos'];
+  locale: Locale;
+  productName: string;
+}) {
+  if (!videos || videos.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-4 mt-8">
+      <h3 className="text-lg font-semibold flex items-center gap-2">
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+        Vidéos
+      </h3>
+      <div className="grid grid-cols-1 gap-4">
+        {videos.map((video, index) => (
+          <div key={index} className="space-y-2">
+            {video.title && (
+              <h4 className="font-medium">{video.title[locale] || video.title.fr}</h4>
+            )}
+            {video.description && (
+              <p className="text-sm text-foreground-muted">
+                {video.description[locale] || video.description.fr}
+              </p>
+            )}
+            <div className="relative aspect-video overflow-hidden rounded-xl bg-background-secondary">
+              <video
+                controls
+                poster={video.thumbnail}
+                className="w-full h-full object-cover"
+                preload="metadata"
+              >
+                <source src={video.url} type={video.mimeType || 'video/mp4'} />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
+            </div>
+            {video.duration && (
+              <p className="text-xs text-foreground-muted">
+                Durée: {Math.floor(video.duration / 60)}:
+                {(video.duration % 60).toString().padStart(2, '0')}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
  * Main Product Detail Section component
  */
 export function ProductDetailSection({
@@ -946,12 +1009,19 @@ export function ProductDetailSection({
       {/* Product content */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Image gallery */}
-          <ImageGallery
-            images={product.images}
-            locale={locale}
-            productName={product.name[locale]}
-          />
+          {/* Image gallery and videos */}
+          <div>
+            <ImageGallery
+              images={product.images}
+              locale={locale}
+              productName={product.name[locale]}
+            />
+            <VideoGallery
+              videos={product.videos}
+              locale={locale}
+              productName={product.name[locale]}
+            />
+          </div>
 
           {/* Product info */}
           <ProductInfo product={product} locale={locale} />
