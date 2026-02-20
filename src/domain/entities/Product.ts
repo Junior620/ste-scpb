@@ -40,8 +40,21 @@ export type PackagingOption = (typeof PACKAGING_OPTIONS)[number];
 export interface ProductImage {
   url: string;
   alt: LocalizedContent;
+  caption?: LocalizedContent;
   width: number;
   height: number;
+}
+
+/**
+ * Product video with metadata
+ */
+export interface ProductVideo {
+  url: string;
+  thumbnail?: string;
+  title?: LocalizedContent;
+  description?: LocalizedContent;
+  duration?: number; // in seconds
+  mimeType?: string;
 }
 
 /**
@@ -77,6 +90,8 @@ export interface Product {
   certifications: Certification[];
   packagingOptions: PackagingOption[];
   images: ProductImage[];
+  gallery?: ProductImage[]; // Additional product images
+  videos?: ProductVideo[]; // Product videos
   constellation: ConstellationConfig;
   relatedProducts: string[];
   createdAt: Date;

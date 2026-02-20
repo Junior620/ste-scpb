@@ -1,4 +1,9 @@
-import type { Product, ConstellationConfig, ProductImage } from '@/domain/entities/Product';
+import type {
+  Product,
+  ConstellationConfig,
+  ProductImage,
+  ProductVideo,
+} from '@/domain/entities/Product';
 import type {
   Article,
   ArticleListItem,
@@ -30,12 +35,40 @@ function toLocalizedContent(fr: string, en: string, ru: string = ''): LocalizedC
 /**
  * Transforms CMS image to domain ProductImage
  */
-function transformProductImage(image: CMSImage): ProductImage {
+function transformProductImage(
+  image: CMSImage,
+  caption?: { fr?: string; en?: string; ru?: string }
+): ProductImage {
   return {
     url: image.url,
     alt: toLocalizedContent(image.alt_fr || '', image.alt_en || ''),
+    caption: caption
+      ? toLocalizedContent(caption.fr || '', caption.en || '', caption.ru || '')
+      : undefined,
     width: image.width,
     height: image.height,
+  };
+}
+
+/**
+ * Transforms CMS video to domain ProductVideo
+ */
+function transformProductVideo(video: any): ProductVideo {
+  return {
+    url: video.url,
+    thumbnail: video.thumbnail?.url,
+    title: video.title
+      ? toLocalizedContent(video.title.fr || '', video.title.en || '', video.title.ru || '')
+      : undefined,
+    description: video.description
+      ? toLocalizedContent(
+          video.description.fr || '',
+          video.description.en || '',
+          video.description.ru || ''
+        )
+      : undefined,
+    duration: video.duration,
+    mimeType: video.mimeType,
   };
 }
 
@@ -141,7 +174,9 @@ export function transformProduct(cmsProduct: CMSProduct): Product {
     season: cmsProduct.season,
     certifications: cmsProduct.certifications as Product['certifications'],
     packagingOptions: cmsProduct.packaging_options as Product['packagingOptions'],
-    images: cmsProduct.images.map(transformProductImage),
+    images: cmsProduct.images.map((img) => transformProductImage(img)),
+    gallery: cmsProduct.gallery?.map((img) => transformProductImage(img.image, img.caption)),
+    videos: cmsProduct.videos?.map(transformProductVideo),
     constellation: transformConstellationConfig(cmsProduct.constellation_config),
     relatedProducts: cmsProduct.related_products.map((rp) => rp.slug),
     createdAt: new Date(cmsProduct.createdAt),

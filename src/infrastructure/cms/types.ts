@@ -19,10 +19,44 @@ export interface CMSProduct {
   certifications: string[];
   packaging_options: string[];
   images: CMSImage[];
+  gallery?: CMSGalleryImage[];
+  videos?: CMSVideo[];
   constellation_config: CMSConstellationConfig | null;
   related_products: CMSRelatedProduct[];
   createdAt: string;
   updatedAt: string;
+}
+
+/**
+ * CMS Gallery Image with caption
+ */
+export interface CMSGalleryImage {
+  image: CMSImage;
+  caption?: {
+    fr?: string;
+    en?: string;
+    ru?: string;
+  };
+}
+
+/**
+ * CMS Video type
+ */
+export interface CMSVideo {
+  url: string;
+  thumbnail?: CMSImage;
+  title?: {
+    fr?: string;
+    en?: string;
+    ru?: string;
+  };
+  description?: {
+    fr?: string;
+    en?: string;
+    ru?: string;
+  };
+  duration?: number;
+  mimeType?: string;
 }
 
 /**
