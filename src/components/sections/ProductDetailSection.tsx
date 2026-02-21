@@ -13,7 +13,7 @@
  * - Related products
  */
 
-import { useState, Suspense, type JSX } from 'react';
+import { useState, useEffect, Suspense, type JSX } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
@@ -432,7 +432,7 @@ function ProductScene({ product }: { product: Product }) {
 }
 
 /**
- * Image gallery component
+ * Image gallery component with keyboard navigation
  */
 function ImageGallery({
   images,
@@ -447,6 +447,24 @@ function ImageGallery({
 
   // Check if we have valid images
   const validImages = images.filter((img) => img.url && !img.url.includes('placeholder'));
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (validImages.length <= 1) return;
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [validImages.length]);
 
   if (validImages.length === 0) {
     return (
@@ -473,10 +491,18 @@ function ImageGallery({
 
   const currentImage = validImages[selectedIndex] || validImages[0];
 
+  const goToPrevious = () => {
+    setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setSelectedIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
+  };
+
   return (
     <div className="space-y-4">
       {/* Main image */}
-      <div className="relative aspect-square overflow-hidden rounded-xl bg-background-secondary">
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-background-secondary group">
         <Image
           src={currentImage.url}
           alt={currentImage.alt[locale] || productName}
@@ -485,6 +511,45 @@ function ImageGallery({
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
         />
+
+        {/* Navigation arrows */}
+        {validImages.length > 1 && (
+          <>
+            <button
+              onClick={goToPrevious}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Image précédente"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Image suivante"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Counter */}
+            <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {selectedIndex + 1} / {validImages.length}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Thumbnails */}
@@ -912,7 +977,7 @@ function SimilarProducts({ products, locale }: { products: Product[]; locale: Lo
 }
 
 /**
- * Video gallery component
+ * Video gallery component with carousel and keyboard navigation
  */
 function VideoGallery({
   videos,
@@ -922,9 +987,39 @@ function VideoGallery({
   locale: Locale;
   productName: string;
 }) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!videos || videos.length <= 1) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [videos]);
+
   if (!videos || videos.length === 0) {
     return null;
   }
+
+  const currentVideo = videos[selectedIndex] || videos[0];
+
+  const goToPrevious = () => {
+    setSelectedIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setSelectedIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <div className="space-y-4 mt-8">
@@ -939,37 +1034,137 @@ function VideoGallery({
         </svg>
         Vidéos
       </h3>
-      <div className="grid grid-cols-1 gap-4">
-        {videos.map((video, index) => (
-          <div key={index} className="space-y-2">
-            {video.title && (
-              <h4 className="font-medium">{video.title[locale] || video.title.fr}</h4>
-            )}
-            {video.description && (
-              <p className="text-sm text-foreground-muted">
-                {video.description[locale] || video.description.fr}
-              </p>
-            )}
-            <div className="relative aspect-video overflow-hidden rounded-xl bg-background-secondary">
-              <video
-                controls
-                poster={video.thumbnail}
-                className="w-full h-full object-cover"
-                preload="metadata"
-              >
-                <source src={video.url} type={video.mimeType || 'video/mp4'} />
-                Votre navigateur ne supporte pas la lecture de vidéos.
-              </video>
+
+      {/* Video info */}
+      {currentVideo.title && (
+        <h4 className="font-medium">{currentVideo.title[locale] || currentVideo.title.fr}</h4>
+      )}
+      {currentVideo.description && (
+        <p className="text-sm text-foreground-muted">
+          {currentVideo.description[locale] || currentVideo.description.fr}
+        </p>
+      )}
+
+      {/* Main video player */}
+      <div className="relative aspect-video overflow-hidden rounded-xl bg-background-secondary group">
+        <video
+          key={currentVideo.url}
+          controls
+          poster={currentVideo.thumbnail}
+          className="w-full h-full object-cover"
+          preload="metadata"
+        >
+          <source src={currentVideo.url} type={currentVideo.mimeType || 'video/mp4'} />
+          Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+
+        {/* Navigation arrows */}
+        {videos.length > 1 && (
+          <>
+            <button
+              onClick={goToPrevious}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Vidéo précédente"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Vidéo suivante"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Counter */}
+            <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {selectedIndex + 1} / {videos.length}
             </div>
-            {video.duration && (
-              <p className="text-xs text-foreground-muted">
-                Durée: {Math.floor(video.duration / 60)}:
-                {(video.duration % 60).toString().padStart(2, '0')}
-              </p>
-            )}
-          </div>
-        ))}
+          </>
+        )}
       </div>
+
+      {/* Duration */}
+      {currentVideo.duration && (
+        <p className="text-xs text-foreground-muted">
+          Durée: {Math.floor(currentVideo.duration / 60)}:
+          {(currentVideo.duration % 60).toString().padStart(2, '0')}
+        </p>
+      )}
+
+      {/* Thumbnails */}
+      {videos.length > 1 && (
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {videos.map((video, index) => {
+            return (
+              <button
+                key={index}
+                onClick={() => setSelectedIndex(index)}
+                className={`relative w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${
+                  selectedIndex === index
+                    ? 'border-primary'
+                    : 'border-transparent hover:border-border'
+                }`}
+                aria-label={`Voir vidéo ${index + 1}`}
+                aria-pressed={selectedIndex === index}
+              >
+                {video.thumbnail ? (
+                  <Image
+                    src={video.thumbnail}
+                    alt={video.title?.[locale] || `Vidéo ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="128px"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-background-secondary flex items-center justify-center">
+                    <svg
+                      className="w-8 h-8 text-foreground-muted"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                )}
+                {/* Play icon overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
