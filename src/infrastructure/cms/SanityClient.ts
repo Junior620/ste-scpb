@@ -40,7 +40,7 @@ interface SanityProduct {
   image?: SanityImage;
   gallery?: SanityImage[];
   videos?: Array<{
-    file: { asset: { _ref: string; url: string }; _type: 'file' };
+    file: { asset: { _ref: string; url: string; mimeType?: string }; _type: 'file' };
     thumbnail?: SanityImage;
     title?: { fr?: string; en?: string; ru?: string };
     description?: { fr?: string; en?: string; ru?: string };
@@ -405,7 +405,7 @@ export class SanityClient implements CMSClient {
         title: video.title ? toLocalized(video.title) : undefined,
         description: video.description ? toLocalized(video.description) : undefined,
         duration: video.duration,
-        mimeType: 'video/mp4',
+        mimeType: video.file?.asset?.mimeType || 'video/mp4',
       })),
       constellation: defaultConstellation,
       relatedProducts: [],
@@ -621,7 +621,8 @@ export class SanityClient implements CMSClient {
             file{
               asset->{
                 _id,
-                url
+                url,
+                mimeType
               }
             },
             thumbnail,
@@ -663,7 +664,8 @@ export class SanityClient implements CMSClient {
             file{
               asset->{
                 _id,
-                url
+                url,
+                mimeType
               }
             },
             thumbnail,
