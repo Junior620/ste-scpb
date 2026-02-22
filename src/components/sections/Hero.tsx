@@ -30,7 +30,13 @@ export function Hero({ className = '' }: HeroProps) {
   const t = useTranslations('home');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set([0])); // Load first video immediately
+  const [isClient, setIsClient] = useState(false); // Track client-side hydration
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Defer video carousel until after initial render (improve LCP)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Preload next video when current one is playing
   useEffect(() => {
@@ -42,6 +48,8 @@ export function Hero({ className = '' }: HeroProps) {
 
   // Control video playback - only play current video
   useEffect(() => {
+    if (!isClient) return; // Skip on server
+
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
 
@@ -53,15 +61,17 @@ export function Hero({ className = '' }: HeroProps) {
         video.pause();
       }
     });
-  }, [currentVideoIndex, loadedVideos]);
+  }, [currentVideoIndex, loadedVideos, isClient]);
 
   useEffect(() => {
+    if (!isClient) return; // Skip carousel on server
+
     const interval = setInterval(() => {
       setCurrentVideoIndex((prev) => (prev + 1) % VIDEOS.length);
     }, VIDEO_DURATION);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isClient]);
 
   return (
     <section
@@ -70,33 +80,45 @@ export function Hero({ className = '' }: HeroProps) {
     >
       <ClickSparkles />
 
-      {/* Video Background Carousel - Lazy loaded */}
+      {/* Video Background Carousel - Deferred for LCP optimization */}
       <div className="absolute inset-0 z-0 bg-background">
-        {VIDEOS.map((video, index) => {
-          // Only render video if it should be loaded
-          const shouldLoad = loadedVideos.has(index);
-          const isCurrentVideo = index === currentVideoIndex;
+        {/* Static poster image for immediate LCP */}
+        {!isClient && (
+          <img
+            src="/og-image.png"
+            alt="Hero background"
+            className="absolute inset-0 h-full w-full object-cover"
+            fetchPriority="high"
+          />
+        )}
 
-          return (
-            <video
-              key={video}
-              ref={(el) => {
-                videoRefs.current[index] = el;
-              }}
-              src={shouldLoad ? video : undefined}
-              poster={index === 0 ? '/og-image.png' : undefined} // Poster for first video only
-              autoPlay={isCurrentVideo && shouldLoad} // Only autoplay the current video
-              loop
-              muted
-              playsInline
-              preload={index === 0 ? 'metadata' : 'none'} // Load metadata for first video
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-                isCurrentVideo ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{ display: shouldLoad ? 'block' : 'none' }}
-            />
-          );
-        })}
+        {/* Videos load after client hydration */}
+        {isClient &&
+          VIDEOS.map((video, index) => {
+            // Only render video if it should be loaded
+            const shouldLoad = loadedVideos.has(index);
+            const isCurrentVideo = index === currentVideoIndex;
+
+            return (
+              <video
+                key={video}
+                ref={(el) => {
+                  videoRefs.current[index] = el;
+                }}
+                src={shouldLoad ? video : undefined}
+                poster={index === 0 ? '/og-image.png' : undefined} // Poster for first video only
+                autoPlay={isCurrentVideo && shouldLoad} // Only autoplay the current video
+                loop
+                muted
+                playsInline
+                preload={index === 0 ? 'metadata' : 'none'} // Load metadata for first video
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                  isCurrentVideo ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{ display: shouldLoad ? 'block' : 'none' }}
+              />
+            );
+          })}
       </div>
 
       {/* Gradient overlay for text readability */}

@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     // Image sizes for srcset generation
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Minimize layout shift during image loading
+    minimumCacheTTL: 31536000, // 1 year cache for images
     remotePatterns: [
       {
         protocol: 'https',
@@ -41,8 +43,8 @@ const nextConfig: NextConfig = {
 
   // Experimental features
   experimental: {
-    // Optimize package imports
-    optimizePackageImports: ['@sentry/nextjs'],
+    // Optimize package imports to reduce bundle size
+    optimizePackageImports: ['@sentry/nextjs', 'lucide-react', '@sanity/image-url', 'react-map-gl'],
   },
 
   // Webpack configuration for bundle optimization
