@@ -55,6 +55,7 @@ export const CSP_DIRECTIVES = {
     'https://*.sentry.io',
     'https://*.ingest.sentry.io',
   ],
+  'media-src': ["'self'", 'https://cdn.sanity.io', 'blob:'],
   'frame-src': ['https://www.google.com/recaptcha/'],
   'worker-src': ["'self'", 'blob:'],
   'object-src': ["'none'"],
