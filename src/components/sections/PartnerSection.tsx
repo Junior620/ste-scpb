@@ -84,7 +84,7 @@ export function PartnerSection() {
                       <div className="text-xs text-foreground-muted">{t('stats.cooperatives')}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">20,000 t</div>
+                      <div className="text-2xl font-bold text-primary">40,000 t</div>
                       <div className="text-xs text-foreground-muted">{t('stats.capacity')}</div>
                     </div>
                     <div className="text-center">
