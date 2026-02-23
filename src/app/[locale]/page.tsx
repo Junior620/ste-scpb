@@ -12,6 +12,7 @@ import {
   CTASection,
   CertificationsSection,
   OtherProductsSection,
+  PartnerSection,
 } from '@/components/sections';
 import { createCMSClient } from '@/infrastructure/cms';
 import type { Product } from '@/domain/entities/Product';
@@ -53,10 +54,6 @@ async function OtherProductsSectionWithData({ locale }: { locale: Locale }) {
   try {
     const cmsClient = await createCMSClient();
     products = await cmsClient.getProducts(locale);
-    console.log(
-      `[HomePage] Fetched ${products.length} products:`,
-      products.map((p) => p.slug)
-    );
   } catch (error) {
     // Silently fail - OtherProductsSection works without images
     console.warn(
@@ -118,6 +115,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <Suspense fallback={<OtherProductsSectionSkeleton />}>
         <OtherProductsSectionWithData locale={validLocale} />
       </Suspense>
+      <PartnerSection />
       <CertificationsSection />
       <ValueChain />
       <WorkforceSection />

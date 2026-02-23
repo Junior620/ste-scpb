@@ -766,6 +766,29 @@
     "regionalOffices": "Bureaux régionaux",
     "exportDestinations": "Destinations d'export"
   },
+  "partner": {
+    "badge": "Partenariat Stratégique",
+    "title": "AFREXIA",
+    "subtitle": "Notre partenaire pour le négoce structuré et la transformation locale",
+    "tagline": "Partenariat stratégique pour l'excellence agricole africaine",
+    "description": "AFREXIA est une entreprise camerounaise engagée dans le négoce structuré, la transformation locale et l'exportation de commodités agricoles à forte valeur ajoutée. S'appuyant sur un réseau de plus de 2 000 coopératives partenaires à travers le pays, AFREXIA mobilise chaque année plusieurs milliers de tonnes de café, cacao, poivre, huiles et autres produits tropicaux, répondant aux standards de qualité et de traçabilité exigés par les marchés internationaux.",
+    "partnership": "Son modèle intègre toute la chaîne de valeur : de la collecte à la transformation industrielle, jusqu'à la logistique d'exportation, afin d'offrir à ses clients une solution professionnelle, fiable et transparente. À travers une approche contractuelle rigoureuse et une présence active sur le terrain, AFREXIA ambitionne de repositionner le Cameroun comme un acteur de référence dans le commerce agro-industriel africain.",
+    "imageCaption": "Contrôle qualité et traçabilité AFREXIA",
+    "points": {
+      "collection": "Réseau de collecte structuré avec plus de 2 000 coopératives",
+      "quality": "Standards de qualité et traçabilité conformes aux exigences internationales",
+      "traceability": "Chaîne de valeur intégrée : collecte, transformation, logistique export"
+    },
+    "stats": {
+      "cooperatives": "Coopératives",
+      "capacity": "Capacité annuelle",
+      "sites": "Sites"
+    },
+    "cta": {
+      "visit": "Visiter afrexiacmr.com"
+    },
+    "footer": "Ensemble, SCPB et AFREXIA œuvrent pour l'excellence et la durabilité du secteur agricole camerounais."
+  },
   "certifications": {
     "title": "Qualité & Conformité",
     "subtitle": "Des standards internationaux pour garantir l'excellence de nos produits",

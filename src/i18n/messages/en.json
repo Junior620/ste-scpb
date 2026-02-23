@@ -766,6 +766,29 @@
     "regionalOffices": "Regional Offices",
     "exportDestinations": "Export Destinations"
   },
+  "partner": {
+    "badge": "Strategic Partnership",
+    "title": "AFREXIA",
+    "subtitle": "Our partner for structured trading and local processing",
+    "tagline": "Strategic partnership for African agricultural excellence",
+    "description": "AFREXIA is a Cameroonian company engaged in structured trading, local processing and export of high value-added agricultural commodities. Relying on a network of over 2,000 partner cooperatives across the country, AFREXIA mobilizes thousands of tons of coffee, cocoa, pepper, oils and other tropical products annually, meeting the quality and traceability standards required by international markets.",
+    "partnership": "Its model integrates the entire value chain: from collection to industrial processing, through to export logistics, to offer clients a professional, reliable and transparent solution. Through a rigorous contractual approach and active field presence, AFREXIA aims to reposition Cameroon as a reference player in African agro-industrial trade.",
+    "imageCaption": "AFREXIA quality control and traceability",
+    "points": {
+      "collection": "Structured collection network with over 2,000 cooperatives",
+      "quality": "Quality and traceability standards compliant with international requirements",
+      "traceability": "Integrated value chain: collection, processing, export logistics"
+    },
+    "stats": {
+      "cooperatives": "Cooperatives",
+      "capacity": "Annual capacity",
+      "sites": "Sites"
+    },
+    "cta": {
+      "visit": "Visit afrexiacmr.com"
+    },
+    "footer": "Together, SCPB and AFREXIA work for excellence and sustainability in the Cameroonian agricultural sector."
+  },
   "certifications": {
     "title": "Quality & Compliance",
     "subtitle": "International standards to guarantee the excellence of our products",

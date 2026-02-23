@@ -8,7 +8,12 @@ export { Hero3D, type Hero3DProps } from './Hero3D';
 export { LazyContactHero } from './LazyContactHero';
 export { ProductsSection, type ProductsSectionProps } from './ProductsSection';
 export { ProductDetailSection, type ProductDetailSectionProps } from './ProductDetailSection';
-export { ValueChain, type ValueChainProps, getValueChainStages, type ValueChainStage } from './ValueChain';
+export {
+  ValueChain,
+  type ValueChainProps,
+  getValueChainStages,
+  type ValueChainStage,
+} from './ValueChain';
 export { BlogSection, type BlogSectionProps } from './BlogSection';
 export { ArticleDetailSection, type ArticleDetailSectionProps } from './ArticleDetailSection';
 export { TeamSection, type TeamSectionProps, renderTeamMemberDisplay } from './TeamSection';
@@ -32,3 +37,4 @@ export { CertificationsSection, type CertificationsSectionProps } from './Certif
 export { OtherProductsSection, type OtherProductsSectionProps } from './OtherProductsSection';
 export { StatisticsHero } from './StatisticsHero';
 export { AboutValuesSection, AboutStatsSection } from './AboutSections';
+export { PartnerSection } from './PartnerSection';
