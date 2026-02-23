@@ -26,7 +26,21 @@ export async function generateMetadata({ params }: ProductsPageProps): Promise<M
     description: t('description'),
     pathname: '/produits',
     locale: validLocale,
-    keywords: ['produits agricoles', 'cacao', 'café', 'bois', 'maïs', 'export', 'B2B', 'Cameroun'],
+    keywords: [
+      'export cacao Douala',
+      'produits agricoles Douala',
+      'fournisseur cacao Douala',
+      'export café Douala',
+      'produits agricoles',
+      'cacao',
+      'café',
+      'bois',
+      'maïs',
+      'export',
+      'B2B',
+      'Cameroun',
+      'Douala',
+    ],
   });
 }
 
