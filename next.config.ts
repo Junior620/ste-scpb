@@ -15,6 +15,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
+  // Output configuration for Vercel deployment
+  output: 'standalone',
+
   // Image optimization domains
   images: {
     // Enable modern image formats for better compression
