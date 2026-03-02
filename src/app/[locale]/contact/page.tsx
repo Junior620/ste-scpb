@@ -147,7 +147,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                         href="mailto:direction@scpb-kameragro.com"
                         className="text-foreground-muted hover:text-primary transition-colors"
                       >
-                        direction@spcb-kameragro.com
+                        direction@scpb-kameragro.com
                       </a>
                     </div>
                   </div>
