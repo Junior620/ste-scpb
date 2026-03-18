@@ -22,13 +22,17 @@ export function PartnerSection() {
     },
     //
     {
-      src: '/partners/afrexia-scpb.jpg',
+      src: '/partners/afrexia-scpb2.jpg',
       alt: "Description de l'image 2",
       caption: 'AFREXIA - SCPB',
     },
-
     {
-      src: '/partners/afrexia-scpb1.jpg',
+      src: '/partners/afrexia-scpb3.jpg',
+      alt: "Description de l'image 2",
+      caption: 'AFREXIA - SCPB',
+    },
+    {
+      src: '/partners/afrexia-scpb4.jpg',
       alt: "Description de l'image 2",
       caption: 'AFREXIA - SCPB',
     },
