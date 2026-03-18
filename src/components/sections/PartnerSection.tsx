@@ -7,11 +7,38 @@
 
 import { useTranslations } from 'next-intl';
 import { ExternalLink, CheckCircle } from 'lucide-react';
-import { Button, ScrollReveal } from '@/components/ui';
-import Image from 'next/image';
+import { Button, ScrollReveal, Carousel } from '@/components/ui';
 
 export function PartnerSection() {
   const t = useTranslations('partner');
+
+  // 🎯 AJOUTE TES IMAGES ICI
+  // Pour ajouter des images au carrousel, modifie ce tableau
+  const carouselImages = [
+    {
+      src: '/partners/afrexia-warehouse.jpg',
+      alt: 'AFREXIA - Contrôle qualité et traçabilité',
+      caption: t('imageCaption'),
+    },
+    //
+    {
+      src: '/partners/afrexia-scpb.jpg',
+      alt: "Description de l'image 2",
+      caption: 'AFREXIA - SCPB',
+    },
+
+    {
+      src: '/partners/afrexia-scpb1.jpg',
+      alt: "Description de l'image 2",
+      caption: 'AFREXIA - SCPB',
+    },
+
+    // {
+    //   src: '/partners/afrexia-image3.jpg',
+    //   alt: 'Description de l\'image 3',
+    //   caption: 'Légende optionnelle',
+    // },
+  ];
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-background via-background-secondary to-background">
@@ -32,18 +59,9 @@ export function PartnerSection() {
           <div className="max-w-6xl mx-auto">
             <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border-2 border-primary/30 overflow-hidden">
               <div className="grid md:grid-cols-2 gap-8 p-6 md:p-10">
-                {/* Left: Image */}
-                <div className="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden">
-                  <Image
-                    src="/partners/afrexia-warehouse.jpg"
-                    alt="AFREXIA - Contrôle qualité et traçabilité"
-                    fill
-                    className="object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm rounded-lg px-4 py-2">
-                    <p className="text-sm font-medium text-foreground">{t('imageCaption')}</p>
-                  </div>
+                {/* Left: Carousel */}
+                <div className="relative h-[400px] md:h-[500px]">
+                  <Carousel images={carouselImages} autoPlayInterval={3000} className="h-full" />
                 </div>
 
                 {/* Right: Content */}

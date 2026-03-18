@@ -40,3 +40,4 @@ export type { WhatsAppWidgetProps } from './WhatsAppWidget';
 export { VideoPlayer } from './VideoPlayer';
 export { Pagination, PaginationInfo } from './Pagination';
 export type { PaginationProps, PaginationInfoProps } from './Pagination';
+export { Carousel } from './Carousel';
