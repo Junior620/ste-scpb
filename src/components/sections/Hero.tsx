@@ -158,7 +158,7 @@ export function Hero({ className = '' }: HeroProps) {
           </div>
 
           {/* Contact info - moved closer to CTAs */}
-          <div className="mt-8 text-center text-sm text-foreground-muted animate-fade-in-up animation-delay-600">
+          <div className="mt-4 text-center text-sm text-foreground-muted animate-fade-in-up animation-delay-600">
             <span className="inline-flex items-center gap-4 flex-wrap justify-center">
               <span>Douala, Cameroun</span>
               <span>•</span>
