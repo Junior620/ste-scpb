@@ -156,12 +156,10 @@ export function Hero({ className = '' }: HeroProps) {
               </Button>
             </Link>
           </div>
-        </div>
 
-        {/* Simple contact line at bottom */}
-        <div className="absolute bottom-8 left-0 right-0 z-10">
-          <div className="text-center text-sm text-foreground-muted">
-            <span className="inline-flex items-center gap-6 flex-wrap justify-center">
+          {/* Contact info - moved closer to CTAs */}
+          <div className="mt-8 text-center text-sm text-foreground-muted animate-fade-in-up animation-delay-600">
+            <span className="inline-flex items-center gap-4 flex-wrap justify-center">
               <span>Douala, Cameroun</span>
               <span>•</span>
               <a href="tel:+237676905938" className="hover:text-primary transition-colors">

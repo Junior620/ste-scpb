@@ -41,3 +41,5 @@ export { VideoPlayer } from './VideoPlayer';
 export { Pagination, PaginationInfo } from './Pagination';
 export type { PaginationProps, PaginationInfoProps } from './Pagination';
 export { Carousel } from './Carousel';
+export { PriceMarquee } from './PriceMarquee';
+export type { PriceItem } from './PriceMarquee';

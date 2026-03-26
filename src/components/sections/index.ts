@@ -38,3 +38,4 @@ export { OtherProductsSection, type OtherProductsSectionProps } from './OtherPro
 export { StatisticsHero } from './StatisticsHero';
 export { AboutValuesSection, AboutStatsSection } from './AboutSections';
 export { PartnerSection } from './PartnerSection';
+export { PriceTickerSection } from './PriceTickerSection';

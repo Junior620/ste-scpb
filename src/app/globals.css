@@ -497,3 +497,37 @@ body {
   opacity: 0 !important;
   pointer-events: none !important;
 }
+
+/* ============================================
+   Price Marquee Animation
+   ============================================ */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}

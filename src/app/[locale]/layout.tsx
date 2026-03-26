@@ -7,6 +7,7 @@ import { generateAlternateLanguages, BASE_URL, SITE_NAME, DEFAULT_OG_IMAGE } fro
 import { CookieBanner, SkipNavigation, WhatsAppWidget } from '@/components/ui';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 import { Header, Footer } from '@/components/layout';
+import { PriceTickerSection } from '@/components/sections';
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -65,9 +66,12 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <NextIntlClientProvider messages={messages}>
       <AnalyticsProvider>
         <SkipNavigation targetId="main-content" />
-        <Header />
-        {children}
-        <Footer />
+        <PriceTickerSection />
+        <div className="pt-[92px]">
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </AnalyticsProvider>
       <CookieBanner />
       <WhatsAppWidget />
