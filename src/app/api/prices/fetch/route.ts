@@ -77,7 +77,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
         return {
           product: productName,
           price,
-          unit: 'FCFA/KG FOB',
+          unit: 'FCFA / KG FOB',
           trend: 'stable',
           change: 0,
           source: 'ONCC',
@@ -119,7 +119,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
         {
           product: 'Cacao',
           price: 2500,
-          unit: 'FCFA/KG FOB',
+          unit: 'FCFA / KG FOB',
           trend: 'stable',
           change: 0,
           source: 'ONCC (Fallback)',
@@ -127,7 +127,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
         {
           product: 'Café Arabica',
           price: 3200,
-          unit: 'FCFA/KG FOB',
+          unit: 'FCFA / KG FOB',
           trend: 'stable',
           change: 0,
           source: 'ONCC (Fallback)',
@@ -135,7 +135,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
         {
           product: 'Café Robusta',
           price: 2800,
-          unit: 'FCFA/KG FOB',
+          unit: 'FCFA / KG FOB',
           trend: 'stable',
           change: 0,
           source: 'ONCC (Fallback)',
@@ -153,7 +153,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       {
         product: 'Cacao',
         price: 2500,
-        unit: 'FCFA/KG FOB',
+        unit: 'FCFA / KG FOB',
         trend: 'stable',
         change: 0,
         source: 'ONCC (Error Fallback)',
@@ -161,7 +161,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       {
         product: 'Café Arabica',
         price: 3200,
-        unit: 'FCFA/KG FOB',
+        unit: 'FCFA / KG FOB',
         trend: 'stable',
         change: 0,
         source: 'ONCC (Error Fallback)',
@@ -169,7 +169,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       {
         product: 'Café Robusta',
         price: 2800,
-        unit: 'FCFA/KG FOB',
+        unit: 'FCFA / KG FOB',
         trend: 'stable',
         change: 0,
         source: 'ONCC (Error Fallback)',
