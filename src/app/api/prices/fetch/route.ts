@@ -7,7 +7,8 @@
 
 import { NextResponse } from 'next/server';
 import * as cheerio from 'cheerio';
-import { chromium } from 'playwright';
+import chromium from '@sparticuz/chromium';
+import { chromium as playwrightChromium } from 'playwright-core';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // Vercel serverless function timeout
@@ -34,8 +35,9 @@ async function fetchCocoaPriceFromICE(): Promise<PriceData | null> {
   try {
     console.log('Launching browser for ICE scraping...');
 
-    // Launch headless browser
-    browser = await chromium.launch({
+    browser = await playwrightChromium.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
       headless: true,
     });
 
