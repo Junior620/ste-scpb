@@ -165,6 +165,9 @@ export async function GET(request: NextRequest) {
     // 4. Update coffee prices in Sanity
     await PriceServiceServer.updatePrices(pricesWithTrends);
 
+    // 5. Sauvegarder dans l'historique
+    await PriceServiceServer.addAllToHistory(pricesWithTrends);
+
     console.log(`Successfully updated ${pricesWithTrends.length} coffee prices with trends`);
 
     return NextResponse.json({

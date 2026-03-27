@@ -96,4 +96,37 @@ export class PriceServiceServer {
       throw error;
     }
   }
+
+  /**
+   * Add a price entry to history (creates a new document each time)
+   * Server-side only
+   */
+  static async addToHistory(priceData: CommodityPrice): Promise<void> {
+    try {
+      const sanityClient = createSanityClient();
+      const client = sanityClient['client'];
+
+      await client.create({
+        _type: 'priceHistory',
+        product: priceData.product,
+        price: priceData.price,
+        unit: priceData.unit,
+        trend: priceData.trend,
+        change: priceData.change,
+        source: priceData.source,
+        recordedAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.error('Error adding price to history:', error);
+      // Ne pas bloquer la mise à jour principale si l'historique échoue
+    }
+  }
+
+  /**
+   * Add multiple prices to history at once
+   * Server-side only
+   */
+  static async addAllToHistory(prices: CommodityPrice[]): Promise<void> {
+    await Promise.all(prices.map((price) => this.addToHistory(price)));
+  }
 }

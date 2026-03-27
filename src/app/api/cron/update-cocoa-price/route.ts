@@ -164,6 +164,9 @@ export async function GET(request: NextRequest) {
     // 4. Update cocoa price in Sanity
     await PriceServiceServer.updatePrices([priceWithTrend]);
 
+    // 5. Sauvegarder dans l'historique
+    await PriceServiceServer.addAllToHistory([priceWithTrend]);
+
     console.log('Successfully updated cocoa closing price with trend');
 
     return NextResponse.json({
