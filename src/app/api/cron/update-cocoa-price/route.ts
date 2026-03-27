@@ -9,9 +9,10 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { PriceServiceServer } from '@/infrastructure/cms/PriceServiceServer';
-import * as cheerio from 'cheerio';
+import { chromium } from 'playwright';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60; // Vercel serverless function timeout
 
 interface PriceData {
   product: string;
@@ -23,41 +24,58 @@ interface PriceData {
 }
 
 /**
- * Fetch cocoa closing price from ICE London Cocoa Futures
+ * Fetch cocoa closing price from ICE London Cocoa Futures using Playwright
+ * Source: https://www.ice.com/products/37089076/London-Cocoa-Futures/data?marketId=7758984
+ * Unit: £/T (Pound Sterling per Tonne)
+ *
+ * Captures the closing price (market closes at 17:00 London time)
+ * XPath: /html/body/div[1]/div/main/div/div/div/div/div/div[4]/div/div/div[1]/table/tbody[1]/tr[1]/td[2]
  */
 async function fetchCocoaPriceFromICE(): Promise<PriceData> {
+  let browser;
   try {
-    console.log('Fetching cocoa closing price from ICE...');
+    console.log('Launching browser for ICE scraping...');
 
-    const response = await fetch(
-      'https://www.ice.com/products/37089076/London-Cocoa-Futures/data',
+    // Launch headless browser
+    browser = await chromium.launch({
+      headless: true,
+    });
+
+    const context = await browser.newContext({
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    });
+
+    const page = await context.newPage();
+
+    console.log('Navigating to ICE website...');
+    await page.goto(
+      'https://www.ice.com/products/37089076/London-Cocoa-Futures/data?marketId=7758984',
       {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        },
+        waitUntil: 'networkidle',
+        timeout: 30000,
       }
     );
 
-    if (!response.ok) {
-      throw new Error(`ICE returned status ${response.status}`);
-    }
+    console.log('Waiting for price table to load...');
+    // Wait for the table to be visible
+    await page.waitForSelector('table tbody tr td', { timeout: 10000 });
 
-    const html = await response.text();
-    const $ = cheerio.load(html);
+    // Extract price using XPath
+    const priceElement = page
+      .locator(
+        'xpath=/html/body/div[1]/div/main/div/div/div/div/div/div[4]/div/div/div[1]/table/tbody[1]/tr[1]/td[2]'
+      )
+      .first();
+    const priceText = await priceElement.textContent();
 
-    const selector =
-      'body > div:first-child > div > main > div > div > div > div > div > div:nth-child(4) > div > div > div:first-child > table > tbody:first-child > tr:first-child > td:nth-child(2)';
-
-    const element = $(selector);
-
-    if (!element.length) {
-      throw new Error('Cocoa price element not found on ICE website');
-    }
-
-    const priceText = element.text().trim();
     console.log('ICE Cocoa raw text:', priceText);
 
-    const priceMatch = priceText.match(/[\d,]+\.?\d*/);
+    if (!priceText) {
+      throw new Error('Price element found but no text content');
+    }
+
+    // Extract numeric price
+    const priceMatch = priceText.trim().match(/[\d,]+\.?\d*/);
     if (!priceMatch) {
       throw new Error(`No price found in ICE text: ${priceText}`);
     }
@@ -70,16 +88,21 @@ async function fetchCocoaPriceFromICE(): Promise<PriceData> {
 
     console.log(`Successfully fetched cocoa closing price from ICE: £${price}/T`);
 
+    await browser.close();
+
     return {
       product: 'Cacao',
       price,
-      unit: '£ / T',
+      unit: '£ / T ICE London',
       trend: 'stable',
       change: 0,
       source: 'ICE',
     };
   } catch (error) {
-    console.error('Error fetching from ICE:', error);
+    console.error('Error fetching from ICE with Playwright:', error);
+    if (browser) {
+      await browser.close();
+    }
     throw error;
   }
 }

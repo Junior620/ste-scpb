@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
     'node_modules/**',
     'coverage/**',
+    // Test scripts
+    'scripts/**/*.js',
   ]),
   {
     rules: {

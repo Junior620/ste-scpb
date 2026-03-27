@@ -71,7 +71,7 @@ async function fetchCoffeePricesFromONCC(): Promise<PriceData[]> {
         return {
           product: productName,
           price,
-          unit: 'FCFA / KG FOB',
+          unit: 'FCFA/KG FOB ONCC',
           trend: 'stable',
           change: 0,
           source: 'ONCC',
