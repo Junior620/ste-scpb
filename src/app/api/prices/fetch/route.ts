@@ -1,7 +1,8 @@
 /**
  * Price Fetching API Route
- * Fetches commodity prices from ONCC (Office National du Cacao et du Café)
- * Source: https://www.oncc.cm/prices
+ * Fetches commodity prices from multiple sources:
+ * - Cacao: ICE London Cocoa Futures (https://www.ice.com/products/37089076/London-Cocoa-Futures/data)
+ * - Coffee: ONCC Cameroon (https://www.oncc.cm/prices)
  */
 
 import { NextResponse } from 'next/server';
@@ -19,15 +20,88 @@ interface PriceData {
 }
 
 /**
- * Fetch prices from ONCC website
- * Scrapes https://www.oncc.cm/prices for commodity prices
+ * Fetch cocoa price from ICE London Cocoa Futures
+ * Source: https://www.ice.com/products/37089076/London-Cocoa-Futures/data
+ * Unit: £/T (Pound Sterling per Tonne)
+ *
+ * Captures the closing price (market closes at 17:00 London time)
+ * XPath: /html/body/div[1]/div/main/div/div/div/div/div/div[4]/div/div/div[1]/table/tbody[1]/tr[1]/td[2]
+ */
+async function fetchCocoaPriceFromICE(): Promise<PriceData | null> {
+  try {
+    console.log('Fetching cocoa price from ICE...');
+
+    const response = await fetch(
+      'https://www.ice.com/products/37089076/London-Cocoa-Futures/data',
+      {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`ICE returned status ${response.status}`);
+    }
+
+    const html = await response.text();
+    const $ = cheerio.load(html);
+
+    // Convert XPath to CSS selector
+    // XPath: /html/body/div[1]/div/main/div/div/div/div/div/div[4]/div/div/div[1]/table/tbody[1]/tr[1]/td[2]
+    // CSS: body > div:first-child > div > main > div > div > div > div > div > div:nth-child(4) > div > div > div:first-child > table > tbody:first-child > tr:first-child > td:nth-child(2)
+    const selector =
+      'body > div:first-child > div > main > div > div > div > div > div > div:nth-child(4) > div > div > div:first-child > table > tbody:first-child > tr:first-child > td:nth-child(2)';
+
+    const element = $(selector);
+
+    if (!element.length) {
+      console.warn('Cocoa price element not found on ICE website');
+      return null;
+    }
+
+    const priceText = element.text().trim();
+    console.log('ICE Cocoa raw text:', priceText);
+
+    // Extract numeric price (supports formats with commas and decimals)
+    const priceMatch = priceText.match(/[\d,]+\.?\d*/);
+    if (!priceMatch) {
+      console.warn('No price found in ICE text:', priceText);
+      return null;
+    }
+
+    const price = parseFloat(priceMatch[0].replace(/,/g, ''));
+
+    if (isNaN(price) || price <= 0) {
+      console.warn('Invalid ICE cocoa price:', price);
+      return null;
+    }
+
+    console.log(`Successfully fetched cocoa price from ICE: £${price}/T`);
+
+    return {
+      product: 'Cacao',
+      price,
+      unit: '£ / T',
+      trend: 'stable',
+      change: 0,
+      source: 'ICE',
+    };
+  } catch (error) {
+    console.error('Error fetching from ICE:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch coffee prices from ONCC website
+ * Scrapes https://www.oncc.cm/prices for coffee commodity prices
  *
  * XPath References:
- * - Cacao: /html/body/main/div/div[4]/div/div/section[2]/section/section[2]/span[1]
  * - Arabica: /html/body/main/div/div[5]/div/div/section[2]/section/section[2]/span[1]
  * - Robusta: /html/body/main/div/div[6]/div/div/section[2]/section/section[2]/span[1]
  */
-async function fetchPricesFromONCC(): Promise<PriceData[]> {
+async function fetchCoffeePricesFromONCC(): Promise<PriceData[]> {
   try {
     console.log('Fetching prices from ONCC...');
 
@@ -72,8 +146,6 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
           return null;
         }
 
-        // Pour l'instant, on met la tendance à 'stable' car on n'a pas l'info de tendance
-        // TODO: Ajouter la logique de détection de tendance si disponible sur le site
         return {
           product: productName,
           price,
@@ -88,13 +160,7 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       }
     };
 
-    // Extraire les prix en utilisant les sélecteurs CSS basés sur les XPath fournis
-    // XPath: /html/body/main/div/div[4]/div/div/section[2]/section/section[2]/span[1]
-    const cacaoPrice = extractPrice(
-      'body > main > div > div:nth-child(4) > div > div > section:nth-child(2) > section > section:nth-child(2) > span:first-child',
-      'Cacao'
-    );
-
+    // Extract coffee prices only (not cocoa)
     // XPath: /html/body/main/div/div[5]/div/div/section[2]/section/section[2]/span[1]
     const arabicaPrice = extractPrice(
       'body > main > div > div:nth-child(5) > div > div > section:nth-child(2) > section > section:nth-child(2) > span:first-child',
@@ -107,23 +173,13 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       'Café Robusta'
     );
 
-    // Ajouter les prix valides au tableau
-    if (cacaoPrice) prices.push(cacaoPrice);
+    // Add valid prices to array
     if (arabicaPrice) prices.push(arabicaPrice);
     if (robustaPrice) prices.push(robustaPrice);
 
     if (prices.length === 0) {
-      console.warn('No prices found on ONCC website, using fallback data');
-      // Fallback: retourner des prix de démonstration
+      console.warn('No coffee prices found on ONCC website, using fallback data');
       return [
-        {
-          product: 'Cacao',
-          price: 2500,
-          unit: 'FCFA / KG FOB',
-          trend: 'stable',
-          change: 0,
-          source: 'ONCC (Fallback)',
-        },
         {
           product: 'Café Arabica',
           price: 3200,
@@ -143,21 +199,13 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
       ];
     }
 
-    console.log(`Successfully fetched ${prices.length} prices from ONCC`);
+    console.log(`Successfully fetched ${prices.length} coffee prices from ONCC`);
     return prices;
   } catch (error) {
     console.error('Error fetching from ONCC:', error);
 
-    // Fallback en cas d'erreur
+    // Fallback for coffee prices
     return [
-      {
-        product: 'Cacao',
-        price: 2500,
-        unit: 'FCFA / KG FOB',
-        trend: 'stable',
-        change: 0,
-        source: 'ONCC (Error Fallback)',
-      },
       {
         product: 'Café Arabica',
         price: 3200,
@@ -180,11 +228,32 @@ async function fetchPricesFromONCC(): Promise<PriceData[]> {
 
 export async function GET() {
   try {
-    const prices = await fetchPricesFromONCC();
+    const allPrices: PriceData[] = [];
+
+    // 1. Fetch cocoa price from ICE
+    const cocoaPrice = await fetchCocoaPriceFromICE();
+    if (cocoaPrice) {
+      allPrices.push(cocoaPrice);
+    } else {
+      // Fallback cocoa price
+      console.warn('Using fallback cocoa price');
+      allPrices.push({
+        product: 'Cacao',
+        price: 2356, // Last known price: £2356/T
+        unit: '£ / T',
+        trend: 'stable',
+        change: 0,
+        source: 'ICE (Fallback)',
+      });
+    }
+
+    // 2. Fetch coffee prices from ONCC
+    const coffeePrices = await fetchCoffeePricesFromONCC();
+    allPrices.push(...coffeePrices);
 
     return NextResponse.json({
       success: true,
-      prices,
+      prices: allPrices,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

@@ -2,6 +2,9 @@
  * Cron Job: Update Commodity Prices
  * Automatically fetches and updates prices in Sanity CMS
  * Triggered by Vercel Cron Jobs
+ *
+ * Schedule: Monday-Friday at 17:30 UTC (18:30 WAT in winter, 19:30 WAT in summer)
+ * Captures ICE London Cocoa closing price (market closes at 17:00 London time)
  */
 
 import { NextRequest, NextResponse } from 'next/server';

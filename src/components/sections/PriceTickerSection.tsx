@@ -15,8 +15,8 @@ export function PriceTickerSection() {
     // Fallback prices si Sanity n'est pas disponible
     {
       product: 'Cacao',
-      price: 2500,
-      unit: 'FCFA / KG FOB',
+      price: 2356,
+      unit: '£ / T',
       trend: 'up',
       change: 2.5,
     },
