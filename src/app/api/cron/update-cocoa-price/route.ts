@@ -9,7 +9,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { PriceServiceServer } from '@/infrastructure/cms/PriceServiceServer';
-import chromium from '@sparticuz/chromium';
+import chromium from '@sparticuz/chromium-min';
 import { chromium as playwrightChromium } from 'playwright-core';
 
 export const dynamic = 'force-dynamic';
@@ -40,7 +40,9 @@ async function fetchCocoaPriceFromICE(): Promise<PriceData> {
     // Launch headless browser (sparticuz/chromium pour Vercel serverless)
     browser = await playwrightChromium.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath(),
+      executablePath: await chromium.executablePath(
+        'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar'
+      ),
       headless: true,
     });
 
