@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sampleRequestSchema } from '@/lib/validation';
 import { createResendEmailService } from '@/infrastructure/email/ResendEmailService';
 import { getRateLimiter, checkRateLimit, getClientIdentifier } from '@/infrastructure/rate-limiter';
-import { verifyRecaptcha, RECAPTCHA_ACTIONS } from '@/infrastructure/captcha';
+import { RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { requireRecaptcha } from '@/lib/require-recaptcha';
+import { submitLead } from '@/lib/submit-lead';
 
 /**
  * POST /api/sample-request
@@ -29,16 +31,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { recaptchaToken, locale, ...formData } = body;
 
-    // Verify reCAPTCHA
-    if (recaptchaToken && process.env.RECAPTCHA_SECRET_KEY) {
-      const recaptchaResult = await verifyRecaptcha(
-        recaptchaToken,
-        RECAPTCHA_ACTIONS.contact,
-        clientIp
-      );
-      if (!recaptchaResult.success) {
-        return NextResponse.json({ error: 'Échec de la vérification reCAPTCHA' }, { status: 400 });
-      }
+    const recaptchaCheck = await requireRecaptcha(
+      recaptchaToken,
+      RECAPTCHA_ACTIONS.sampleRequest,
+      clientIp
+    );
+    if (!recaptchaCheck.ok) {
+      return recaptchaCheck.response;
     }
 
     // Validate form data
@@ -58,9 +57,19 @@ export async function POST(request: NextRequest) {
 
     // Send notification email to company
     await emailService.send({
-      to: { email: process.env.COMPANY_EMAIL || 'direction@ste-scpb.com' },
+      to: { email: process.env.COMPANY_EMAIL || process.env.EMAIL_CONTACT || 'scpb@ste-scpb.com' },
       subject: `Nouvelle demande d'échantillon - ${validatedData.product}`,
       html: generateCompanyNotificationEmail(validatedData),
+    });
+
+    await submitLead({
+      source: 'sample-request',
+      email: validatedData.email,
+      name: validatedData.name,
+      company: validatedData.company,
+      phone: validatedData.phone,
+      locale,
+      metadata: { product: validatedData.product, sampleWeight: validatedData.sampleWeight },
     });
 
     return NextResponse.json(

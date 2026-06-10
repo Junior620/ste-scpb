@@ -255,6 +255,28 @@ export const newsletterSchema = z.object({
 });
 
 // =============================================================================
+// Lead Magnet Schema (EUDR dossier download)
+// =============================================================================
+
+export const leadMagnetSchema = z.object({
+  name: z
+    .string()
+    .min(2, 'Nom requis (min 2 caractères)')
+    .max(100, 'Nom trop long (max 100 caractères)'),
+  email: emailSchema,
+  company: z
+    .string()
+    .min(2, 'Nom de société requis (min 2 caractères)')
+    .max(200, 'Nom de société trop long'),
+  privacyConsent: z.literal(true, {
+    error: 'Vous devez accepter la politique de confidentialité',
+  }),
+  magnetType: z.enum(['eudr-dossier']).default('eudr-dossier'),
+});
+
+export type LeadMagnetFormData = z.infer<typeof leadMagnetSchema>;
+
+// =============================================================================
 // Sample Request Schema
 // =============================================================================
 

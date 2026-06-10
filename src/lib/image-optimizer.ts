@@ -3,14 +3,14 @@
  * Provides helpers for optimizing Sanity CMS images with modern formats and proper sizing
  */
 
-import imageUrlBuilder from '@sanity/image-url';
+import { createImageUrlBuilder } from '@sanity/image-url';
 
 // Sanity project configuration
 const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '0b1e7ens';
 const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
 // Initialize Sanity image URL builder
-const builder = imageUrlBuilder({
+const builder = createImageUrlBuilder({
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
 });

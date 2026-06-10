@@ -49,23 +49,16 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
   });
 
   /**
-   * Property: All hreflang URLs should contain the same pathname
+   * Property: All hreflang URLs should be valid per-locale paths
    */
-  it('should include the same pathname in all hreflang URLs', () => {
+  it('should include locale prefix in all hreflang URLs', () => {
     fc.assert(
       fc.property(pathnameArb, (pathname) => {
         const links = getHreflangLinks(pathname);
-        const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
 
         for (const link of links) {
-          // Each URL should contain the pathname after the locale
-          if (normalizedPath === '' || normalizedPath === '/') {
-            // Root path - URL should end with locale (possibly with trailing slash)
-            expect(link.href).toMatch(/\/[a-z]{2}\/?$/);
-          } else {
-            // Non-root path - URL should contain the pathname
-            expect(link.href).toContain(normalizedPath);
-          }
+          if (link.hrefLang === 'x-default') continue;
+          expect(link.href).toMatch(new RegExp(`/${link.hrefLang}(/|$)`));
         }
       }),
       { numRuns: 100 }
@@ -94,6 +87,9 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
           expect(languages[locale]).toBeDefined();
           expect(typeof languages[locale]).toBe('string');
         }
+
+        expect(languages['x-default']).toBeDefined();
+        expect(languages['x-default']).toContain(`/${DEFAULT_LOCALE}`);
       }),
       { numRuns: 100 }
     );
@@ -164,11 +160,10 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
             locale: locale as Locale,
           });
 
-          // Should have title (as object with default and template)
+          // Should have title (absolute — avoids duplicate site suffix)
           expect(metadata.title).toBeDefined();
-          const titleObj = metadata.title as { default: string; template: string };
-          expect(titleObj.default).toBe(title);
-          expect(titleObj.template).toContain('%s');
+          const titleObj = metadata.title as { absolute: string };
+          expect(titleObj.absolute).toBe(title);
 
           // Should have description
           expect(metadata.description).toBe(description);
@@ -182,7 +177,7 @@ describe('Hreflang Tag Consistency - Property Tests', () => {
           expect(metadata.openGraph?.description).toBe(description);
 
           // OpenGraph locale should match
-          const expectedOgLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
+          const expectedOgLocale = locale === 'fr' ? 'fr_FR' : locale === 'ru' ? 'ru_RU' : 'en_US';
           expect(metadata.openGraph?.locale).toBe(expectedOgLocale);
 
           // Should have twitter card
@@ -334,10 +329,10 @@ describe('Meta Tags Uniqueness - Property Tests', () => {
             locale: locale as Locale,
           });
 
-          // Title should be defined (as object with default and template)
+          // Title should be defined (absolute)
           expect(metadata.title).toBeDefined();
-          const titleObj = metadata.title as { default: string; template: string };
-          expect(titleObj.default).toBeTruthy();
+          const titleObj = metadata.title as { absolute: string };
+          expect(titleObj.absolute).toBeTruthy();
 
           // Description should be non-empty
           expect(metadata.description).toBeTruthy();

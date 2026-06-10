@@ -4,12 +4,13 @@
  */
 import type { Metadata } from 'next';
 import { Locale, SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@/domain/value-objects/Locale';
+import { resolveLocalizedUrl } from '@/i18n/localized-url';
 
 /**
  * Base URL for the website
  * Should be set in environment variables for production
  */
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.com';
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
 
 /**
  * Default Open Graph image
@@ -23,8 +24,40 @@ export const DEFAULT_OG_IMAGE = `${BASE_URL}/api/og`;
 export const SITE_NAME = 'STE-SCPB';
 
 /**
+ * Open Graph locale for a given site locale
+ */
+export function getOpenGraphLocale(locale: Locale): string {
+  switch (locale) {
+    case 'fr':
+      return 'fr_FR';
+    case 'en':
+      return 'en_US';
+    case 'ru':
+      return 'ru_RU';
+    default:
+      return 'fr_FR';
+  }
+}
+
+/**
+ * Build a fully qualified localized URL for hreflang/canonical tags
+ */
+export function buildLocalizedUrl(pathname: string, locale: Locale): string {
+  return resolveLocalizedUrl(BASE_URL, locale, pathname);
+}
+
+export function buildLocalizedDynamicUrl(
+  pathname: string,
+  locale: Locale,
+  params: { slug: string }
+): string {
+  const base = pathname.replace('[slug]', params.slug);
+  return resolveLocalizedUrl(BASE_URL, locale, base);
+}
+
+/**
  * Generate alternate language links for hreflang tags
- * @param pathname - The current pathname without locale prefix
+ * @param pathname - The current pathname without locale prefix (internal route key)
  * @param currentLocale - The current locale (optional, for locale-specific canonical)
  * @returns Object with alternates for metadata
  *
@@ -35,22 +68,18 @@ export function generateAlternateLanguages(
   pathname: string = '',
   currentLocale?: Locale
 ): Metadata['alternates'] {
-  // Ensure pathname starts with /
-  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
-
-  // Generate language alternates
   const languages: Record<string, string> = {};
 
   for (const locale of SUPPORTED_LOCALES) {
-    languages[locale] = `${BASE_URL}/${locale}${normalizedPath}`;
+    languages[locale] = buildLocalizedUrl(pathname, locale);
   }
 
-  // Canonical should point to the current locale's URL (FR→FR, EN→EN)
-  // If no locale provided, default to DEFAULT_LOCALE for backwards compatibility
+  languages['x-default'] = buildLocalizedUrl(pathname, DEFAULT_LOCALE);
+
   const canonicalLocale = currentLocale || DEFAULT_LOCALE;
 
   return {
-    canonical: `${BASE_URL}/${canonicalLocale}${normalizedPath}`,
+    canonical: buildLocalizedUrl(pathname, canonicalLocale),
     languages,
   };
 }
@@ -86,14 +115,12 @@ export function generateLocalizedMetadata({
   keywords,
   noIndex = false,
 }: LocalizedMetadataOptions): Metadata {
-  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
-  const fullUrl = `${BASE_URL}/${locale}${normalizedPath}`;
+  const fullUrl = buildLocalizedUrl(pathname, locale);
   const imageUrl = ogImage || DEFAULT_OG_IMAGE;
 
   const metadata: Metadata = {
     title: {
-      default: title,
-      template: `%s | ${SITE_NAME}`,
+      absolute: title,
     },
     description,
     // Pass current locale to ensure canonical points to current language (REQ-7)
@@ -103,7 +130,7 @@ export function generateLocalizedMetadata({
       description,
       url: fullUrl,
       siteName: SITE_NAME,
-      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      locale: getOpenGraphLocale(locale),
       type: 'website',
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
     },
@@ -215,21 +242,18 @@ export function getHreflangLinks(pathname: string = ''): Array<{
   hrefLang: string;
   href: string;
 }> {
-  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
-
   const links: Array<{ rel: string; hrefLang: string; href: string }> = SUPPORTED_LOCALES.map(
     (locale) => ({
       rel: 'alternate',
       hrefLang: locale as string,
-      href: `${BASE_URL}/${locale}${normalizedPath}`,
+      href: buildLocalizedUrl(pathname, locale),
     })
   );
 
-  // Add x-default pointing to default locale
   links.push({
     rel: 'alternate',
     hrefLang: 'x-default',
-    href: `${BASE_URL}/${DEFAULT_LOCALE}${normalizedPath}`,
+    href: buildLocalizedUrl(pathname, DEFAULT_LOCALE),
   });
 
   return links;

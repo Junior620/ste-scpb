@@ -4,7 +4,9 @@
  * DO NOT import this in client components
  */
 
+import { createClient } from '@sanity/client';
 import { createSanityClient } from './SanityClient';
+import { DEFAULT_COMMODITY_PRICES } from '@/lib/default-commodity-prices';
 
 export interface CommodityPrice {
   product: string;
@@ -23,7 +25,22 @@ export class PriceServiceServer {
    */
   static async getPrices(): Promise<CommodityPrice[]> {
     try {
-      const client = createSanityClient();
+      const projectId = process.env.SANITY_PROJECT_ID;
+      const dataset = process.env.SANITY_DATASET;
+
+      if (!projectId || !dataset) {
+        console.warn('[PriceServiceServer] Missing Sanity config, using fallback prices');
+        return DEFAULT_COMMODITY_PRICES;
+      }
+
+      // Public read via CDN — avoids 401 when SANITY_API_TOKEN is missing or invalid
+      const readClient = createClient({
+        projectId,
+        dataset,
+        useCdn: true,
+        apiVersion: '2024-01-01',
+      });
+
       const query = `*[_type == "commodityPrice"] | order(product asc) {
         product,
         price,
@@ -34,11 +51,17 @@ export class PriceServiceServer {
         source
       }`;
 
-      const prices = await client['client'].fetch<CommodityPrice[]>(query);
+      const prices = await readClient.fetch<CommodityPrice[]>(query);
+
+      if (!prices || prices.length === 0) {
+        console.warn('[PriceServiceServer] No prices in Sanity, using fallback');
+        return DEFAULT_COMMODITY_PRICES;
+      }
+
       return prices;
     } catch (error) {
       console.error('Error fetching prices from Sanity:', error);
-      return [];
+      return DEFAULT_COMMODITY_PRICES;
     }
   }
 
@@ -49,7 +72,7 @@ export class PriceServiceServer {
   static async updatePrice(priceData: CommodityPrice): Promise<void> {
     try {
       const sanityClient = createSanityClient();
-      const client = sanityClient['client']; // Access private client
+      const client = sanityClient.getWriteClient();
 
       // Check if price document already exists
       const existingQuery = `*[_type == "commodityPrice" && product == $product][0]`;
@@ -104,7 +127,7 @@ export class PriceServiceServer {
   static async addToHistory(priceData: CommodityPrice): Promise<void> {
     try {
       const sanityClient = createSanityClient();
-      const client = sanityClient['client'];
+      const client = sanityClient.getWriteClient();
 
       await client.create({
         _type: 'priceHistory',

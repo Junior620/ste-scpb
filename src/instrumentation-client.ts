@@ -1,20 +1,38 @@
 // This file configures the initialization of Sentry on the client.
-// The added config here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
-  dsn: "https://37c600e110c0af518ce3db1451d7867a@o4510572654428160.ingest.de.sentry.io/4510572656787536",
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
 
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
-  // Enable logs to be sent to Sentry
-  enableLogs: true,
+  enabled: process.env.NODE_ENV === 'production',
 
-  // Enable sending user PII (Personally Identifiable Information)
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
-  sendDefaultPii: true,
+  tracesSampleRate: 0.1,
+
+  debug: false,
+
+  replaysOnErrorSampleRate: 1.0,
+  replaysSessionSampleRate: 0.1,
+
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: true,
+      blockAllMedia: true,
+    }),
+  ],
+
+  ignoreErrors: [
+    /^chrome-extension:\/\//,
+    /^moz-extension:\/\//,
+    'Network request failed',
+    'Failed to fetch',
+    'Load failed',
+    'AbortError',
+    'ResizeObserver loop',
+  ],
+
+  environment: process.env.NODE_ENV,
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

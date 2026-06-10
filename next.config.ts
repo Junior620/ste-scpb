@@ -15,8 +15,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
-  // Output configuration for Vercel deployment
-  output: 'standalone',
+  // Standalone breaks `next build` on Windows (EINVAL copying chunks named `node:inspector`).
+  // Not required for Vercel — only useful for self-hosted/Docker on Linux/macOS.
+  ...(process.platform !== 'win32' ? { output: 'standalone' as const } : {}),
 
   // Image optimization domains
   images: {

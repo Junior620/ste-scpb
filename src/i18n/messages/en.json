@@ -78,7 +78,13 @@
     "quote": "Request a Quote",
     "legalMentions": "Legal Mentions",
     "privacyPolicy": "Privacy Policy",
-    "featuredProduct": "Featured – Premium Export"
+    "featuredProduct": "Featured – Premium Export",
+    "solutions": "Solutions",
+    "eudr": "EUDR Compliance",
+    "traceability": "Cocoa Traceability",
+    "cocoatrack": "CocoaTrack",
+    "faq": "FAQ",
+    "useCases": "Use cases"
   },
   "home": {
     "title": "Fine Cameroon Cocoa",
@@ -96,6 +102,7 @@
       "quote": "Request export quote",
       "catalog": "Download our catalog",
       "products": "Discover our cocoa",
+      "eudr": "EUDR compliance guide",
       "sample": "Request a sample",
       "contactTitle": "Ready to source your premium cocoa?",
       "contactDescription": "Get a personalized export offer. Our team supports you on volumes, specs and shipping.",
@@ -429,7 +436,7 @@
         "label": "Years of experience"
       },
       "partners": {
-        "value": "20+",
+        "value": "500+",
         "label": "Partner producers"
       },
       "destinations": {
@@ -448,7 +455,7 @@
     },
     "usaPartnership": {
       "title": "SCPB in the United States and Internationally",
-      "subtitle": "Kamer Agro LLC — SCPB for the North American and International Markets",
+      "subtitle": "Kamer Agro LLC, SCPB for the North American and International Markets",
       "description": "Kamer Agro LLC is STE-SCPB's entity dedicated to business operations in the United States and international markets. Based in New York, Kamer Agro LLC offers local customer service, optimized logistics, and personalized support for all our North American and international clients.",
       "benefits": {
         "title": "Benefits for our American and international clients",
@@ -553,6 +560,8 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
+      "hint": "Export, EUDR, traceability, documents and samples: find all answers on our FAQ page.",
+      "viewAll": "View full FAQ",
       "docs": {
         "question": "What documents do you provide?",
         "answer": "COA (Certificate of Analysis), phytosanitary certificate, certificate of origin, packing list, Bill of Lading."
@@ -886,7 +895,9 @@
     "partner": "SCPB USA/International",
     "links": {
       "quality": "Quality & compliance",
-      "contact": "Contact us"
+      "contact": "Contact us",
+      "partners": "Partners",
+      "eudrGuide": "EUDR guide (PDF)"
     },
     "export": {
       "docs": "COA • Phytosanitary • Certificate of Origin",
@@ -1221,6 +1232,313 @@
       "disclaimer": "Aggregated internal data. May vary by season, availability and zones.",
       "source": "Source: STE-SCPB shipping records – Non-contractual data."
     }
+  },
+  "eudrProof": {
+    "badge": "Compliance & proof",
+    "title": "Traceable cocoa, EUDR-ready",
+    "subtitle": "GPS-mapped plots, due diligence dossier and lot-to-plot traceability, built into every SCPB export via CocoaTrack.",
+    "items": {
+      "traceability": {
+        "title": "Lot → plot traceability",
+        "description": "Every lot is linked to documented producers and origin zones."
+      },
+      "gps": {
+        "title": "GPS-mapped farms",
+        "description": "Geolocation of production areas for EUDR due diligence."
+      },
+      "dds": {
+        "title": "Exportable DDS dossier",
+        "description": "Structured documentation for your compliance declarations."
+      },
+      "cocoatrack": {
+        "title": "CocoaTrack platform",
+        "description": "Field data, satellite checks and document compliance in one flow."
+      }
+    },
+    "cta": {
+      "eudr": "EUDR compliance guide",
+      "cocoatrack": "Discover CocoaTrack"
+    }
+  },
+  "partnerTeaser": {
+    "title": "Strategic partnerships",
+    "description": "SCPB works with trusted partners for quality, logistics and traceability.",
+    "partners": "AFREXIA · KAMER AGRO LLC",
+    "cta": "View our partners"
+  },
+  "leadMagnet": {
+    "formTitle": "Download the EUDR dossier",
+    "formSubtitle": "Due diligence checklist, documentation requirements and SCPB methodology, free PDF.",
+    "name": "Full name",
+    "email": "Work email",
+    "company": "Company",
+    "privacyPrefix": "I accept the",
+    "privacyLink": "privacy policy",
+    "submit": "Download PDF",
+    "submitting": "Sending…",
+    "successTitle": "Your dossier is ready",
+    "successMessage": "Thank you! Click below to download the SCPB EUDR guide.",
+    "downloadButton": "Download PDF",
+    "error": "An error occurred. Please try again."
+  },
+  "booking": {
+    "title": "Schedule a call",
+    "subtitle": "Book a 30-minute slot with our export team.",
+    "iframeTitle": "Cal.com scheduling"
+  },
+  "solutions": {
+    "eudr": {
+      "meta": {
+        "title": "EUDR Compliant Cocoa | STE-SCPB Cameroon",
+        "description": "EUDR-ready cocoa from Cameroon: GPS traceability, due diligence and exportable dossier. SCPB guide and support."
+      },
+      "hero": {
+        "badge": "EU Regulation",
+        "title": "EUDR compliance for your cocoa supply",
+        "subtitle": "Since 30 December 2024, EU operators must prove deforestation-free cocoa. SCPB delivers traceable cocoa and documentation ready for due diligence.",
+        "primaryCta": "Request a quote",
+        "secondaryCta": "View our traceability"
+      },
+      "sections": {
+        "obligation": {
+          "title": "Your regulatory obligation",
+          "description": "EUDR requires due diligence on cocoa imported to the EU: plot mapping, deforestation risk assessment and DDS submission."
+        },
+        "methodology": {
+          "title": "Our methodology",
+          "description": "Field GPS collection, lot aggregation, quality controls and document consolidation via CocoaTrack, from cooperative to container."
+        },
+        "documentation": {
+          "title": "Exportable documentation",
+          "description": "Plot sheets, certificates, lab results and lot-to-plot traceability for your audits and declarations."
+        },
+        "cocoatrack": {
+          "title": "Embedded CocoaTrack",
+          "description": "Every SCPB export can rely on our traceability platform, not external SaaS, but origin-integrated assurance."
+        }
+      },
+      "checklist": {
+        "title": "SCPB due diligence checklist",
+        "subtitle": "Download our PDF guide to prepare EUDR compliance with a Cameroonian supplier.",
+        "items": {
+          "gps": "GPS mapping of production zones",
+          "risk": "Deforestation risk assessment by zone",
+          "dds": "Exportable DDS dossier structure",
+          "chain": "Documented lot → plot → producer chain"
+        },
+        "cocoatrackCta": "Learn more about CocoaTrack"
+      }
+    },
+    "traceability": {
+      "meta": {
+        "title": "Cocoa Traceability Cameroon | GPS Plots | STE-SCPB",
+        "description": "SCPB cocoa traceability: mapped zones, 500+ producers, lot-to-plot chain to Douala export."
+      },
+      "hero": {
+        "badge": "Documented origin",
+        "title": "Cocoa traceability from farmer to container",
+        "subtitle": "GPS zones, field collection and document consolidation, the foundation of EUDR compliance and buyer trust.",
+        "primaryCta": "Request a quote",
+        "secondaryCta": "EUDR guide"
+      },
+      "map": {
+        "title": "Mapped production zones",
+        "subtitle": "Plots and producers across Cameroon's main cocoa regions."
+      },
+      "process": {
+        "title": "Traceability chain",
+        "steps": {
+          "origin": { "title": "Origin", "description": "GPS registration of plots and partner producers." },
+          "collection": { "title": "Collection", "description": "Lot aggregation with CocoaTrack field data." },
+          "processing": { "title": "Processing", "description": "Fermentation, drying and sorting with documented QC." },
+          "export": { "title": "Export", "description": "Douala container with full lot-to-plot dossier." }
+        }
+      },
+      "cta": {
+        "text": "See how CocoaTrack digitizes every traceability step.",
+        "button": "CocoaTrack platform"
+      }
+    },
+    "cocoatrack": {
+      "meta": {
+        "title": "CocoaTrack | Traceability & EUDR | STE-SCPB",
+        "description": "CocoaTrack: GPS plots, field collection, satellite checks and EUDR dossier, SCPB's integrated traceability platform."
+      },
+      "hero": {
+        "badge": "SCPB Platform",
+        "title": "CocoaTrack, embedded traceability & compliance",
+        "subtitle": "Not generic software: the digital guarantee of every SCPB export lot, from Cameroonian plot to your factory.",
+        "primaryCta": "Request a demo",
+        "secondaryCta": "EUDR guide"
+      },
+      "intro": {
+        "title": "Key features",
+        "description": "CocoaTrack covers field collection, mapping, document compliance and buyer reporting."
+      },
+      "video": {
+        "title": "CocoaTrack demo",
+        "subtitle": "Walk through the platform: GPS plots, field collection and EUDR compliance dossier.",
+        "play": "Play demo video",
+        "unsupported": "Your browser does not support video playback.",
+        "unavailable": "The demo video will be available soon. Contact us for a live demo.",
+        "hint": "Click play to start. Recommended: 2–4 min MP4 (H.264)."
+      },
+      "features": {
+        "parcels": { "title": "GPS plots", "description": "Mapping and registration of production zones per producer." },
+        "field": { "title": "Field collection", "description": "Mobile capture of harvest, quality and volume data per lot." },
+        "satellite": { "title": "Satellite monitoring", "description": "Zone analysis for deforestation risk (EUDR)." },
+        "compliance": { "title": "Document compliance", "description": "Structured DDS dossier and exportable files for audits." },
+        "dashboard": { "title": "Dashboard", "description": "Consolidated view of lots, producers and compliance status." },
+        "mobile": { "title": "Mobile access", "description": "Field agents and cooperatives connected in real time." }
+      },
+      "demo": {
+        "title": "Request a demonstration",
+        "description": "30 minutes with our team to see CocoaTrack and discuss your EUDR / traceability needs.",
+        "portalCta": "Explore interactive demo",
+        "primaryCta": "Book a demo",
+        "secondaryCta": "Request cocoa quote"
+      }
+    },
+    "partners": {
+      "meta": {
+        "title": "Partners | AFREXIA & KAMER AGRO | STE-SCPB",
+        "description": "SCPB strategic partnerships: AFREXIA (traceability & quality) and KAMER AGRO LLC (USA)."
+      },
+      "hero": {
+        "badge": "SCPB ecosystem",
+        "title": "Our strategic partners",
+        "subtitle": "Alliances that strengthen quality, traceability and SCPB's international presence."
+      }
+    }
+  },
+  "traceability": {
+    "map": {
+      "unavailable": "Map unavailable, Mapbox token not configured.",
+      "producers": "{count} mapped producers",
+      "zones": {
+        "centre": "Centre Region",
+        "sud": "South Region",
+        "littoral": "Littoral (hinterland)",
+        "est": "East Region"
+      }
+    }
+  },
+  "faqPage": {
+    "meta": {
+      "title": "FAQ Cocoa Export & EUDR | STE-SCPB",
+      "description": "Frequently asked questions: cocoa export, EUDR compliance, CocoaTrack traceability, documents and samples."
+    },
+    "hero": {
+      "title": "Frequently asked questions",
+      "subtitle": "Export, EUDR compliance, traceability and commercial terms."
+    },
+    "sections": {
+      "export": {
+        "title": "Export & documents",
+        "items": {
+          "docs": {
+            "question": "Which documents do you provide?",
+            "answer": "COA, phytosanitary certificate, certificate of origin, packing list, Bill of Lading and traceability dossier on request."
+          },
+          "destinations": { "question": "Which destinations do you cover?", "answer": "EU, USA, Asia and Africa. Shipment from Douala and Kribi." },
+          "incoterms": { "question": "Which Incoterms do you offer?", "answer": "FOB Douala/Kribi, CIF and DAP depending on destination and volume." },
+          "sample": { "question": "How to request a sample?", "answer": "Via the quote form selecting Sample, or contact us directly. Up to 2 kg depending on product." }
+        }
+      },
+      "eudr": {
+        "title": "EUDR compliance",
+        "items": {
+          "deadline": { "question": "Does EUDR apply to my cocoa supply?", "answer": "If you import or place cocoa on the EU market, deforestation due diligence applies since 30 Dec 2024." },
+          "dds": { "question": "Do you provide a DDS dossier?", "answer": "Yes. SCPB structures plot data, risks and lot-to-plot chain for your declarations." },
+          "scpbRole": { "question": "What is SCPB's role in my compliance?", "answer": "We document origin and traceability upstream. You remain responsible for final submission to authorities." },
+          "cocoatrack": { "question": "What is CocoaTrack?", "answer": "Our field collection, GPS mapping and document platform integrated into every SCPB export." }
+        }
+      },
+      "traceability": {
+        "title": "Traceability",
+        "items": {
+          "method": { "question": "How does your traceability work?", "answer": "GPS plot registration, lot collection, quality controls and container link with full dossier." },
+          "gps": { "question": "Are plots geolocated?", "answer": "Yes. Production zones mapped and linked to exported lots via CocoaTrack." },
+          "lot": { "question": "Can I trace from container to plot?", "answer": "Yes. Each exported lot is documented with associated plots and partner producers." }
+        }
+      },
+      "commercial": {
+        "title": "Commercial",
+        "items": {
+          "response": { "question": "Quote response time?", "answer": "24-48 business hours for an initial reply." },
+          "payment": { "question": "Payment terms?", "answer": "LC, deposit + balance or negotiated terms for recurring partners." },
+          "nda": { "question": "Do you offer an NDA?", "answer": "Yes, on request for sensitive commercial exchanges or deep audits." }
+        }
+      }
+    },
+    "cta": { "title": "A specific question?", "subtitle": "Our export team replies within 24-48 h.", "contact": "Contact us", "quote": "Request a quote" }
+  },
+  "useCases": {
+    "meta": { "title": "Use cases | Traceable cocoa & EUDR | STE-SCPB", "description": "How chocolatiers, industrials and traders use SCPB and CocoaTrack for compliant sourcing." },
+    "hero": { "title": "Use cases", "subtitle": "Different buyer profiles, one foundation: documented traceability and EUDR compliance." },
+    "labels": { "challenge": "Challenge", "solution": "SCPB solution", "result": "Outcome" },
+    "cases": {
+      "chocolatier": {
+        "title": "Premium EU chocolatier",
+        "profile": "50-200 t/year, terroir + EUDR",
+        "challenge": "Prove Cameroon origin and deforestation-free supply for brand and client audits.",
+        "solution": "Lot-to-plot cocoa, exportable DDS dossier and consistent quality samples.",
+        "result": "Faster EUDR compliance and credible origin story for B2B clients."
+      },
+      "industrial": {
+        "title": "Industrial processor",
+        "profile": "500+ t/year, regular volumes",
+        "challenge": "Secure volumes with homogeneous documentation across EU production sites.",
+        "solution": "Framework contracts, CocoaTrack document consolidation and predictable shipping.",
+        "result": "Less import friction and standardized traceability on every delivery."
+      },
+      "trader": {
+        "title": "International trader",
+        "profile": "Multi-destination resale",
+        "challenge": "Resell Cameroon origin with transferable proof for end buyers.",
+        "solution": "Full lot dossier (GPS, risks, certificates) ready for their due diligence.",
+        "result": "Documented origin positioning vs opaque lots."
+      }
+    },
+    "cta": { "text": "Explore the interactive CocoaTrack demo with anonymized plots and sample dossier.", "demo": "View CocoaTrack demo", "quote": "Request a quote" }
+  },
+  "cocoatrackDemo": {
+    "meta": { "title": "CocoaTrack demo | Plots & EUDR dossier | STE-SCPB", "description": "Interactive demo: anonymized plot map and due diligence dossier preview." },
+    "hero": { "badge": "Public demo", "title": "CocoaTrack demonstration portal", "subtitle": "Anonymized illustrative data. Contact us for a personalized demo." },
+    "map": {
+      "heading": "Mapped plots (anonymized data)",
+      "disclaimer": "Approximate coordinates, producers not identified. Not a contractual dossier.",
+      "unavailable": "Map unavailable.",
+      "area": "{ha} ha",
+      "zones": { "centre": "Centre zone", "sud": "South zone", "littoral": "Littoral zone", "est": "East zone" },
+      "risk": { "low": "Low risk", "medium": "Medium risk", "verified": "Verified" }
+    },
+    "dossier": {
+      "heading": "Due diligence dossier preview",
+      "title": "DDS dossier (demo extract)",
+      "subtitle": "Typical SCPB export dossier structure for EUDR compliance.",
+      "lotId": "Lot no.",
+      "volume": "Volume",
+      "parcels": "Plots",
+      "harvest": "Harvest",
+      "disclaimer": "Demonstration document. Real data provided per lot on export.",
+      "sections": {
+        "origin": { "title": "Origin & producers", "content": "8 partner producers across 10 mapped plots in Centre and South regions (Cameroon)." },
+        "gps": { "title": "Geolocation", "content": "Plot polygons in GeoJSON format, collected via CocoaTrack and verified in the field." },
+        "risk": { "title": "Risk assessment", "content": "Satellite zone analysis, low/medium classification, 3-season harvest history." },
+        "chain": { "title": "Lot → plot chain", "content": "LOT-2026-0047 aggregates plots P-0142 to P-0502 with timestamped collection log." },
+        "certificates": { "title": "Certificates & analyses", "content": "Documents available for this lot (see below)." }
+      },
+      "certItems": { "phyto": "Phytosanitary certificate", "origin": "Certificate of origin", "coa": "COA (Certificate of Analysis)" }
+    },
+    "cta": { "title": "Book a live demo", "subtitle": "30 minutes with our team on your volumes, zones and EUDR requirements.", "primary": "Book a demo", "secondary": "EUDR compliance guide" }
+  },
+  "newsEditorial": {
+    "title": "EUDR & traceability insights",
+    "description": "Articles on compliance, Cameroon terroirs and cocoa export. Editorial target: 2 posts per month.",
+    "eudrLink": "SCPB EUDR guide",
+    "allArticles": "All articles",
+    "empty": "Upcoming EUDR and traceability articles will appear here."
   },
   "notFound": {
     "title": "Page not found",

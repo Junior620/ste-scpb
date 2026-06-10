@@ -52,7 +52,7 @@ const PROCESS_STEPS = [
 const STATS = [
   { value: '40 000 MT', key: '0' },
   { value: '5+', key: '1' },
-  { value: '20+', key: '2' },
+  { value: '500+', key: '2' },
   { value: '15', key: '3' },
 ];
 

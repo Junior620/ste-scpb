@@ -28,6 +28,8 @@ export const RECAPTCHA_ACTIONS = {
   contact: 'contact_submit',
   rfq: 'rfq_submit',
   newsletter: 'newsletter_subscribe',
+  sampleRequest: 'sample_request_submit',
+  leadMagnet: 'lead_magnet_download',
 } as const;
 
 export type RecaptchaAction = (typeof RECAPTCHA_ACTIONS)[keyof typeof RECAPTCHA_ACTIONS];
@@ -75,7 +77,7 @@ export class RecaptchaService {
 
   /**
    * Verifies a reCAPTCHA token
-   * 
+   *
    * @param token - The reCAPTCHA token from the client
    * @param expectedAction - The expected action name
    * @param remoteIp - Optional client IP for better abuse detection
@@ -97,14 +99,11 @@ export class RecaptchaService {
     }
 
     try {
-      const response = await fetch(
-        'https://www.google.com/recaptcha/api/siteverify',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString(),
-        }
-      );
+      const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      });
 
       if (!response.ok) {
         return {
@@ -181,9 +180,7 @@ export function createRecaptchaService(): RecaptchaService {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
   if (!secretKey) {
-    throw new Error(
-      'Missing RECAPTCHA_SECRET_KEY environment variable'
-    );
+    throw new Error('Missing RECAPTCHA_SECRET_KEY environment variable');
   }
 
   return new RecaptchaService({
@@ -195,7 +192,7 @@ export function createRecaptchaService(): RecaptchaService {
 /**
  * Verifies a reCAPTCHA token using the default service
  * Convenience function for API routes
- * 
+ *
  * @param token - The reCAPTCHA token from the client
  * @param action - The expected action name
  * @param remoteIp - Optional client IP

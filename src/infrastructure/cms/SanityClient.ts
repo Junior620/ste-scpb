@@ -1,5 +1,5 @@
 import { createClient, type SanityClient as SanityClientType } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+import { createImageUrlBuilder, type ImageUrlBuilder } from '@sanity/image-url';
 import type { CMSClient, CMSErrorCode } from './CMSClient';
 import { CMSError } from './CMSClient';
 import type { Product, ConstellationConfig } from '@/domain/entities/Product';
@@ -224,24 +224,48 @@ interface SanityImage {
  * Implements CMSClient interface for Sanity
  */
 export class SanityClient implements CMSClient {
+  /** Public read client (CDN, no token) */
   private readonly client: SanityClientType;
-  private readonly imageBuilder: ReturnType<typeof imageUrlBuilder>;
+  /** Authenticated client for mutations — requires SANITY_API_TOKEN */
+  private readonly writeClient: SanityClientType | null;
+  private readonly imageBuilder: ImageUrlBuilder;
   private readonly cacheTTL: number;
   private readonly cache: Map<string, CacheEntry<unknown>> = new Map();
 
   constructor(config: SanityClientConfig) {
+    // Public reads via CDN — avoids 401 when token is missing, expired, or placeholder
     this.client = createClient({
       projectId: config.projectId,
       dataset: config.dataset,
-      token: config.apiToken,
-      useCdn: config.useCdn ?? true,
+      useCdn: true,
       apiVersion: '2024-01-01',
     });
-    this.imageBuilder = imageUrlBuilder(this.client);
-    // Use 5 minutes cache TTL as per performance optimization requirements
-    // Shorter cache in development for faster iteration
+
+    this.writeClient = config.apiToken
+      ? createClient({
+          projectId: config.projectId,
+          dataset: config.dataset,
+          token: config.apiToken,
+          useCdn: false,
+          apiVersion: '2024-01-01',
+        })
+      : null;
+
+    this.imageBuilder = createImageUrlBuilder(this.client);
     const isDev = process.env.NODE_ENV === 'development';
-    this.cacheTTL = isDev ? 60 : (config.cacheTTL ?? 300); // 1 min in dev, 5 min in prod
+    this.cacheTTL = isDev ? 60 : (config.cacheTTL ?? 300);
+  }
+
+  /**
+   * Returns an authenticated Sanity client for create/patch/delete operations.
+   */
+  getWriteClient(): SanityClientType {
+    if (!this.writeClient) {
+      throw new Error(
+        'SANITY_API_TOKEN is required for write operations. Set a valid token in .env.local.'
+      );
+    }
+    return this.writeClient;
   }
 
   /**
@@ -302,6 +326,9 @@ export class SanityClient implements CMSClient {
   private mapErrorToCode(error: unknown): CMSErrorCode {
     if (error instanceof Error) {
       if (error.message.includes('401') || error.message.includes('403')) {
+        return 'UNAUTHORIZED';
+      }
+      if (error.message.includes('Unauthorized') || error.message.includes('Session not found')) {
         return 'UNAUTHORIZED';
       }
       if (error.message.includes('404')) {
@@ -908,7 +935,6 @@ export function createSanityClient(): SanityClient {
     projectId,
     dataset,
     apiToken,
-    useCdn: process.env.NODE_ENV === 'production',
     cacheTTL: parseInt(process.env.CMS_CACHE_TTL ?? '300', 10),
   });
 }

@@ -6,6 +6,7 @@ import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { LazyMapSection, LazyContactHero } from '@/components/sections';
+import { CalComEmbed } from '@/components/ui/CalComEmbed';
 import { StaticHeroFallback } from '@/components/3d';
 
 interface ContactPageProps {
@@ -172,6 +173,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
           </div>
         </div>
       </div>
+
+      <CalComEmbed />
 
       {/* Map Section - Lazy loaded with viewport intersection */}
       <LazyMapSection />

@@ -27,12 +27,12 @@ export function PriceMarquee({ prices, speed = 30, className = '' }: PriceMarque
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-[100] overflow-hidden bg-gradient-to-r from-background-secondary via-background-tertiary to-background-secondary border-b border-primary/20 shadow-lg ${className}`}
+      className={`fixed top-0 left-0 right-0 z-[100] h-7 overflow-hidden bg-gradient-to-r from-background-secondary via-background-tertiary to-background-secondary border-b border-primary/20 shadow-lg ${className}`}
     >
       {/* Animated shimmer effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-shimmer" />
 
-      <div className="relative flex items-center h-full">
+      <div className="relative flex items-center h-7">
         {/* Label fixe sur la gauche */}
         <div className="absolute left-0 top-0 bottom-0 z-10 flex items-center px-3 bg-gradient-to-r from-background-secondary via-background-secondary to-transparent">
           <div className="flex items-center gap-2 pr-4">

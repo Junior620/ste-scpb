@@ -11,7 +11,7 @@ import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { Confetti } from '@/components/ui/Confetti';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import { Clock, FileText, Package, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { Clock, FileText, Package, ArrowRight } from 'lucide-react';
 
 /**
  * ContactForm Component - Simplified for info/questions
@@ -41,7 +41,6 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const { trackContactSubmission } = useAnalytics();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -146,10 +145,6 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
     { value: 'cameroon', label: t('form.assistanceCountries.cameroon') },
     { value: 'usa', label: t('form.assistanceCountries.usa') },
   ];
-
-  const toggleFaq = (key: string) => {
-    setExpandedFaq(expandedFaq === key ? null : key);
-  };
 
   if (status === 'success') {
     return (
@@ -378,32 +373,16 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
         </p>
       </form>
 
-      {/* Mini FAQ */}
-      <div className="mt-8 pt-8 border-t border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">{t('faq.title')}</h3>
-        <div className="space-y-2">
-          {['docs', 'destinations', 'sample'].map((key) => (
-            <div key={key} className="border border-border rounded-lg overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleFaq(key)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-background-secondary transition-colors"
-              >
-                <span className="font-medium text-foreground">{t(`faq.${key}.question`)}</span>
-                {expandedFaq === key ? (
-                  <ChevronUp className="w-5 h-5 text-foreground-muted" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-foreground-muted" />
-                )}
-              </button>
-              {expandedFaq === key && (
-                <div className="px-4 pb-4 text-sm text-foreground-muted">
-                  {t(`faq.${key}.answer`)}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      {/* Lien vers la FAQ consolidée */}
+      <div className="mt-8 pt-8 border-t border-border text-center">
+        <h3 className="text-lg font-semibold text-foreground mb-2">{t('faq.title')}</h3>
+        <p className="text-sm text-foreground-muted mb-4">{t('faq.hint')}</p>
+        <Link href="/faq">
+          <Button variant="outline" type="button">
+            {t('faq.viewAll')}
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

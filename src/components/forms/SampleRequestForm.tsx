@@ -117,7 +117,7 @@ export function SampleRequestForm({
       if (siteKey && window.grecaptcha) {
         try {
           recaptchaToken = await window.grecaptcha.execute(siteKey, {
-            action: 'sample_request',
+            action: 'sample_request_submit',
           });
         } catch (error) {
           console.error('reCAPTCHA error:', error);

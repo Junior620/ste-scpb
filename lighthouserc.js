@@ -1,7 +1,7 @@
 /**
  * Lighthouse CI Configuration
  * Validates: Requirements 9.2, 9.3, 3.6 (Scroll Animation Performance), 11.4 (Performance Budgets)
- * 
+ *
  * Performance targets (Requirements 11.4):
  * - FCP budget: 2500ms
  * - LCP budget: 2500ms
@@ -9,12 +9,12 @@
  * - Bundle size budget: 1MB total JavaScript
  * - Desktop: >= 80
  * - Mobile: >= 70
- * 
+ *
  * Scroll Animation Impact (Requirements 3.6):
  * - LCP should not be negatively impacted by scroll animations
  * - CLS should remain at 0 (animations use transform/opacity only)
  * - ScrollReveal uses GPU-accelerated properties to avoid layout shifts
- * 
+ *
  * Note: TTFB (Time to First Byte) is best monitored through:
  * - Server-Timing headers in production
  * - Vercel Analytics Real Experience Score
@@ -27,13 +27,18 @@ module.exports = {
     collect: {
       // URLs to audit - includes pages with ScrollReveal animations
       url: [
-        'http://localhost:3000/',           // Homepage with ProductsPreview, CTASection, CertificationsSection
-        'http://localhost:3000/fr',         // French homepage
-        'http://localhost:3000/en',         // English homepage
+        'http://localhost:3000/', // Homepage with ProductsPreview, CTASection, CertificationsSection
+        'http://localhost:3000/fr', // French homepage
+        'http://localhost:3000/en', // English homepage
         'http://localhost:3000/fr/produits', // Products page with animated cards
-        'http://localhost:3000/fr/contact',  // Contact page
+        'http://localhost:3000/fr/contact', // Contact page
         'http://localhost:3000/fr/statistiques', // Statistics page with ScrollReveal
         'http://localhost:3000/fr/a-propos', // About page with AboutHero values
+        'http://localhost:3000/fr/conformite-eudr',
+        'http://localhost:3000/fr/cocoatrack',
+        'http://localhost:3000/fr/cocoatrack/demo',
+        'http://localhost:3000/fr/faq',
+        'http://localhost:3000/fr/cas-usage',
       ],
       // Number of runs per URL
       numberOfRuns: 3,
@@ -51,14 +56,14 @@ module.exports = {
       // Performance assertions
       assertions: {
         // Desktop performance >= 80
-        'categories:performance': ['warn', { minScore: 0.8 }],
+        'categories:performance': ['error', { minScore: 0.8 }],
         // Accessibility >= 90
-        'categories:accessibility': ['warn', { minScore: 0.9 }],
+        'categories:accessibility': ['error', { minScore: 0.9 }],
         // Best practices >= 90
-        'categories:best-practices': ['warn', { minScore: 0.9 }],
+        'categories:best-practices': ['error', { minScore: 0.9 }],
         // SEO >= 90
-        'categories:seo': ['warn', { minScore: 0.9 }],
-        
+        'categories:seo': ['error', { minScore: 0.9 }],
+
         // Core Web Vitals - Performance Optimization Requirements (Req 11.4)
         // FCP budget: 2500ms (Requirements 11.4)
         'first-contentful-paint': ['error', { maxNumericValue: 2500 }],
@@ -70,7 +75,7 @@ module.exports = {
         // No layout-affecting properties = no layout shift
         'cumulative-layout-shift': ['warn', { maxNumericValue: 0.1 }],
         'total-blocking-time': ['warn', { maxNumericValue: 300 }],
-        
+
         // Performance budgets (Requirements 11.4)
         // Bundle size budget: 1MB total
         'resource-summary:script:size': ['error', { maxNumericValue: 1048576 }], // 1MB in bytes

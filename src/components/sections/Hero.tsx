@@ -85,7 +85,7 @@ export function Hero({ className = '' }: HeroProps) {
         {/* Static poster image for immediate LCP */}
         {!isClient && (
           <img
-            src="/og-image.png"
+            src="/api/og"
             alt="Hero background"
             className="absolute inset-0 h-full w-full object-cover"
             fetchPriority="high"
@@ -106,7 +106,7 @@ export function Hero({ className = '' }: HeroProps) {
                   videoRefs.current[index] = el;
                 }}
                 src={shouldLoad ? video : undefined}
-                poster={index === 0 ? '/og-image.png' : undefined} // Poster for first video only
+                poster={index === 0 ? '/api/og' : undefined}
                 autoPlay={isCurrentVideo && shouldLoad} // Only autoplay the current video
                 loop
                 muted
@@ -150,10 +150,15 @@ export function Hero({ className = '' }: HeroProps) {
                 {t('cta.quote')}
               </Button>
             </Link>
-            <Link href="/produits/cacao">
+            <Link href="/conformite-eudr">
               <Button variant="outline" size="lg" className="min-w-[220px]">
-                {t('cta.products')}
+                {t('cta.eudr')}
               </Button>
+            </Link>
+          </div>
+          <div className="mt-4 flex justify-center animate-fade-in-up animation-delay-600">
+            <Link href="/produits/cacao" className="text-sm text-primary hover:underline">
+              {t('cta.products')} →
             </Link>
           </div>
 

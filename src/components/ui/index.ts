@@ -11,8 +11,6 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export type { CardProps, CardVariant } from './Card';
 export { Modal, ModalFooter } from './Modal';
 export type { ModalProps, ModalSize } from './Modal';
-export { MegaMenu } from './MegaMenu';
-export type { MegaMenuProps, ProductCategory, NavItem } from './MegaMenu';
 export { StickyQuoteCTA } from './StickyQuoteCTA';
 export type { StickyQuoteCTAProps } from './StickyQuoteCTA';
 export { CookieBanner, useCookiePreferences } from './CookieBanner';

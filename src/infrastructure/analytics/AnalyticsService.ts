@@ -10,7 +10,8 @@ export type ConversionEventType =
   | 'contact_submission'
   | 'newsletter_signup'
   | 'product_view'
-  | 'page_view';
+  | 'page_view'
+  | 'brochure_download';
 
 export interface ConversionEventData {
   event_type: ConversionEventType;
@@ -193,6 +194,7 @@ export class GA4AnalyticsService implements AnalyticsService {
       newsletter_signup: 'sign_up',
       product_view: 'view_item',
       page_view: 'page_view',
+      brochure_download: 'file_download',
     };
 
     return eventMap[eventType] || eventType;

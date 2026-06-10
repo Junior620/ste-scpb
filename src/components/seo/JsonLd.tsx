@@ -11,8 +11,8 @@
  */
 
 import type { Locale } from '@/domain/value-objects/Locale';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
+import { BASE_URL } from '@/i18n/metadata';
+import { resolveLocalizedPath } from '@/i18n/localized-url';
 
 // Unique IDs for schema deduplication (Google best practice)
 const ORGANIZATION_ID = `${BASE_URL}/#organization`;
@@ -35,7 +35,7 @@ export function WebSiteJsonLd({ locale }: { locale: Locale }) {
   // Search is now implemented on /produits with ?q= parameter
   const hasWorkingSearch = true;
 
-  const productsPath = locale === 'fr' ? '/fr/produits' : '/en/products';
+  const productsPath = resolveLocalizedPath(locale, '/produits');
 
   const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -47,7 +47,7 @@ export function WebSiteJsonLd({ locale }: { locale: Locale }) {
       locale === 'fr'
         ? 'Export de produits agricoles camerounais - Cacao, Café, Bois, Maïs'
         : 'Cameroonian agricultural products export - Cocoa, Coffee, Wood, Corn',
-    inLanguage: ['fr', 'en'],
+    inLanguage: ['fr', 'en', 'ru'],
     publisher: { '@id': ORGANIZATION_ID },
   };
 
@@ -78,7 +78,7 @@ export function OrganizationJsonLd() {
     image: `${BASE_URL}/logo.png`, // Google recommends image in addition to logo
     description:
       'Société camerounaise spécialisée dans le commerce de produits agricoles et matières premières: cacao, café, bois, maïs.',
-    email: 'direction@scpb-kameragro.com',
+    email: 'scpb@ste-scpb.com',
     telephone: '+237676905938',
     address: {
       '@type': 'PostalAddress',
@@ -92,6 +92,9 @@ export function OrganizationJsonLd() {
     areaServed: ['CM', 'FR', 'EU', 'US'],
     knowsAbout: [
       'cocoa export',
+      'EUDR compliance',
+      'cocoa traceability',
+      'CocoaTrack',
       'coffee export',
       'wood export',
       'corn export',
@@ -100,18 +103,16 @@ export function OrganizationJsonLd() {
       'agricultural commodities',
       'B2B trading',
     ],
-    // Social links - add URLs when available (LinkedIn, Facebook, etc.)
     sameAs: [
-      // 'https://www.linkedin.com/company/ste-scpb',
-      // 'https://www.facebook.com/ste-scpb',
+      ...(process.env.NEXT_PUBLIC_LINKEDIN_URL ? [process.env.NEXT_PUBLIC_LINKEDIN_URL] : []),
     ],
     contactPoint: [
       {
         '@type': 'ContactPoint',
         contactType: 'sales',
         telephone: '+237676905938',
-        email: 'direction@scpb-kameragro.com',
-        availableLanguage: ['fr', 'en'],
+        email: 'scpb@ste-scpb.com',
+        availableLanguage: ['fr', 'en', 'ru'],
       },
       {
         '@type': 'ContactPoint',

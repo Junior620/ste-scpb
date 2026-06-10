@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { RFQForm } from '@/components/forms/RFQForm';
+import { CalComEmbed } from '@/components/ui/CalComEmbed';
 import { Clock, FileCheck, Ship } from 'lucide-react';
 import { BackButton } from '@/components/ui';
 
@@ -78,6 +79,7 @@ export default async function DevisPage({ params }: DevisPageProps) {
           </div>
         </div>
       </div>
+      <CalComEmbed />
     </main>
   );
 }

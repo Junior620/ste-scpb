@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 export async function POST() {
   try {
     const sanityClient = createSanityClient();
-    const client = sanityClient['client'];
+    const client = sanityClient.getWriteClient();
 
     // Fetch all existing commodity prices
     const query = `*[_type == "commodityPrice"] {

@@ -15,12 +15,13 @@ export function Header() {
   const navLinks = [
     { href: '/', label: t('home') },
     { href: '/produits', label: t('products') },
+    { href: '/conformite-eudr', label: t('eudr') },
+    { href: '/cocoatrack', label: t('cocoatrack') },
     { href: '/a-propos', label: t('about') },
-    { href: '/equipe', label: t('team') },
-    { href: '/statistiques', label: t('statistics') },
     { href: '/actualites', label: t('news') },
+    { href: '/faq', label: t('faq') },
     { href: '/contact', label: t('contact') },
-  ];
+  ] as const;
 
   return (
     <header className="fixed top-[28px] left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">

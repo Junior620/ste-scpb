@@ -50,39 +50,12 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RP92153GZ" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-2RP92153GZ');
-            `,
-          }}
-        />
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />
-        {/* 
-          Preconnect to critical third-party domains for faster resource loading
-          This establishes early connections to reduce latency
-        */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.sanity.io" />
-        {/*
-          DNS prefetch for analytics and non-critical third-party domains
-          Fallback for browsers that don't support preconnect
-        */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vercel-insights.com" />
-        {/*
-          Print stylesheet loaded separately with media="print"
-          This prevents print styles from blocking initial page render
-        */}
         <link rel="stylesheet" href="/print.css" media="print" />
       </head>
       <body className={`${montserrat.variable} antialiased`}>

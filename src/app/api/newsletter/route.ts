@@ -1,18 +1,17 @@
 /**
  * Newsletter Subscription API Route
- * Validates: Requirements 8.2, 8.5
- * 
+ *
  * Security measures:
  * - Zod validation
  * - Rate limiting (3 requests/hour per IP)
- * - reCAPTCHA v3 verification
- * - Double opt-in flow
- * - Already subscribed handling
+ * - reCAPTCHA v3 verification (required in production)
+ * - Double opt-in flow with Upstash Redis persistence
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { newsletterSchema } from '@/lib/validation';
-import { verifyRecaptcha, RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { requireRecaptcha } from '@/lib/require-recaptcha';
 import {
   getNewsletterLimiter,
   checkRateLimit,
@@ -23,65 +22,60 @@ import {
   generateNewsletterConfirmationHtml,
   generateNewsletterConfirmationText,
 } from '@/infrastructure/email/templates/newsletter-confirmation';
+import { submitLead } from '@/lib/submit-lead';
+import {
+  confirmNewsletterSubscription,
+  isNewsletterStorageAvailable,
+  isNewsletterSubscribed,
+  removePendingNewsletterConfirmation,
+  savePendingNewsletterConfirmation,
+} from '@/infrastructure/newsletter/NewsletterStore';
+import { BASE_URL } from '@/i18n/metadata';
 
-/**
- * Newsletter subscription request body
- */
 interface NewsletterSubscriptionBody {
   email: string;
   consent: boolean;
   recaptchaToken?: string;
 }
 
-/**
- * Simple in-memory store for subscribed emails
- * In production, this would be a database or external service (e.g., Mailchimp, Sendinblue)
- */
-const subscribedEmails = new Set<string>();
-const pendingConfirmations = new Map<string, { email: string; expiresAt: Date }>();
+const CONFIRMATION_TTL_SECONDS = 24 * 60 * 60;
 
-/**
- * Generates a confirmation token
- */
 function generateConfirmationToken(): string {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
   return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
-/**
- * Minimal logging for audit purposes
- */
-function logSubscription(data: {
-  timestamp: Date;
-  success: boolean;
-  errorType?: string;
-}) {
-  console.log('[NEWSLETTER_SUBSCRIPTION]', JSON.stringify({
-    timestamp: data.timestamp.toISOString(),
-    success: data.success,
-    ...(data.errorType && { errorType: data.errorType }),
-  }));
+function logSubscription(data: { timestamp: Date; success: boolean; errorType?: string }) {
+  console.log(
+    '[NEWSLETTER_SUBSCRIPTION]',
+    JSON.stringify({
+      timestamp: data.timestamp.toISOString(),
+      success: data.success,
+      ...(data.errorType && { errorType: data.errorType }),
+    })
+  );
 }
-
 
 export async function POST(request: NextRequest) {
   const submittedAt = new Date();
   const clientIp = getClientIdentifier(request);
 
   try {
-    // 1. Parse request body
+    if (!isNewsletterStorageAvailable()) {
+      return NextResponse.json(
+        { error: 'Service temporairement indisponible. Veuillez réessayer.' },
+        { status: 503 }
+      );
+    }
+
     let body: NewsletterSubscriptionBody;
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: 'Invalid request body' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    // 2. Check rate limit
     try {
       const limiter = getNewsletterLimiter();
       const rateLimitResult = await checkRateLimit(limiter, clientIp);
@@ -112,38 +106,25 @@ export async function POST(request: NextRequest) {
       console.error('[RATE_LIMIT_ERROR]', error);
     }
 
-    // 3. Verify reCAPTCHA (if token provided)
-    if (body.recaptchaToken && process.env.RECAPTCHA_SECRET_KEY) {
-      try {
-        const recaptchaResult = await verifyRecaptcha(
-          body.recaptchaToken,
-          RECAPTCHA_ACTIONS.newsletter,
-          clientIp
-        );
-
-        if (!recaptchaResult.success) {
-          logSubscription({
-            timestamp: submittedAt,
-            success: false,
-            errorType: 'RECAPTCHA_FAILED',
-          });
-
-          return NextResponse.json(
-            { error: 'Vérification de sécurité échouée. Veuillez réessayer.' },
-            { status: 400 }
-          );
-        }
-      } catch (error) {
-        console.error('[RECAPTCHA_ERROR]', error);
-      }
+    const recaptchaCheck = await requireRecaptcha(
+      body.recaptchaToken,
+      RECAPTCHA_ACTIONS.newsletter,
+      clientIp
+    );
+    if (!recaptchaCheck.ok) {
+      logSubscription({
+        timestamp: submittedAt,
+        success: false,
+        errorType: 'RECAPTCHA_FAILED',
+      });
+      return recaptchaCheck.response;
     }
 
-    // 4. Validate form data with Zod
     const validationResult = newsletterSchema.safeParse(body);
 
     if (!validationResult.success) {
       const errors = validationResult.error.flatten();
-      
+
       logSubscription({
         timestamp: submittedAt,
         success: false,
@@ -162,8 +143,7 @@ export async function POST(request: NextRequest) {
     const { email } = validationResult.data;
     const normalizedEmail = email.toLowerCase().trim();
 
-    // 5. Check if already subscribed
-    if (subscribedEmails.has(normalizedEmail)) {
+    if (await isNewsletterSubscribed(normalizedEmail)) {
       logSubscription({
         timestamp: submittedAt,
         success: false,
@@ -179,20 +159,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-
-    // 6. Generate confirmation token and URL (double opt-in)
     const confirmationToken = generateConfirmationToken();
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ste-scpb.com';
-    const confirmationUrl = `${baseUrl}/api/newsletter/confirm?token=${confirmationToken}`;
+    const confirmationUrl = `${BASE_URL}/api/newsletter/confirm?token=${confirmationToken}`;
 
-    // Store pending confirmation (expires in 24 hours)
-    const expiresAt = new Date(submittedAt.getTime() + 24 * 60 * 60 * 1000);
-    pendingConfirmations.set(confirmationToken, {
-      email: normalizedEmail,
-      expiresAt,
-    });
+    await savePendingNewsletterConfirmation(
+      confirmationToken,
+      normalizedEmail,
+      CONFIRMATION_TTL_SECONDS
+    );
 
-    // 7. Send confirmation email
     try {
       const emailService = createResendEmailService();
 
@@ -216,9 +191,7 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       console.error('[EMAIL_ERROR]', error);
-      
-      // Clean up pending confirmation
-      pendingConfirmations.delete(confirmationToken);
+      await removePendingNewsletterConfirmation(confirmationToken);
 
       logSubscription({
         timestamp: submittedAt,
@@ -227,21 +200,31 @@ export async function POST(request: NextRequest) {
       });
 
       return NextResponse.json(
-        { error: 'Erreur lors de l\'envoi de l\'email de confirmation. Veuillez réessayer.' },
+        { error: "Erreur lors de l'envoi de l'email de confirmation. Veuillez réessayer." },
         { status: 500 }
       );
     }
 
-    // 8. Log successful submission
     logSubscription({
       timestamp: submittedAt,
       success: true,
     });
 
+    await submitLead({
+      source: 'newsletter',
+      email: normalizedEmail,
+      locale: (request.headers.get('accept-language') || '').includes('en')
+        ? 'en'
+        : (request.headers.get('accept-language') || '').includes('ru')
+          ? 'ru'
+          : 'fr',
+    });
+
     return NextResponse.json(
       {
         success: true,
-        message: 'Un email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.',
+        message:
+          'Un email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.',
       },
       { status: 200 }
     );
@@ -261,37 +244,27 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * GET handler for confirmation link
- */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token = searchParams.get('token');
+  const locale = searchParams.get('locale') || 'fr';
 
   if (!token) {
-    return NextResponse.redirect(new URL('/newsletter?error=invalid_token', request.url));
+    return NextResponse.redirect(new URL(`/${locale}?newsletter=invalid_token`, BASE_URL));
   }
 
-  const pending = pendingConfirmations.get(token);
+  try {
+    const email = await confirmNewsletterSubscription(token);
 
-  if (!pending) {
-    return NextResponse.redirect(new URL('/newsletter?error=invalid_token', request.url));
+    if (!email) {
+      return NextResponse.redirect(new URL(`/${locale}?newsletter=invalid_token`, BASE_URL));
+    }
+
+    console.log('[NEWSLETTER_CONFIRMED]', JSON.stringify({ timestamp: new Date().toISOString() }));
+
+    return NextResponse.redirect(new URL(`/${locale}?newsletter=confirmed`, BASE_URL));
+  } catch (error) {
+    console.error('[NEWSLETTER_CONFIRM_ERROR]', error);
+    return NextResponse.redirect(new URL(`/${locale}?newsletter=error`, BASE_URL));
   }
-
-  if (new Date() > pending.expiresAt) {
-    pendingConfirmations.delete(token);
-    return NextResponse.redirect(new URL('/newsletter?error=expired', request.url));
-  }
-
-  // Confirm subscription
-  subscribedEmails.add(pending.email);
-  pendingConfirmations.delete(token);
-
-  console.log('[NEWSLETTER_CONFIRMED]', JSON.stringify({
-    timestamp: new Date().toISOString(),
-  }));
-
-  // Redirect to success page
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  return NextResponse.redirect(new URL('/newsletter?confirmed=true', baseUrl || request.url));
 }

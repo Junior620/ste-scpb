@@ -363,7 +363,7 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                 )}
               </div>
               <p className="text-[10px] text-foreground/40 mb-5">
-                Part du volume exporté (12 derniers mois) — Total :{' '}
+                Part du volume exporté (12 derniers mois), total :{' '}
                 {data.kpi.tonnesExported.toLocaleString()} t
               </p>
 

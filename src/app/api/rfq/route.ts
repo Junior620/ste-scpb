@@ -11,7 +11,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { rfqFormSchema } from '@/lib/validation';
-import { verifyRecaptcha, RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { requireRecaptcha } from '@/lib/require-recaptcha';
 import {
   getRfqFormLimiter,
   checkRateLimit,
@@ -28,6 +29,7 @@ import {
   generateRFQConfirmationText,
   generateRFQConfirmationSubject,
 } from '@/infrastructure/email/templates/rfq-confirmation';
+import { submitLead } from '@/lib/submit-lead';
 
 /**
  * RFQ form submission request body
@@ -133,33 +135,21 @@ export async function POST(request: NextRequest) {
       console.error('[RATE_LIMIT_ERROR]', error);
     }
 
-    // 3. Verify reCAPTCHA (if token provided)
-    if (body.recaptchaToken && process.env.RECAPTCHA_SECRET_KEY) {
-      try {
-        const recaptchaResult = await verifyRecaptcha(
-          body.recaptchaToken,
-          RECAPTCHA_ACTIONS.rfq,
-          clientIp
-        );
-
-        if (!recaptchaResult.success) {
-          logSubmission({
-            productCount: body.products?.length || 0,
-            country: body.country || 'unknown',
-            timestamp: submittedAt,
-            success: false,
-            errorType: 'RECAPTCHA_FAILED',
-          });
-
-          return NextResponse.json(
-            { error: 'Vérification de sécurité échouée. Veuillez réessayer.' },
-            { status: 400 }
-          );
-        }
-      } catch (error) {
-        console.error('[RECAPTCHA_ERROR]', error);
-        // Continue without blocking if reCAPTCHA service fails
-      }
+    // 3. Verify reCAPTCHA (required in production)
+    const recaptchaCheck = await requireRecaptcha(
+      body.recaptchaToken,
+      RECAPTCHA_ACTIONS.rfq,
+      clientIp
+    );
+    if (!recaptchaCheck.ok) {
+      logSubmission({
+        productCount: body.products?.length || 0,
+        country: body.country || 'unknown',
+        timestamp: submittedAt,
+        success: false,
+        errorType: 'RECAPTCHA_FAILED',
+      });
+      return recaptchaCheck.response;
     }
 
     // 4. Validate form data with Zod
@@ -292,6 +282,20 @@ export async function POST(request: NextRequest) {
       country: validatedData.country,
       timestamp: submittedAt,
       success: true,
+    });
+
+    await submitLead({
+      source: 'rfq',
+      email: validatedData.email,
+      name: validatedData.contactPerson,
+      company: validatedData.companyName,
+      phone: validatedData.phone,
+      locale,
+      metadata: {
+        country: validatedData.country,
+        productCount: validatedData.products.length,
+        referenceId,
+      },
     });
 
     return NextResponse.json(

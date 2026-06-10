@@ -9,7 +9,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
-import { MapPin, Phone, Mail, Clock, Ship, FileCheck } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Ship, FileCheck, Linkedin } from 'lucide-react';
 import { NewsletterForm } from '@/components/forms/NewsletterForm';
 
 export function Footer() {
@@ -21,11 +21,13 @@ export function Footer() {
   const quickLinks = [
     { href: '/', label: tNav('home') },
     { href: '/produits', label: tNav('products') },
-    { href: '/produits/cacao', label: t('links.quality') },
+    { href: '/conformite-eudr', label: tNav('eudr') },
+    { href: '/tracabilite-cacao', label: tNav('traceability') },
+    { href: '/cocoatrack', label: tNav('cocoatrack') },
+    { href: '/cas-usage', label: tNav('useCases') },
     { href: '/a-propos', label: tNav('about') },
-    { href: '/equipe', label: tNav('team') },
-    { href: '/actualites', label: tNav('news') },
-    { href: '/statistiques', label: tNav('statistics') },
+    { href: '/partenaires', label: t('links.partners') },
+    { href: '/faq', label: tNav('faq') },
     { href: '/devis', label: tNav('quote') },
   ];
 
@@ -86,6 +88,18 @@ export function Footer() {
                 {t('partner')}: <span className="font-medium">KAMER AGRO LLC</span>
               </p>
             </div>
+
+            {process.env.NEXT_PUBLIC_LINKEDIN_URL && (
+              <a
+                href={process.env.NEXT_PUBLIC_LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-4 text-sm text-foreground-muted hover:text-primary transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+                LinkedIn
+              </a>
+            )}
           </div>
 
           {/* Quick Links */}

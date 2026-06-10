@@ -4,7 +4,6 @@
  */
 
 export { Hero, type HeroProps } from './Hero';
-export { Hero3D, type Hero3DProps } from './Hero3D';
 export { LazyContactHero } from './LazyContactHero';
 export { ProductsSection, type ProductsSectionProps } from './ProductsSection';
 export { ProductDetailSection, type ProductDetailSectionProps } from './ProductDetailSection';
@@ -32,10 +31,16 @@ export { LazyMapSection } from './LazyMapSection';
 export { ProductsPreview } from './ProductsPreview';
 export { WorkforceSection } from './WorkforceSection';
 export { TeamPreview } from './TeamPreview';
+export { HomeTeamSection, type HomeTeamSectionProps } from './HomeTeamSection';
 export { CTASection } from './CTASection';
 export { CertificationsSection, type CertificationsSectionProps } from './CertificationsSection';
 export { OtherProductsSection, type OtherProductsSectionProps } from './OtherProductsSection';
 export { StatisticsHero } from './StatisticsHero';
 export { AboutValuesSection, AboutStatsSection } from './AboutSections';
 export { PartnerSection } from './PartnerSection';
+export { PartnerTeaser } from './PartnerTeaser';
+export { EudrProofSection } from './EudrProofSection';
+export { TraceabilityMap } from './TraceabilityMap';
+export { SolutionHero } from './SolutionHero';
+export { CocoaTrackDemoVideo } from './CocoaTrackDemoVideo';
 export { PriceTickerSection } from './PriceTickerSection';

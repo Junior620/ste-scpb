@@ -11,7 +11,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { contactFormSchema, type ContactSubject } from '@/lib/validation';
-import { verifyRecaptcha, RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { RECAPTCHA_ACTIONS } from '@/infrastructure/captcha/RecaptchaService';
+import { requireRecaptcha } from '@/lib/require-recaptcha';
 import {
   getContactFormLimiter,
   checkRateLimit,
@@ -28,6 +29,7 @@ import {
   generateContactConfirmationText,
   generateContactConfirmationSubject,
 } from '@/infrastructure/email/templates/contact-confirmation';
+import { submitLead } from '@/lib/submit-lead';
 
 /**
  * Contact form submission request body (simplified)
@@ -92,6 +94,7 @@ function logSubmission(data: {
 export async function POST(request: NextRequest) {
   const submittedAt = new Date();
   const clientIp = getClientIdentifier(request);
+  const isDev = process.env.NODE_ENV === 'development';
 
   try {
     // 1. Parse request body
@@ -135,34 +138,20 @@ export async function POST(request: NextRequest) {
       console.error('[RATE_LIMIT_ERROR]', error);
     }
 
-    // 3. Verify reCAPTCHA (if token provided and in production)
-    // In development, skip reCAPTCHA verification for easier testing
-    const isDev = process.env.NODE_ENV === 'development';
-    if (body.recaptchaToken && process.env.RECAPTCHA_SECRET_KEY && !isDev) {
-      try {
-        const recaptchaResult = await verifyRecaptcha(
-          body.recaptchaToken,
-          RECAPTCHA_ACTIONS.contact,
-          clientIp
-        );
-
-        if (!recaptchaResult.success) {
-          logSubmission({
-            subject: body.subject,
-            timestamp: submittedAt,
-            success: false,
-            errorType: 'RECAPTCHA_FAILED',
-          });
-
-          return NextResponse.json(
-            { error: 'Vérification de sécurité échouée. Veuillez réessayer.' },
-            { status: 400 }
-          );
-        }
-      } catch (error) {
-        console.error('[RECAPTCHA_ERROR]', error);
-        // Continue without blocking if reCAPTCHA service fails
-      }
+    // 3. Verify reCAPTCHA (required in production)
+    const recaptchaCheck = await requireRecaptcha(
+      body.recaptchaToken,
+      RECAPTCHA_ACTIONS.contact,
+      clientIp
+    );
+    if (!recaptchaCheck.ok) {
+      logSubmission({
+        subject: body.subject || 'unknown',
+        timestamp: submittedAt,
+        success: false,
+        errorType: 'RECAPTCHA_FAILED',
+      });
+      return recaptchaCheck.response;
     }
 
     // 4. Validate form data with Zod
@@ -290,6 +279,20 @@ export async function POST(request: NextRequest) {
       subject: validatedData.subject,
       timestamp: submittedAt,
       success: true,
+    });
+
+    await submitLead({
+      source: 'contact',
+      email: validatedData.email,
+      name: validatedData.name,
+      company: validatedData.company,
+      message: validatedData.message,
+      locale,
+      metadata: {
+        subject: validatedData.subject,
+        assistanceCountry: validatedData.assistanceCountry,
+        referenceId,
+      },
     });
 
     return NextResponse.json(

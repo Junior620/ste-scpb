@@ -44,7 +44,7 @@ export function PriceTickerSection() {
   if (loading) {
     return (
       <section
-        className="w-full h-10 bg-muted/30 animate-pulse"
+        className="fixed top-0 left-0 right-0 z-[100] h-7 bg-muted/30 animate-pulse"
         aria-label="Chargement des prix..."
       />
     );

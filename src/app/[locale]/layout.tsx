@@ -4,7 +4,9 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Locale, isValidLocale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, BASE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/i18n/metadata';
-import { CookieBanner, SkipNavigation, WhatsAppWidget } from '@/components/ui';
+import { CookieBanner, SkipNavigation, WhatsAppWidget, StickyQuoteCTA } from '@/components/ui';
+import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/seo/JsonLd';
+import { SetHtmlLang } from '@/components/providers/SetHtmlLang';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 import { Header, Footer } from '@/components/layout';
 import { PriceTickerSection } from '@/components/sections';
@@ -63,7 +65,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <SetHtmlLang />
+      <OrganizationJsonLd />
+      <WebSiteJsonLd locale={locale as Locale} />
       <AnalyticsProvider>
         <SkipNavigation targetId="main-content" />
         <PriceTickerSection />
@@ -75,6 +80,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </AnalyticsProvider>
       <CookieBanner />
       <WhatsAppWidget />
+      <StickyQuoteCTA />
     </NextIntlClientProvider>
   );
 }

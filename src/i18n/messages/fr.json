@@ -78,7 +78,13 @@
     "quote": "Demander un devis",
     "legalMentions": "Mentions légales",
     "privacyPolicy": "Politique de confidentialité",
-    "featuredProduct": "Produit phare – Export premium"
+    "featuredProduct": "Produit phare – Export premium",
+    "solutions": "Solutions",
+    "eudr": "Conformité EUDR",
+    "traceability": "Traçabilité cacao",
+    "cocoatrack": "CocoaTrack",
+    "faq": "FAQ",
+    "useCases": "Cas d'usage"
   },
   "home": {
     "title": "Cacao fin du Cameroun",
@@ -96,6 +102,7 @@
       "quote": "Demander un devis export",
       "catalog": "Télécharger notre catalogue",
       "products": "Découvrez notre cacao",
+      "eudr": "Guide conformité EUDR",
       "sample": "Demander un échantillon",
       "contactTitle": "Prêt à sourcer votre cacao premium ?",
       "contactDescription": "Recevez une offre export personnalisée. Notre équipe vous accompagne sur les volumes, specs et expédition.",
@@ -429,7 +436,7 @@
         "label": "Années d'expérience"
       },
       "partners": {
-        "value": "20+",
+        "value": "500+",
         "label": "Producteurs partenaires"
       },
       "destinations": {
@@ -448,7 +455,7 @@
     },
     "usaPartnership": {
       "title": "SCPB aux États-Unis et à l'International",
-      "subtitle": "Kamer Agro LLC — SCPB pour le marché nord-américain et international",
+      "subtitle": "Kamer Agro LLC, SCPB pour le marché nord-américain et international",
       "description": "Kamer Agro LLC est l'entité de STE-SCPB dédiée aux opérations commerciales aux États-Unis et sur les marchés internationaux. Basée à New York, Kamer Agro LLC offre un service client local, une logistique optimisée et un accompagnement personnalisé pour tous nos clients nord-américains et internationaux.",
       "benefits": {
         "title": "Avantages pour nos clients américains et internationaux",
@@ -553,6 +560,8 @@
     },
     "faq": {
       "title": "Questions fréquentes",
+      "hint": "Export, EUDR, traçabilité, documents et échantillons : toutes les réponses sur notre page FAQ.",
+      "viewAll": "Voir la FAQ complète",
       "docs": {
         "question": "Quels documents fournissez-vous ?",
         "answer": "COA (Certificate of Analysis), certificat phytosanitaire, certificat d'origine, packing list, Bill of Lading."
@@ -886,7 +895,9 @@
     "partner": "SCPB USA/International",
     "links": {
       "quality": "Qualité & conformité",
-      "contact": "Nous contacter"
+      "contact": "Nous contacter",
+      "partners": "Partenaires",
+      "eudrGuide": "Guide EUDR (PDF)"
     },
     "export": {
       "docs": "COA • Phytosanitaire • Certificat d'origine",
@@ -1221,6 +1232,441 @@
       "disclaimer": "Données internes agrégées. Peut varier selon saison, disponibilité et zones.",
       "source": "Source : registres d'expédition STE-SCPB – Données non contractuelles."
     }
+  },
+  "eudrProof": {
+    "badge": "Conformité & preuves",
+    "title": "Cacao traçable, prêt pour l'EUDR",
+    "subtitle": "Parcelles GPS, dossier de due diligence et traçabilité lot-à-parcelle, intégrés à chaque export SCPB via CocoaTrack.",
+    "items": {
+      "traceability": {
+        "title": "Traçabilité lot → parcelle",
+        "description": "Chaque lot est rattaché aux producteurs et zones d'origine documentées."
+      },
+      "gps": {
+        "title": "Parcelles cartographiées",
+        "description": "Géolocalisation des zones de production pour la due diligence EUDR."
+      },
+      "dds": {
+        "title": "Dossier DDS exportable",
+        "description": "Documentation structurée pour vos déclarations de conformité."
+      },
+      "cocoatrack": {
+        "title": "Plateforme CocoaTrack",
+        "description": "Collecte terrain, contrôle satellite et conformité documentaire en un seul flux."
+      }
+    },
+    "cta": {
+      "eudr": "Guide conformité EUDR",
+      "cocoatrack": "Découvrir CocoaTrack"
+    }
+  },
+  "partnerTeaser": {
+    "title": "Partenariats stratégiques",
+    "description": "SCPB s'appuie sur des partenaires reconnus pour la qualité, la logistique et la traçabilité.",
+    "partners": "AFREXIA · KAMER AGRO LLC",
+    "cta": "Voir nos partenaires"
+  },
+  "leadMagnet": {
+    "formTitle": "Télécharger le dossier EUDR",
+    "formSubtitle": "Checklist due diligence, exigences documentaires et méthodologie SCPB, PDF gratuit.",
+    "name": "Nom complet",
+    "email": "Email professionnel",
+    "company": "Société",
+    "privacyPrefix": "J'accepte la",
+    "privacyLink": "politique de confidentialité",
+    "submit": "Télécharger le PDF",
+    "submitting": "Envoi en cours…",
+    "successTitle": "Votre dossier est prêt",
+    "successMessage": "Merci ! Cliquez ci-dessous pour télécharger le guide EUDR SCPB.",
+    "downloadButton": "Télécharger le PDF",
+    "error": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "booking": {
+    "title": "Planifier un échange",
+    "subtitle": "Réservez un créneau avec notre équipe export (30 min).",
+    "iframeTitle": "Prise de rendez-vous Cal.com"
+  },
+  "solutions": {
+    "eudr": {
+      "meta": {
+        "title": "Conformité EUDR Cacao | STE-SCPB Cameroun",
+        "description": "Cacao conforme EUDR depuis le Cameroun : traçabilité GPS, due diligence et dossier exportable. Guide et accompagnement SCPB."
+      },
+      "hero": {
+        "badge": "Réglementation UE",
+        "title": "Conformité EUDR pour votre approvisionnement cacao",
+        "subtitle": "Depuis le 30 décembre 2024, les opérateurs UE doivent prouver l'absence de déforestation. SCPB fournit cacao traçable et documentation prête pour la due diligence.",
+        "primaryCta": "Demander un devis",
+        "secondaryCta": "Voir notre traçabilité"
+      },
+      "sections": {
+        "obligation": {
+          "title": "Votre obligation réglementaire",
+          "description": "L'EUDR impose une due diligence sur le cacao importé en UE : cartographie des parcelles, évaluation des risques de déforestation et déclaration (DDS)."
+        },
+        "methodology": {
+          "title": "Notre méthodologie",
+          "description": "Collecte GPS terrain, regroupement par lot, contrôles qualité et consolidation documentaire via CocoaTrack, de la coopérative au conteneur."
+        },
+        "documentation": {
+          "title": "Documentation exportable",
+          "description": "Fiches parcelles, certificats, analyses et traçabilité lot-à-parcelle disponibles pour vos audits et déclarations."
+        },
+        "cocoatrack": {
+          "title": "CocoaTrack embarqué",
+          "description": "Chaque export SCPB peut s'appuyer sur notre plateforme de traçabilité, pas un SaaS externe, une garantie intégrée à l'origine."
+        }
+      },
+      "checklist": {
+        "title": "Checklist due diligence SCPB",
+        "subtitle": "Téléchargez notre guide PDF pour préparer votre conformité EUDR avec un fournisseur camerounais.",
+        "items": {
+          "gps": "Cartographie GPS des zones de production",
+          "risk": "Évaluation des risques de déforestation par zone",
+          "dds": "Structure de dossier DDS exportable",
+          "chain": "Chaîne lot → parcelle → producteur documentée"
+        },
+        "cocoatrackCta": "En savoir plus sur CocoaTrack"
+      }
+    },
+    "traceability": {
+      "meta": {
+        "title": "Traçabilité Cacao Cameroun | Parcelles GPS | STE-SCPB",
+        "description": "Méthodologie de traçabilité cacao SCPB : zones cartographiées, 500+ producteurs, chaîne lot-à-parcelle jusqu'à l'export Douala."
+      },
+      "hero": {
+        "badge": "Origine documentée",
+        "title": "Traçabilité cacao du producteur au conteneur",
+        "subtitle": "Zones GPS, collecte terrain et consolidation documentaire, la base de votre conformité EUDR et de la confiance acheteur.",
+        "primaryCta": "Demander un devis",
+        "secondaryCta": "Guide EUDR"
+      },
+      "map": {
+        "title": "Zones de production cartographiées",
+        "subtitle": "Parcelles et producteurs répartis sur les principales régions cacaoyères du Cameroun."
+      },
+      "process": {
+        "title": "Chaîne de traçabilité",
+        "steps": {
+          "origin": {
+            "title": "Origine",
+            "description": "Enregistrement GPS des parcelles et producteurs partenaires."
+          },
+          "collection": {
+            "title": "Collecte",
+            "description": "Agrégation traçée par lot avec données terrain CocoaTrack."
+          },
+          "processing": {
+            "title": "Transformation",
+            "description": "Fermentation, séchage et tri avec contrôles qualité documentés."
+          },
+          "export": {
+            "title": "Export",
+            "description": "Conteneur Douala avec dossier complet lot-à-parcelle."
+          }
+        }
+      },
+      "cta": {
+        "text": "Découvrez comment CocoaTrack digitalise chaque étape de la traçabilité.",
+        "button": "Plateforme CocoaTrack"
+      }
+    },
+    "cocoatrack": {
+      "meta": {
+        "title": "CocoaTrack | Traçabilité & Conformité EUDR | STE-SCPB",
+        "description": "CocoaTrack : parcelles GPS, collecte terrain, contrôle satellite et dossier EUDR, la plateforme de traçabilité intégrée à SCPB."
+      },
+      "hero": {
+        "badge": "Plateforme SCPB",
+        "title": "CocoaTrack, traçabilité et conformité embarquées",
+        "subtitle": "Pas un logiciel générique : la garantie digitale de chaque lot exporté par SCPB, de la parcelle camerounaise à votre usine.",
+        "primaryCta": "Demander une démo",
+        "secondaryCta": "Guide EUDR"
+      },
+      "intro": {
+        "title": "Fonctionnalités clés",
+        "description": "CocoaTrack couvre la collecte terrain, la cartographie, la conformité documentaire et le reporting acheteur."
+      },
+      "video": {
+        "title": "Démonstration CocoaTrack",
+        "subtitle": "Parcourez la plateforme : parcelles GPS, collecte terrain et dossier de conformité EUDR.",
+        "play": "Lire la démo vidéo",
+        "unsupported": "Votre navigateur ne supporte pas la lecture vidéo.",
+        "unavailable": "La vidéo de démonstration sera disponible prochainement. Contactez-nous pour une démo live.",
+        "hint": "Cliquez sur lecture pour lancer la démo. Durée recommandée : 2–4 min, format MP4 (H.264)."
+      },
+      "features": {
+        "parcels": {
+          "title": "Parcelles GPS",
+          "description": "Cartographie et enregistrement des zones de production par producteur."
+        },
+        "field": {
+          "title": "Collecte terrain",
+          "description": "Saisie mobile des données de récolte, qualité et volumes par lot."
+        },
+        "satellite": {
+          "title": "Contrôle satellite",
+          "description": "Analyse des zones pour le risque de déforestation (EUDR)."
+        },
+        "compliance": {
+          "title": "Conformité documentaire",
+          "description": "Dossier DDS structuré et pièces exportables pour vos audits."
+        },
+        "dashboard": {
+          "title": "Tableau de bord",
+          "description": "Vue consolidée lots, producteurs et statut de conformité."
+        },
+        "mobile": {
+          "title": "Accès mobile",
+          "description": "Agents terrain et coopératives connectés en temps réel."
+        }
+      },
+      "demo": {
+        "title": "Demandez une démonstration",
+        "description": "30 minutes avec notre équipe pour voir CocoaTrack et discuter de votre besoin EUDR / traçabilité.",
+        "portalCta": "Explorer la démo interactive",
+        "primaryCta": "Réserver une démo",
+        "secondaryCta": "Demander un devis cacao"
+      }
+    },
+    "partners": {
+      "meta": {
+        "title": "Partenaires | AFREXIA & KAMER AGRO | STE-SCPB",
+        "description": "Partenariats stratégiques SCPB : AFREXIA (traçabilité & qualité) et KAMER AGRO LLC (USA)."
+      },
+      "hero": {
+        "badge": "Écosystème SCPB",
+        "title": "Nos partenaires stratégiques",
+        "subtitle": "Des alliances qui renforcent la qualité, la traçabilité et la présence internationale de SCPB."
+      }
+    }
+  },
+  "traceability": {
+    "map": {
+      "unavailable": "Carte indisponible, token Mapbox non configuré.",
+      "producers": "{count} producteurs cartographiés",
+      "zones": {
+        "centre": "Région Centre",
+        "sud": "Région Sud",
+        "littoral": "Littoral (hinterland)",
+        "est": "Région Est"
+      }
+    }
+  },
+  "faqPage": {
+    "meta": {
+      "title": "FAQ Export Cacao & EUDR | STE-SCPB",
+      "description": "Réponses aux questions fréquentes : export cacao, conformité EUDR, traçabilité CocoaTrack, documents et échantillons."
+    },
+    "hero": {
+      "title": "Questions fréquentes",
+      "subtitle": "Export, conformité EUDR, traçabilité et conditions commerciales."
+    },
+    "sections": {
+      "export": {
+        "title": "Export & documents",
+        "items": {
+          "docs": {
+            "question": "Quels documents fournissez-vous ?",
+            "answer": "COA, certificat phytosanitaire, certificat d'origine, packing list, Bill of Lading et dossier de traçabilité sur demande."
+          },
+          "destinations": {
+            "question": "Quelles destinations couvrez-vous ?",
+            "answer": "Union européenne, États-Unis, Asie et Afrique. Embarquement via Douala et Kribi."
+          },
+          "incoterms": {
+            "question": "Quels Incoterms proposez-vous ?",
+            "answer": "FOB Douala/Kribi, CIF et DAP selon destination et volume. Précisez votre besoin dans le devis."
+          },
+          "sample": {
+            "question": "Comment obtenir un échantillon ?",
+            "answer": "Via le formulaire devis en sélectionnant « Échantillon », ou par contact direct. Jusqu'à 2 kg selon produit."
+          }
+        }
+      },
+      "eudr": {
+        "title": "Conformité EUDR",
+        "items": {
+          "deadline": {
+            "question": "L'EUDR s'applique-t-il à mon approvisionnement cacao ?",
+            "answer": "Si vous importez ou commercialisez du cacao sur le marché UE, vous devez réaliser une due diligence anti-déforestation depuis le 30/12/2024."
+          },
+          "dds": {
+            "question": "Fournissez-vous un dossier DDS ?",
+            "answer": "Oui. SCPB structure les données parcelles, risques et chaîne lot-à-parcelle exportables pour vos déclarations."
+          },
+          "scpbRole": {
+            "question": "Quel est le rôle de SCPB dans ma conformité ?",
+            "answer": "Nous documentons l'origine et la traçabilité en amont. Vous restez responsable de la déclaration finale auprès des autorités."
+          },
+          "cocoatrack": {
+            "question": "Qu'est-ce que CocoaTrack ?",
+            "answer": "Notre plateforme de collecte terrain, cartographie GPS et consolidation documentaire intégrée à chaque export SCPB."
+          }
+        }
+      },
+      "traceability": {
+        "title": "Traçabilité",
+        "items": {
+          "method": {
+            "question": "Comment fonctionne votre traçabilité ?",
+            "answer": "Enregistrement GPS des parcelles, collecte par lot, contrôles qualité et lien conteneur avec dossier complet."
+          },
+          "gps": {
+            "question": "Les parcelles sont-elles géolocalisées ?",
+            "answer": "Oui. Zones de production cartographiées et rattachées aux lots exportés via CocoaTrack."
+          },
+          "lot": {
+            "question": "Puis-je remonter du conteneur à la parcelle ?",
+            "answer": "Oui. Chaque lot exporté est documenté avec ses parcelles et producteurs partenaires associés."
+          }
+        }
+      },
+      "commercial": {
+        "title": "Commercial",
+        "items": {
+          "response": {
+            "question": "Quel délai de réponse pour un devis ?",
+            "answer": "24 à 48 h ouvrées pour une première réponse. Les demandes complexes peuvent nécessiter un échange complémentaire."
+          },
+          "payment": {
+            "question": "Quelles sont vos conditions de paiement ?",
+            "answer": "Selon profil client et Incoterm : LC, acompte + solde ou conditions négociées pour partenaires récurrents."
+          },
+          "nda": {
+            "question": "Proposez-vous un NDA ?",
+            "answer": "Oui, sur demande pour les échanges commerciaux sensibles ou les audits approfondis."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Une question spécifique ?",
+      "subtitle": "Notre équipe export vous répond sous 24-48 h.",
+      "contact": "Nous contacter",
+      "quote": "Demander un devis"
+    }
+  },
+  "useCases": {
+    "meta": {
+      "title": "Cas d'usage | Cacao traçable & EUDR | STE-SCPB",
+      "description": "Comment chocolatiers, industriels et négociants utilisent SCPB et CocoaTrack pour l'approvisionnement conforme."
+    },
+    "hero": {
+      "title": "Cas d'usage",
+      "subtitle": "Des profils acheteurs différents, un même socle : traçabilité documentée et conformité EUDR."
+    },
+    "labels": {
+      "challenge": "Enjeu",
+      "solution": "Solution SCPB",
+      "result": "Résultat"
+    },
+    "cases": {
+      "chocolatier": {
+        "title": "Chocolatier premium UE",
+        "profile": "50-200 t/an, exigence terroir + EUDR",
+        "challenge": "Prouver l'origine camerounaise et l'absence de déforestation pour la marque et les audits clients.",
+        "solution": "Cacao traçable lot-à-parcelle, dossier DDS exportable et échantillons qualité constants.",
+        "result": "Conformité EUDR accélérée et storytelling origine crédible auprès de la clientèle B2B."
+      },
+      "industrial": {
+        "title": "Transformateur industriel",
+        "profile": "500+ t/an, volumes réguliers",
+        "challenge": "Sécuriser des volumes avec documentation homogène pour plusieurs sites de production UE.",
+        "solution": "Contrats cadre, CocoaTrack pour la consolidation documentaire et calendrier d'expédition prévisible.",
+        "result": "Moins de friction à l'importation et traçabilité standardisée sur toutes les livraisons."
+      },
+      "trader": {
+        "title": "Négociant international",
+        "profile": "Revente multi-destinations",
+        "challenge": "Revendre de l'origine Cameroun avec preuves transférables aux acheteurs finaux.",
+        "solution": "Dossier complet par lot (GPS, risques, certificats) prêt pour reprise dans leur due diligence.",
+        "result": "Positionnement « origine documentée » et différenciation face aux lots opaques."
+      }
+    },
+    "cta": {
+      "text": "Explorez la démo interactive CocoaTrack avec parcelles anonymisées et exemple de dossier.",
+      "demo": "Voir la démo CocoaTrack",
+      "quote": "Demander un devis"
+    }
+  },
+  "cocoatrackDemo": {
+    "meta": {
+      "title": "Démo CocoaTrack | Parcelles & dossier EUDR | STE-SCPB",
+      "description": "Démonstration interactive : carte de parcelles anonymisées et aperçu d'un dossier de due diligence exportable."
+    },
+    "hero": {
+      "badge": "Démo publique",
+      "title": "Portail de démonstration CocoaTrack",
+      "subtitle": "Données anonymisées à titre illustratif. Contactez-nous pour une démo personnalisée avec vos critères."
+    },
+    "map": {
+      "heading": "Parcelles cartographiées (données anonymisées)",
+      "disclaimer": "Coordonnées approximatives, producteurs non identifiés. Ne constitue pas un dossier contractuel.",
+      "unavailable": "Carte indisponible.",
+      "area": "{ha} ha",
+      "zones": {
+        "centre": "Zone Centre",
+        "sud": "Zone Sud",
+        "littoral": "Zone Littoral",
+        "est": "Zone Est"
+      },
+      "risk": {
+        "low": "Risque faible",
+        "medium": "Risque modéré",
+        "verified": "Vérifié"
+      }
+    },
+    "dossier": {
+      "heading": "Aperçu dossier de due diligence",
+      "title": "Dossier DDS (extrait démo)",
+      "subtitle": "Structure type d'un dossier export SCPB pour conformité EUDR.",
+      "lotId": "N° lot",
+      "volume": "Volume",
+      "parcels": "Parcelles",
+      "harvest": "Récolte",
+      "disclaimer": "Document de démonstration. Les données réelles sont fournies par lot lors de l'export.",
+      "sections": {
+        "origin": {
+          "title": "Origine & producteurs",
+          "content": "8 producteurs partenaires répartis sur 10 parcelles cartographiées en zones Centre et Sud (Cameroun)."
+        },
+        "gps": {
+          "title": "Géolocalisation",
+          "content": "Polygones parcelles au format GeoJSON, collectés via CocoaTrack et vérifiés par contrôle terrain."
+        },
+        "risk": {
+          "title": "Évaluation des risques",
+          "content": "Analyse satellite des zones, classification faible/modérée, historique de récolte sur 3 saisons."
+        },
+        "chain": {
+          "title": "Chaîne lot → parcelle",
+          "content": "LOT-2026-0047 agrège les parcelles P-0142 à P-0502 avec journal de collecte horodaté."
+        },
+        "certificates": {
+          "title": "Certificats & analyses",
+          "content": "Liste des pièces disponibles pour ce lot (voir ci-dessous)."
+        }
+      },
+      "certItems": {
+        "phyto": "Certificat phytosanitaire",
+        "origin": "Certificat d'origine",
+        "coa": "COA (Certificate of Analysis)"
+      }
+    },
+    "cta": {
+      "title": "Passer à une démo live",
+      "subtitle": "30 minutes avec notre équipe sur vos volumes, zones et exigences EUDR.",
+      "primary": "Réserver une démo",
+      "secondary": "Guide conformité EUDR"
+    }
+  },
+  "newsEditorial": {
+    "title": "Veille EUDR & traçabilité",
+    "description": "Articles sur la conformité, les terroirs camerounais et l'export cacao. Objectif éditorial : 2 publications par mois.",
+    "eudrLink": "Guide EUDR SCPB",
+    "allArticles": "Tous les articles",
+    "empty": "Les prochains articles EUDR et traçabilité seront publiés ici."
   },
   "notFound": {
     "title": "Page introuvable",
