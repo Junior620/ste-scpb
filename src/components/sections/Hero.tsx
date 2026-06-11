@@ -80,22 +80,11 @@ export function Hero({ className = '' }: HeroProps) {
     >
       <ClickSparkles />
 
-      {/* Video Background Carousel - Deferred for LCP optimization */}
-      <div className="absolute inset-0 z-0 bg-background">
-        {/* Static poster image for immediate LCP */}
-        {!isClient && (
-          <img
-            src="/api/og"
-            alt="Hero background"
-            className="absolute inset-0 h-full w-full object-cover"
-            fetchPriority="high"
-          />
-        )}
-
-        {/* Videos load after client hydration */}
+      {/* Background: solid black — never use /api/og here (OG card text overlaps hero copy) */}
+      <div className="absolute inset-0 z-0 bg-black" aria-hidden="true">
+        {/* Videos load after client hydration (requires files in public/hero/) */}
         {isClient &&
           VIDEOS.map((video, index) => {
-            // Only render video if it should be loaded
             const shouldLoad = loadedVideos.has(index);
             const isCurrentVideo = index === currentVideoIndex;
 
@@ -106,12 +95,11 @@ export function Hero({ className = '' }: HeroProps) {
                   videoRefs.current[index] = el;
                 }}
                 src={shouldLoad ? video : undefined}
-                poster={index === 0 ? '/api/og' : undefined}
-                autoPlay={isCurrentVideo && shouldLoad} // Only autoplay the current video
+                autoPlay={isCurrentVideo && shouldLoad}
                 loop
                 muted
                 playsInline
-                preload={index === 0 ? 'metadata' : 'none'} // Load metadata for first video
+                preload={index === 0 ? 'metadata' : 'none'}
                 className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
                   isCurrentVideo ? 'opacity-100' : 'opacity-0'
                 }`}
@@ -120,9 +108,6 @@ export function Hero({ className = '' }: HeroProps) {
             );
           })}
       </div>
-
-      {/* Gradient overlay for text readability */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/60 via-background/70 to-background/80 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
