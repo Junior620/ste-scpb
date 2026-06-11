@@ -4,7 +4,7 @@
 > **Périmètre :** site en production (https://ste-scpb.com), codebase `ste-scpb-website` (Next.js), CMS Sanity (`scpb`), projet `my-strapi-project`
 > **Objectif :** rendre le site plus professionnel, crédible, clair, attractif et efficace pour générer des leads qualifiés (coopératives, exportateurs, acheteurs, institutions, investisseurs, industriels du cacao, acteurs ESG)
 
-> _Document d'audit initial (10 juin 2026). La section K reflète l'état après implémentation sur `master` (commit `2e7e902`)._
+> _Document d'audit initial (10 juin 2026). La section K reflète l'état après implémentation sur `master` (commit `d51aa59`)._
 
 ---
 
@@ -382,7 +382,7 @@ Le message différenciant reste valide : SCPB vend **le cacao ET la conformité 
 
 ## K. État post-implémentation (juin 2026)
 
-> Mise à jour après livraison des niveaux 1 à 3 sur `master` (commit `2e7e902`) et correction item 13 (URLs localisées).
+> Mise à jour après livraison des niveaux 1 à 3 sur `master` (commit `d51aa59`) et correction item 13 (URLs localisées).
 
 ### K.1 Synthèse par niveau
 
