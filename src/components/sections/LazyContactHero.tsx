@@ -11,12 +11,13 @@
  * - StaticHeroFallback as loading component
  */
 
+import type { ComponentProps } from 'react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { StaticHeroFallback } from '@/components/3d/StaticHeroFallback';
 
 // Dynamic import with SSR disabled and loading fallback
-const ContactHero = dynamic(() => import('./ContactHero').then(mod => mod.ContactHero), {
+const ContactHero = dynamic(() => import('./ContactHero').then((mod) => mod.ContactHero), {
   ssr: false,
   loading: () => (
     <div className="relative h-[40vh] min-h-[300px] overflow-hidden">
@@ -25,10 +26,14 @@ const ContactHero = dynamic(() => import('./ContactHero').then(mod => mod.Contac
   ),
 });
 
+import { Link } from '@/i18n/routing';
+
+type AppHref = ComponentProps<typeof Link>['href'];
+
 interface LazyContactHeroProps {
   title: string;
   subtitle: string;
-  quoteLink: string;
+  quoteLink: AppHref;
   quoteLinkText: string;
 }
 

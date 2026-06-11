@@ -114,8 +114,8 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
 
   // Breadcrumb items: Accueil > Actualités > [Article Title]
   const breadcrumbItems = [
-    { label: t('home'), href: `/${validLocale}` },
-    { label: t('news'), href: `/${validLocale}/actualites` },
+    { label: t('home'), href: '/' as const },
+    { label: t('news'), href: '/actualites' as const },
     { label: article.title[validLocale] },
   ];
 

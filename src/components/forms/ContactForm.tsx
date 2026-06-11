@@ -177,7 +177,7 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
           <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
         </Link>
         <Link
-          href="/devis?type=sample"
+          href={{ pathname: '/devis', query: { type: 'sample' } }}
           className="flex flex-col items-center gap-2 p-4 bg-background-secondary rounded-lg hover:bg-primary/10 transition-colors text-center border border-border"
         >
           <Package className="w-6 h-6 text-primary" />

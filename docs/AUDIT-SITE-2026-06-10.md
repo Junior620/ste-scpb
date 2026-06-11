@@ -4,6 +4,8 @@
 > **Périmètre :** site en production (https://ste-scpb.com), codebase `ste-scpb-website` (Next.js), CMS Sanity (`scpb`), projet `my-strapi-project`
 > **Objectif :** rendre le site plus professionnel, crédible, clair, attractif et efficace pour générer des leads qualifiés (coopératives, exportateurs, acheteurs, institutions, investisseurs, industriels du cacao, acteurs ESG)
 
+> _Document d'audit initial (10 juin 2026). La section K reflète l'état après implémentation sur `master` (commit `2e7e902`)._
+
 ---
 
 ## Sommaire
@@ -18,6 +20,7 @@
 - [H. Backlog priorisé](#h-backlog-priorisé)
 - [I. Plan d'action en 3 niveaux](#i-plan-daction-en-3-niveaux)
 - [J. Recommandation finale](#j-recommandation-finale)
+- [K. État post-implémentation (juin 2026)](#k-état-post-implémentation-juin-2026)
 
 ---
 
@@ -361,19 +364,123 @@ Items **18 à 22** + : refactoring, cas d'usage, FAQ, blog cadencé, et à terme
 
 ## J. Recommandation finale
 
-1. **À corriger absolument en premier** : la rotation des secrets exposés dans `.env.example` et la fermeture des endpoints de debug. Non négociable, avant tout le reste.
+> _Recommandation révisée juin 2026 — voir section K pour l'état courant. Les sections A–I restent le diagnostic initial._
 
-2. **Ce qui améliorera vraiment les leads** : le tunnel EUDR (page pilier + dossier PDF gated + séquence email + tracking GA4 réparé). La cible a une **obligation réglementaire** — c'est le levier de conversion le plus puissant qui existe : ces acheteurs ne « s'intéressent » pas à la traçabilité, ils en ont juridiquement besoin.
+1. **Ops restantes** : rotation des secrets (item 1), variables Vercel (`NEXT_PUBLIC_GA_MEASUREMENT_ID`, `CRM_WEBHOOK_URL`, `NEXT_PUBLIC_LINKEDIN_URL`), resoumission du sitemap dans Search Console après fix URLs.
 
-3. **Ce qui rendra le site plus crédible** : la cohérence (un seul jeu de chiffres, un seul domaine email, exit Yahoo), des preuves visuelles réelles (photos terrain, certificats PDF, LinkedIn), et la suppression des artefacts de chantier (documents-en-cours, sentry-example, debug).
+2. **Conversion et crédibilité** : honeypot sur les formulaires (item 4), remplacer les mentions UTZ par Rainforest Alliance (item 6), fermer ou retirer `/documents-en-cours`, certificats PDF téléchargeables (item 16), cohérence emails/chiffres restants.
 
-4. **Ce qui différenciera SCPB/CocoaTrack** : les plateformes de traçabilité classiques (Sourcemap, Farmforce, Koltiva…) vendent du logiciel aux exportateurs. SCPB peut vendre **le cacao ET la conformité dans la même offre** — « exportateur digitalement traçable en direct origine ». Personne ou presque ne tient cette position au Cameroun. CocoaTrack ne doit pas être présenté comme un SaaS de plus, mais comme la garantie embarquée de chaque conteneur SCPB.
+3. **Performance** : restaurer et compresser les vidéos hero (`public/hero/` vide, item 5) — impact direct LCP mobile.
 
-5. **À développer en priorité** : Niveau 1 intégralement, puis la page `/conformite-eudr` avec son lead magnet — meilleur ratio effort/impact de tout le backlog.
+4. **Différenciation CocoaTrack** : le pivot stratégique est amorcé (`/conformite-eudr`, `/tracabilite-cacao`, `/cocoatrack/demo`, lead magnet EUDR). Prioriser désormais le contenu éditorial (blog item 22), les preuves visuelles terrain et la séquence email post-lead magnet pour convertir les acheteurs EUDR.
+
+5. **Prochaine vague technique** : refactor des monolithes et purge Strapi (item 18), brancher la FAQ Sanity `faqEntry` (item 20), compléter les e2e de soumission formulaires (item 21).
+
+Le message différenciant reste valide : SCPB vend **le cacao ET la conformité dans la même offre** — CocoaTrack comme garantie embarquée de chaque conteneur, pas comme un SaaS de plus.
+
+---
+
+## K. État post-implémentation (juin 2026)
+
+> Mise à jour après livraison des niveaux 1 à 3 sur `master` (commit `2e7e902`) et correction item 13 (URLs localisées).
+
+### K.1 Synthèse par niveau
+
+| Niveau           | Statut | Commentaire                                                                                                                                                                                                                        |
+| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N1 (items 1–8)   | ~75 %  | Debug/Sentry supprimés, sitemap OK, GA4 consent-aware, newsletter Upstash, reCAPTCHA renforcé ; partiels : `.env.example` gitignoré (item 1), honeypot absent (item 4), vidéos hero manquantes (item 5), UTZ non remplacé (item 6) |
+| N2 (items 9–17)  | ~80 %  | Pages EUDR, traçabilité, CocoaTrack, partenaires, cas d'usage, FAQ, home restructurée, CRM webhook, URLs localisées (item 13) ; partiels : LinkedIn/sameAs via env (16), RU incomplet (17), lead magnet partiel (9)                |
+| N3 (items 18–22) | ~40 %  | Portail demo CocoaTrack livré, FAQ page + JSON-LD, Lighthouse CI strict ; ouverts : refactor monolithes (18), purge Strapi (18), blog cadencé (22), e2e soumission formulaires (21)                                                |
+
+### K.2 Backlog 1–22 — tableau de suivi
+
+| #   | Statut  | Note                                                                                             |
+| --- | ------- | ------------------------------------------------------------------------------------------------ |
+| 1   | Partiel | Rotation secrets à valider ops ; `.env.example` toujours exclu par `.gitignore`                  |
+| 2   | Fait    | Endpoints debug + pages Sentry demo supprimés                                                    |
+| 3   | Fait    | Sitemap/robots OK ; JSON-LD Organization migré                                                   |
+| 4   | Partiel | reCAPTCHA exigé en prod ; honeypot toujours absent                                               |
+| 5   | Partiel | `.HEIC` traité ; MP4 hero (`public/hero/`) toujours absents                                      |
+| 6   | Partiel | Chiffres/emails harmonisés en partie ; mentions UTZ restantes ; `/documents-en-cours` public     |
+| 7   | Fait    | GA4 via `NEXT_PUBLIC_GA_MEASUREMENT_ID` + consentement                                           |
+| 8   | Fait    | Newsletter persistée (Upstash)                                                                   |
+| 9   | Fait    | Page `/conformite-eudr` + lead magnet PDF                                                        |
+| 10  | Fait    | Page `/cocoatrack` + portail `/cocoatrack/demo`                                                  |
+| 11  | Fait    | Page `/tracabilite-cacao`                                                                        |
+| 12  | Fait    | Home : bloc EUDR, partenaires, équipe unifiée                                                    |
+| 13  | Fait    | `pathnames` branchés dans next-intl ; SEO via `getPathname` ; 301 legacy EN/RU                   |
+| 14  | Partiel | Webhook CRM via `CRM_WEBHOOK_URL` ; persistance leads basique                                    |
+| 15  | Fait    | StickyQuoteCTA monté ; Cal.com si configuré                                                      |
+| 16  | Partiel | LinkedIn via env ; certificats PDF non téléchargeables                                           |
+| 17  | Partiel | Traductions RU FAQ/cas d'usage/demo ; contenu Sanity RU incomplet                                |
+| 18  | Ouvert  | Refactor monolithes + purge Strapi non faits                                                     |
+| 19  | Fait    | Fusion UI home (`HomeTeamSection`) ; `WorkforceSection.tsx` encore exporté — code mort → item 18 |
+| 20  | Partiel | Page FAQ i18n statique + JSON-LD ; type Sanity `faqEntry` non consommé côté site                 |
+| 21  | Partiel | Lighthouse CI en `error` ; e2e smoke formulaires incomplet                                       |
+| 22  | Ouvert  | Blog cadencé = discipline éditoriale / contenu                                                   |
+
+### K.3 Constats initiaux désormais obsolètes (sections A–J)
+
+Les paragraphes suivants des sections A à J ne reflètent plus l'état du code — les lire avec prudence :
+
+**Section A**
+
+- **« Zéro occurrence EUDR / CocoaTrack / deforestation dans `src/` »** — pages et sections dédiées livrées.
+- **« Aucune page EUDR / traçabilité démontrée / CocoaTrack n'existe nulle part »** — `/conformite-eudr`, `/tracabilite-cacao`, `/cocoatrack`, portail demo livrés.
+- **« Le sitemap est inaccessible »** — corrigé (middleware + robots).
+- **« Aucun CRM ni persistance des leads »** — webhook CRM + LeadStore partiels (item 14).
+- **« 4 endpoints debug publics » / page Sentry demo** — supprimés.
+- **« GA4 codé en dur sans consentement »** — corrigé (consent-aware + variable d'environnement).
+- **« Newsletter en mémoire (Set/Map) »** — persistée via Upstash.
+
+**Section B**
+
+- **« MegaMenu jamais branché »** — composant supprimé (code mort).
+- **« StickyQuoteCTA jamais monté »** — monté dans le layout.
+- **Home « 9 sections AFREXIA + Main-d'œuvre + Équipe »** — restructurée (bloc EUDR, partenaires, `HomeTeamSection`).
+
+**Section D**
+
+- **Table CTA « Monter StickyQuoteCTA »** — fait (item 15).
+- **Lead magnets « à créer » (dossier EUDR)** — livré via `/conformite-eudr` + `/api/lead-magnet`.
+- **reCAPTCHA optionnel / GA4 double instance** — reCAPTCHA exigé en prod ; GA4 unifié (item 7).
+
+**Section F**
+
+- **Liste code mort incluant `MegaMenu`, `StickyQuoteCTA`** — supprimés ou montés ; refactor monolithes toujours ouvert (item 18).
+
+**Section I**
+
+- **Plans « Niveau 1 semaine 1 » / « Niveau 2 semaines 2–5 »** — largement exécutés ; voir synthèse K.1.
+
+**Section J**
+
+- **Points 1 et 5 (debug + Niveau 1 + page `/conformite-eudr`)** — remplacés par la section J révisée ci-dessus.
+
+**SEO / i18n**
+
+- **« URLs EN `/en/products` → 404 (pathnames non branchés) »** — corrigé (item 13).
+
+### K.4 Actions ops hors code (checklist)
+
+- [ ] Rotation secrets (Sanity, Upstash, reCAPTCHA, Sentry, Resend) si pas encore fait
+- [ ] Variables Vercel : `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `CRM_WEBHOOK_URL`, `NEXT_PUBLIC_LINKEDIN_URL`
+- [ ] Cloudflare : ajouter `Sitemap: https://www.ste-scpb.com/sitemap.xml` dans `robots.txt` si proxy actif
+- [ ] Search Console : resoumettre le sitemap après fix URLs localisées
+
+### K.5 Prochaines priorités recommandées
+
+1. ~~URLs localisées (item 13)~~ — livré
+2. Restaurer/compresser vidéos hero (`public/hero/`)
+3. Honeypot formulaires (item 4)
+4. Remplacer mentions UTZ → Rainforest Alliance (item 6)
+5. Versionner `.env.example` (exception dans `.gitignore`, item 1)
 
 ---
 
 ## Processus d'implémentation convenu
+
+> _Processus exécuté sur `master` — voir section K pour le suivi._
 
 Après validation :
 

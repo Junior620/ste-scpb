@@ -1,13 +1,16 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Link } from '@/i18n/routing';
 import { ChevronRight, Home } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ste-scpb.com';
 
+type AppHref = ComponentProps<typeof Link>['href'];
+
 export interface BreadcrumbItem {
   label: string;
-  href?: string;
+  href?: AppHref;
 }
 
 export interface BreadcrumbProps {
@@ -23,9 +26,9 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
     itemListElement: items.map((item, index) => {
       // Build full URL for JSON-LD (Google recommends absolute URLs)
       const fullUrl = item.href
-        ? item.href.startsWith('http')
+        ? typeof item.href === 'string' && item.href.startsWith('http')
           ? item.href
-          : `${BASE_URL}${item.href}`
+          : `${BASE_URL}${typeof item.href === 'string' ? item.href : ''}`
         : undefined;
 
       return {

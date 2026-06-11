@@ -9,7 +9,16 @@ export type { Locale } from './config';
 export { SUPPORTED_LOCALES, DEFAULT_LOCALE } from './config';
 
 // Routing
-export { routing, Link, redirect, usePathname, useRouter, getPathname } from './routing';
+export {
+  routing,
+  Link,
+  redirect,
+  usePathname,
+  useRouter,
+  getPathname,
+  productHref,
+  articleHref,
+} from './routing';
 
 // Metadata utilities
 export {

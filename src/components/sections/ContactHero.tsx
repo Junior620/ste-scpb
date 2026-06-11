@@ -13,11 +13,14 @@ import {
 } from '@/components/3d';
 import { usePerformanceMode } from '@/hooks/usePerformanceMode';
 import { Link } from '@/i18n/routing';
+import type { ComponentProps } from 'react';
+
+type AppHref = ComponentProps<typeof Link>['href'];
 
 interface ContactHeroProps {
   title: string;
   subtitle: string;
-  quoteLink: string;
+  quoteLink: AppHref;
   quoteLinkText: string;
 }
 

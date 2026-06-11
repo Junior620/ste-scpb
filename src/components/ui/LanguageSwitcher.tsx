@@ -1,7 +1,8 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/routing';
+import { useParams } from 'next/navigation';
+import { useRouter, usePathname, articleHref, productHref } from '@/i18n/routing';
 import { Locale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { localeLabels, localeFlags } from '@/i18n/config';
 import { useTransition, useState, useRef, useEffect } from 'react';
@@ -32,6 +33,7 @@ export function LanguageSwitcher({
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,7 +64,21 @@ export function LanguageSwitcher({
 
   const handleLocaleChange = (newLocale: Locale) => {
     startTransition(() => {
-      router.replace(pathname, { locale: newLocale });
+      if (params.slug && typeof params.slug === 'string') {
+        if (pathname === '/produits/[slug]') {
+          router.replace(productHref(params.slug), { locale: newLocale });
+          setIsOpen(false);
+          return;
+        }
+        if (pathname === '/actualites/[slug]') {
+          router.replace(articleHref(params.slug), { locale: newLocale });
+          setIsOpen(false);
+          return;
+        }
+      }
+
+      type ReplaceHref = Parameters<typeof router.replace>[0];
+      router.replace(pathname as ReplaceHref, { locale: newLocale });
     });
     setIsOpen(false);
   };
@@ -72,9 +88,7 @@ export function LanguageSwitcher({
       {showFlags && <span aria-hidden="true">{localeFlags[loc]}</span>}
       {showLabels && <span>{localeLabels[loc]}</span>}
       {!showLabels && !showFlags && <span>{loc.toUpperCase()}</span>}
-      {isSelected && (
-        <span className="sr-only">({t('currentLanguage')})</span>
-      )}
+      {isSelected && <span className="sr-only">({t('currentLanguage')})</span>}
     </>
   );
 

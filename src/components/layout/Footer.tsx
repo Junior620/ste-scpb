@@ -6,11 +6,14 @@
  * Optimized for international buyers
  */
 
+import type { ComponentProps } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { MapPin, Phone, Mail, Clock, Ship, FileCheck, Linkedin } from 'lucide-react';
 import { NewsletterForm } from '@/components/forms/NewsletterForm';
+
+type AppHref = ComponentProps<typeof Link>['href'];
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -18,7 +21,7 @@ export function Footer() {
   const tContact = useTranslations('contact.info');
 
   // Quick links - added B2B conversion links + all key pages for SEO
-  const quickLinks = [
+  const quickLinks: Array<{ href: AppHref; label: string }> = [
     { href: '/', label: tNav('home') },
     { href: '/produits', label: tNav('products') },
     { href: '/conformite-eudr', label: tNav('eudr') },
@@ -31,7 +34,7 @@ export function Footer() {
     { href: '/devis', label: tNav('quote') },
   ];
 
-  const legalLinks = [
+  const legalLinks: Array<{ href: AppHref; label: string }> = [
     { href: '/mentions-legales', label: tNav('legalMentions') },
     { href: '/politique-confidentialite', label: tNav('privacyPolicy') },
   ];
@@ -107,7 +110,7 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-4">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-foreground-muted hover:text-primary transition-colors"
@@ -124,7 +127,7 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-4">{t('legal')}</h3>
             <ul className="space-y-2">
               {legalLinks.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-foreground-muted hover:text-primary transition-colors"

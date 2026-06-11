@@ -321,12 +321,12 @@ export function StatisticsSection({ sanityData }: StatisticsSectionProps) {
                     </div>
                   ))}
               </div>
-              <Link
+              <a
                 href="#destinations"
                 className="flex items-center gap-1 text-sm text-primary hover:underline mt-4"
               >
                 {t('destinations.cta')} <ChevronRight className="w-4 h-4" />
-              </Link>
+              </a>
             </div>
           </section>
         </ScrollReveal>

@@ -85,7 +85,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   try {
     const cmsClient = await createCMSClient();
-    
+
     // Parallel data fetching: fetch product and all products simultaneously
     const [fetchedProduct, allProducts] = await Promise.all([
       cmsClient.getProductBySlug(slug, locale as Locale),
@@ -128,8 +128,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   // Breadcrumb items: Accueil > Produits > [Product Name]
   const validLocale = isValidLocale(locale) ? (locale as Locale) : 'fr';
   const breadcrumbItems = [
-    { label: t('home'), href: `/${validLocale}` },
-    { label: t('products'), href: `/${validLocale}/produits` },
+    { label: t('home'), href: '/' as const },
+    { label: t('products'), href: '/produits' as const },
     { label: product.name[validLocale] },
   ];
 

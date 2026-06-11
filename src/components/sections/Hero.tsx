@@ -8,7 +8,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import { Button } from '@/components/ui';
 import { ClickSparkles } from '@/components/ui/ClickSparkles';
 
@@ -157,7 +157,7 @@ export function Hero({ className = '' }: HeroProps) {
             </Link>
           </div>
           <div className="mt-4 flex justify-center animate-fade-in-up animation-delay-600">
-            <Link href="/produits/cacao" className="text-sm text-primary hover:underline">
+            <Link href={productHref('cacao')} className="text-sm text-primary hover:underline">
               {t('cta.products')} →
             </Link>
           </div>

@@ -1,31 +1,21 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/Button';
+
+type AppHref = ComponentProps<typeof Link>['href'];
 
 export interface SolutionHeroProps {
   badge?: string;
   title: string;
   subtitle: string;
   primaryCta?: {
-    href:
-      | '/devis'
-      | '/contact'
-      | '/conformite-eudr'
-      | '/cocoatrack'
-      | '/tracabilite-cacao'
-      | '/produits/cacao';
+    href: AppHref;
     label: string;
   };
   secondaryCta?: {
-    href:
-      | '/devis'
-      | '/contact'
-      | '/conformite-eudr'
-      | '/cocoatrack'
-      | '/tracabilite-cacao'
-      | '/produits/cacao'
-      | '/partenaires';
+    href: AppHref;
     label: string;
   };
 }

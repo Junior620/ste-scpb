@@ -19,11 +19,26 @@ test.describe('Navigation', () => {
 
   test('should navigate to products page', async ({ page }) => {
     // Find products link
-    const productsLink = page.locator('a[href*="/produits"]').first();
+    const productsLink = page.locator('a[href*="/produits"], a[href*="/products"]').first();
 
     if (await productsLink.isVisible()) {
       await productsLink.click();
-      await expect(page).toHaveURL(/\/produits/);
+      await expect(page).toHaveURL(/\/produits|\/products/);
+    }
+  });
+
+  test('should use localized slug after switching to English on products page', async ({
+    page,
+  }) => {
+    await page.goto('/fr/produits');
+
+    const englishLink = page.locator('button:has-text("EN"), button:has-text("English")').first();
+
+    if (await englishLink.isVisible()) {
+      await englishLink.click();
+      await page.waitForURL(/\/en\/products/);
+      expect(page.url()).toContain('/products');
+      expect(page.url()).not.toContain('/produits');
     }
   });
 
@@ -56,7 +71,7 @@ test.describe('Navigation', () => {
 
     if (await logoLink.isVisible()) {
       await logoLink.click();
-      
+
       // Should be back on homepage
       const url = page.url();
       expect(url.endsWith('/fr') || url.endsWith('/fr/')).toBeTruthy();
@@ -105,7 +120,7 @@ test.describe('Navigation - Mobile', () => {
 
       // Find and click a navigation link
       const navLink = page.locator('nav a[href*="/produits"]').first();
-      
+
       if (await navLink.isVisible()) {
         await navLink.click();
 
@@ -157,9 +172,9 @@ test.describe('Navigation - Accessibility', () => {
     // Tab through navigation
     for (let i = 0; i < 10; i++) {
       await page.keyboard.press('Tab');
-      
+
       const focusedElement = page.locator(':focus');
-      
+
       // Each focused element should be visible
       if (await focusedElement.isVisible()) {
         await expect(focusedElement).toBeVisible();
@@ -179,7 +194,9 @@ test.describe('Sticky Quote CTA', () => {
     await page.waitForTimeout(500);
 
     // Look for sticky quote button
-    const stickyCTA = page.locator('[data-testid="sticky-quote-cta"], button:has-text("Devis"), a:has-text("Devis")');
+    const stickyCTA = page.locator(
+      '[data-testid="sticky-quote-cta"], button:has-text("Devis"), a:has-text("Devis")'
+    );
 
     // If sticky CTA exists, it should be visible after scroll
     if (await stickyCTA.first().isVisible()) {

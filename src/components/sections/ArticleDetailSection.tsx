@@ -15,7 +15,7 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import type { Article } from '@/domain/entities/Article';
 import { formatArticleDate, getLocalizedArticleContent } from '@/domain/entities/Article';
 import type { Locale } from '@/domain/value-objects/Locale';
@@ -237,7 +237,7 @@ function ContextualProductLinks({
         {products.map((product) => (
           <Link
             key={product.slug}
-            href={`/produits/${product.slug}`}
+            href={productHref(product.slug)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-background hover:bg-primary/10 border border-border hover:border-primary/30 transition-all group"
           >
             <span className="font-medium text-foreground group-hover:text-primary transition-colors">

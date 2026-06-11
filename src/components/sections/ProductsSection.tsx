@@ -12,7 +12,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import Image from 'next/image';
 import type { Product, ProductCategory } from '@/domain/entities/Product';
 import { PRODUCT_CATEGORIES } from '@/domain/entities/Product';
@@ -245,7 +245,7 @@ function ProductCard({ product, locale }: { product: Product; locale: Locale }) 
   const tagline = getProductTagline(product.category, locale);
 
   return (
-    <Link href={`/produits/${product.slug}`} className="block h-full">
+    <Link href={productHref(product.slug)} className="block h-full">
       <Card
         variant="glow"
         interactive

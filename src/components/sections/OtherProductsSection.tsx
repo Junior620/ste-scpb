@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import Image from 'next/image';
 import {
   Coffee,
@@ -130,7 +130,7 @@ export function OtherProductsSection({ products = [] }: OtherProductsSectionProp
             return (
               <Link
                 key={key}
-                href={`/produits/${slug}`}
+                href={productHref(slug)}
                 className="group relative bg-background rounded-xl p-6 border border-border hover:border-primary/50 transition-all hover:shadow-lg overflow-hidden"
                 onMouseEnter={() => setHoveredProduct(key)}
                 onMouseLeave={() => setHoveredProduct(null)}

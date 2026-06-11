@@ -12,7 +12,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { Link } from '@/i18n/routing';
+import { Link, articleHref } from '@/i18n/routing';
 import type { ArticleListItem, ArticleCategory } from '@/domain/entities/Article';
 import { formatArticleDate } from '@/domain/entities/Article';
 import type { Locale } from '@/domain/value-objects/Locale';
@@ -174,7 +174,7 @@ function ArticleCard({ article, locale }: { article: ArticleListItem; locale: Lo
   const t = useTranslations('news');
 
   return (
-    <Link href={`/actualites/${article.slug}`}>
+    <Link href={articleHref(article.slug)}>
       <Card variant="default" interactive className="h-full group">
         {/* Featured Image */}
         {article.featuredImage && (

@@ -3,6 +3,9 @@ import { LOCALIZED_PATHNAMES } from '@/i18n/pathnames';
 
 /**
  * Legacy French slugs still used in some EN/RU URLs — redirect to localized paths (301).
+ *
+ * Pages with identical slugs across locales (`/contact`, `/faq`, `/cocoatrack`, `/cocoatrack/demo`)
+ * do not need entries here — the middleware skips when target === source.
  */
 export const LEGACY_SLUG_REDIRECTS: Partial<Record<Exclude<Locale, 'fr'>, Record<string, string>>> =
   {

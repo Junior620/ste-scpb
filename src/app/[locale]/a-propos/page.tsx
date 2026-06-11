@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Locale, SUPPORTED_LOCALES } from '@/domain/value-objects/Locale';
 import { generateAlternateLanguages, SITE_NAME } from '@/i18n/metadata';
 import { Target, Eye, Heart, FileText, Building2, MapPin } from 'lucide-react';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import { Button } from '@/components/ui/Button';
 import { AboutHero } from '@/components/sections/AboutHero';
 import { AboutValuesSection, AboutStatsSection } from '@/components/sections/AboutSections';
@@ -154,7 +154,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">{t('cta.title')}</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/produits/cacao">
+              <Link href={productHref('cacao')}>
                 <Button variant="outline" size="lg">
                   {t('cta.datasheet')}
                 </Button>

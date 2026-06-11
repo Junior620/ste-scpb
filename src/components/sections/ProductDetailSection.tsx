@@ -16,7 +16,7 @@
 import { useState, useEffect, Suspense, type JSX } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, productHref } from '@/i18n/routing';
 import type { Product, ProductCategory } from '@/domain/entities/Product';
 import type { Locale } from '@/domain/value-objects/Locale';
 import {
@@ -886,7 +886,7 @@ function RelatedProducts({ products, locale }: { products: Product[]; locale: Lo
       <h2 className="text-2xl font-bold mb-6">{t('related')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <Link key={product.id} href={`/produits/${product.slug}`}>
+          <Link key={product.id} href={productHref(product.slug)}>
             <Card variant="default" interactive className="h-full group">
               {product.images.length > 0 && (
                 <div className="relative aspect-video overflow-hidden rounded-t-xl -mx-4 -mt-4 md:-mx-6 md:-mt-6 mb-4">
@@ -938,7 +938,7 @@ function SimilarProducts({ products, locale }: { products: Product[]; locale: Lo
       <h2 className="text-2xl font-bold mb-6">{t('similar')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <Link key={product.id} href={`/produits/${product.slug}`}>
+          <Link key={product.id} href={productHref(product.slug)}>
             <Card variant="default" interactive className="h-full group">
               {product.images.length > 0 && (
                 <div className="relative aspect-video overflow-hidden rounded-t-xl -mx-4 -mt-4 md:-mx-6 md:-mt-6 mb-4">

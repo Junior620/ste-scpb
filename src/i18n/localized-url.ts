@@ -1,44 +1,28 @@
 import type { Locale } from '@/domain/value-objects/Locale';
-import { LOCALIZED_PATHNAMES } from '@/i18n/localized-paths';
+import { getPathname } from '@/i18n/routing';
 
-function getLocalizedSegment(locale: Locale, segment: string): string {
-  const config = LOCALIZED_PATHNAMES[segment as keyof typeof LOCALIZED_PATHNAMES];
-  if (!config) return segment;
-  if (typeof config === 'string') return config === '/' ? '' : config;
-  return config[locale] ?? config.fr;
-}
+type StaticHref = Parameters<typeof getPathname>[0]['href'];
 
 /**
- * Resolve a localized pathname segment (without domain) for SEO/sitemap.
+ * Resolve a localized pathname (without domain) via next-intl routing config.
  */
 export function resolveLocalizedPath(
   locale: Locale,
   pathname: string,
   params?: Record<string, string>
 ): string {
-  let normalized = pathname === '' ? '/' : pathname.startsWith('/') ? pathname : `/${pathname}`;
-
-  if (params) {
-    normalized = Object.entries(params).reduce(
-      (result, [key, value]) => result.replace(`[${key}]`, value),
-      normalized
-    );
+  if (pathname.includes('[slug]') && params?.slug) {
+    return getPathname({
+      locale,
+      href: {
+        pathname: pathname as '/produits/[slug]' | '/actualites/[slug]',
+        params: { slug: params.slug },
+      },
+    });
   }
 
-  if (normalized === '/') {
-    return `/${locale}`;
-  }
-
-  const segments = normalized.split('/').filter(Boolean);
-  if (segments.length === 0) {
-    return `/${locale}`;
-  }
-
-  const firstSegment = `/${segments[0]}`;
-  const localizedFirst = getLocalizedSegment(locale, firstSegment);
-  const rest = segments.slice(1).join('/');
-
-  return `/${locale}${localizedFirst}${rest ? `/${rest}` : ''}`;
+  const href = (pathname === '' ? '/' : pathname) as StaticHref;
+  return getPathname({ locale, href });
 }
 
 export function resolveLocalizedUrl(

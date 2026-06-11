@@ -47,12 +47,11 @@ export function buildLocalizedUrl(pathname: string, locale: Locale): string {
 }
 
 export function buildLocalizedDynamicUrl(
-  pathname: string,
+  pathname: '/produits/[slug]' | '/actualites/[slug]',
   locale: Locale,
   params: { slug: string }
 ): string {
-  const base = pathname.replace('[slug]', params.slug);
-  return resolveLocalizedUrl(BASE_URL, locale, base);
+  return resolveLocalizedUrl(BASE_URL, locale, pathname, params);
 }
 
 /**

@@ -68,4 +68,14 @@ export const LOCALIZED_PATHNAMES = {
     ru: '/keysy-ispolzovaniya',
   },
   '/cocoatrack/demo': '/cocoatrack/demo',
+  '/produits/[slug]': {
+    fr: '/produits/[slug]',
+    en: '/products/[slug]',
+    ru: '/produkty/[slug]',
+  },
+  '/actualites/[slug]': {
+    fr: '/actualites/[slug]',
+    en: '/news/[slug]',
+    ru: '/novosti/[slug]',
+  },
 } as const;

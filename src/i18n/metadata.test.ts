@@ -1,10 +1,37 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+vi.mock('@/i18n/routing', () => ({
+  getPathname: ({ locale, href }: { locale: string; href: unknown }) => {
+    const slugBases: Record<string, Record<string, string>> = {
+      '/produits/[slug]': { fr: '/produits', en: '/products', ru: '/produkty' },
+      '/actualites/[slug]': { fr: '/actualites', en: '/news', ru: '/novosti' },
+    };
+    const staticPaths: Record<string, Record<string, string>> = {
+      '/produits': { fr: '/produits', en: '/products', ru: '/produkty' },
+      '/actualites': { fr: '/actualites', en: '/news', ru: '/novosti' },
+    };
+
+    if (typeof href === 'object' && href !== null && 'pathname' in href) {
+      const { pathname, params } = href as { pathname: string; params: { slug: string } };
+      const base = slugBases[pathname]?.[locale] ?? pathname.replace('[slug]', params.slug);
+      return `/${locale}${base}/${params.slug}`;
+    }
+
+    const path = (href === '' ? '/' : href) as string;
+    const localized = staticPaths[path]?.[locale];
+    if (localized) return `/${locale}${localized}`;
+    if (path === '/') return `/${locale}`;
+    return `/${locale}${path}`;
+  },
+}));
+
 import * as fc from 'fast-check';
 import {
   generateAlternateLanguages,
   generateLocalizedMetadata,
   getHreflangLinks,
   PAGE_METADATA_CONFIGS,
+  buildLocalizedUrl,
 } from './metadata';
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, Locale } from '@/domain/value-objects/Locale';
 
@@ -14,6 +41,10 @@ import { SUPPORTED_LOCALES, DEFAULT_LOCALE, Locale } from '@/domain/value-object
  * **Validates: Requirements 6.5**
  */
 describe('Hreflang Tag Consistency - Property Tests', () => {
+  it('should build canonical EN products URL via getPathname routing', () => {
+    expect(buildLocalizedUrl('/produits', 'en')).toBe('https://www.ste-scpb.com/en/products');
+  });
+
   // Arbitrary for valid URL pathnames
   const pathnameArb = fc
     .array(fc.stringMatching(/^[a-z0-9-]+$/), { minLength: 0, maxLength: 3 })
